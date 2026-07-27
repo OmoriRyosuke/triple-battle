@@ -363,7 +363,7 @@ const DEX = [
   items:[["フラエッテナイト",99.7]]},
  {n:"ライチュウ",t:["でんき"],bs:[60,90,55,90,80,110],abil:[["ひらいしん",97.9],["せいでんき",2.1]],
   mega:{n:"メガライチュウY",t:["でんき"],bs:[60,100,55,160,80,130],abil:"ノーガード",stone:"ライチュウナイトY"},
-  mega2:{n:"メガライチュウX",t:["でんき"],bs:[60,135,95,90,95,110],abil:"かたいツメ",stone:"ライチュウナイトX"},
+  mega2:{n:"メガライチュウX",t:["でんき"],bs:[60,135,95,90,95,110],abil:"エレキメーカー",stone:"ライチュウナイトX"},
   mv:[["きあいだま",86.7],["でんじほう",86.5],["まもる",82.2],["ねこだまし",73.3],["くさむすび",19.2],["アンコール",11.3],["ボルトチェンジ",10.4],["ボルテッカー",3.8],["ライジングボルト",3.2],["マジカルシャイン",2.7]],
   items:[["ライチュウナイトY",86.7],["きあいのタスキ",4.0]]},
  {n:"オーロンゲ",t:["あく","フェアリー"],bs:[95,120,65,95,75,60],abil:[["いたずらごころ",99.4],["わるいてぐせ",0.4],["おみとおし",0.2]],
@@ -765,7 +765,7 @@ window.setNat=function(which,v){
   if(m.plus&&m.minus&&m.plus!=="none"&&m.plus===m.minus){ alert("同じ能力に補正はかけられません"); m[which==="plus"?"minus":"plus"]="none"; }
   render();
 };
-const IMPL_ABILITIES=["いかく","ひでり","あめふらし","すなおこし","サイコメイカー","グラスメイカー","ダウンロード","おもてなし","きょうえん","トレース","まけんき","そうだいしょう","さめはだ","すながくれ","フェアリースキン","てきおうりょく","すいすい","ようりょくそ","かるわざ","どくしゅ","かたいツメ","あまのじゃく","いしあたま","すてみ","クリアボディ","しろいけむり","シェルアーマー","メガランチャー","じきゅうりょく","がんじょう","あついしぼう","たいねつ","いたずらごころ","すりぬけ","ふゆう","フェアリーオーラ","フラワーベール","ノーガード","ひらいしん","せいでんき","おうごんのからだ","こんじょう","しんがん","きもったま","さいせいりょく","アナライズ","テクニシャン","ムラっけ","はやてのつばさ","ほのおのからだ","フラワーギフト","テレパシー","せいしんりょく","きんちょうかん","かたやぶり","マジシャン","サンパワー","もうか","げきりゅう","しんりょく","テイルアーマー","そうしょく","かがくへんかガス","てんねん","しれいとう","よびみず","かげふみ","こだいかっせい","マジックミラー","ミストメイカー","ふかしのこぶし","ぎゃくじょう","トランジスタ","ゆきふらし","ゆきがくれ","おやこあい","スカイスキン","せいぎのこころ","ぼうおん","ぼうじん","フレンドガード","やるき","もらいび","ふしぎなまもり","クォークチャージ"];
+const IMPL_ABILITIES=["いかく","ひでり","あめふらし","すなおこし","サイコメイカー","グラスメイカー","ダウンロード","おもてなし","きょうえん","トレース","まけんき","そうだいしょう","さめはだ","すながくれ","フェアリースキン","てきおうりょく","すいすい","ようりょくそ","かるわざ","どくしゅ","かたいツメ","あまのじゃく","いしあたま","すてみ","クリアボディ","しろいけむり","シェルアーマー","メガランチャー","じきゅうりょく","がんじょう","あついしぼう","たいねつ","いたずらごころ","すりぬけ","ふゆう","フェアリーオーラ","フラワーベール","ノーガード","ひらいしん","せいでんき","おうごんのからだ","こんじょう","しんがん","きもったま","さいせいりょく","アナライズ","テクニシャン","ムラっけ","はやてのつばさ","ほのおのからだ","フラワーギフト","テレパシー","せいしんりょく","きんちょうかん","かたやぶり","マジシャン","サンパワー","もうか","げきりゅう","しんりょく","テイルアーマー","そうしょく","かがくへんかガス","てんねん","しれいとう","よびみず","かげふみ","こだいかっせい","マジックミラー","ミストメイカー","ふかしのこぶし","ぎゃくじょう","トランジスタ","ゆきふらし","ゆきがくれ","おやこあい","スカイスキン","せいぎのこころ","ぼうおん","ぼうじん","フレンドガード","やるき","もらいび","ふしぎなまもり","クォークチャージ","きょうせい","エレキメーカー","ほおぶくろ","するどいめ","あとだし","はやおき","すじがねいり","はんすう","メロメロボディ","かたやぶり","わるいてぐせ","おみとおし","しめりけ","ライトメタル","プレッシャー","いしあたま","ぼうだん","しんりょく"];
 function customPanel(){
   let html=`<div class="panel"><h2>カスタムポケモンを追加（手動入力）</h2>
    名前: <input type="text" id="cname" style="width:130px">
@@ -998,6 +998,7 @@ function onEntry(mon){
   if(a==="サイコメイカー"&&B.terrain!=="psy"){ B.terrain="psy"; B.terrainTurns=5; log(`${mon.name}のサイコメイカー！足下がふしぎな感じになった！`); }
   if(a==="グラスメイカー"&&B.terrain!=="grass"){ B.terrain="grass"; B.terrainTurns=5; log(`${mon.name}のグラスメイカー！足下に草がしげった！`); }
   if(a==="ミストメイカー"&&B.terrain!=="mist"){ B.terrain="mist"; B.terrainTurns=5; log(`${mon.name}のミストメイカー！足下に霧が立ちこめた！`); }
+  if(a==="エレキメーカー"&&B.terrain!=="elec"){ B.terrain="elec"; B.terrainTurns=5; log(`${mon.name}のエレキメーカー！足下に電気が流れた！`); }
   checkSeeds();
   if(a==="いかく"){
     const fs=B.sides[foeSide(mon.side)].field; const p=fieldPos(mon);
@@ -1111,6 +1112,19 @@ function applyBoost(mon,delta,src,label){
 function consumeItem(mon){
   mon.item="なし"; mon.itemUsed=true;
   if(effAbility(mon)==="かるわざ"&&!mon.vol.unburden){ mon.vol.unburden=true; log(`　${mon.name}のかるわざ！持ち物がなくなって素早さが2倍になった！`); }
+  symbiosisGive(mon);
+}
+function symbiosisGive(receiver){
+  if(!receiver||receiver.item!=="なし")return;
+  const f=B.sides[receiver.side].field;
+  const giver=f.find(m=>alive(m)&&m!==receiver&&effAbility(m)==="きょうせい"&&m.item!=="なし"&&!ITEMS[m.item].stone);
+  if(!giver)return;
+  receiver.item=giver.item; receiver.itemUsed=false;
+  log(`　${giver.name}のきょうせい！${receiver.name}に${receiver.item}を渡した！`);
+  giver.item="なし";
+  if(effAbility(giver)==="かるわざ"&&!giver.vol.unburden){ giver.vol.unburden=true; log(`　${giver.name}のかるわざ！素早さが2倍になった！`); }
+  if(receiver.vol.unburden){ receiver.vol.unburden=false; }
+  checkSeeds();
 }
 function loseItem(mon){
   mon.item="なし";
@@ -1151,6 +1165,7 @@ function boardHtml(activeSide,activePos,viewer){
   if(B.terrain==="psy")cond.push(`サイコフィールド(残${B.terrainTurns})`);
   if(B.terrain==="grass")cond.push(`グラスフィールド(残${B.terrainTurns})`);
   if(B.terrain==="mist")cond.push(`ミストフィールド(残${B.terrainTurns})`);
+  if(B.terrain==="elec")cond.push(`エレキフィールド(残${B.terrainTurns})`);
   if([1,2].some(pp=>B.sides[pp].field.some(m=>alive(m)&&m.ability==="かがくへんかガス")))cond.push("かがくへんかガス（特性無効）");
   if(B.trickroom)cond.push(`トリックルーム(残${B.trickroom})`);
   [1,2].forEach(p=>{
@@ -1422,6 +1437,7 @@ function calcDamage(att,def,name,M,opts){
   if(B.terrain==="psy"&&mt==="エスパー"&&grounded(att))mod*=1.3;
   if(B.terrain==="grass"&&mt==="くさ"&&grounded(att))mod*=1.3;
   if(B.terrain==="mist"&&mt==="ドラゴン"&&grounded(def))mod*=0.5;
+  if(B.terrain==="elec"&&mt==="でんき"&&grounded(att))mod*=1.3;
   if(crit)mod*=1.5;
   const dfx=B.sides[def.side].fx;
   if(!crit&&effAbility(att)!=="すりぬけ"){
@@ -2013,6 +2029,7 @@ function applyStatus(mon,st,src){
   if(src&&src!==mon&&mon.types.includes("くさ")&&B.sides[mon.side].field.some(m=>alive(m)&&effAbility(m)==="フラワーベール"))return;
   if(src&&src!==mon&&src.side!==mon.side&&B.sides[mon.side].fx.safeguard){ log(`　${mon.name}はしんぴのまもりに守られている！`); return; }
   if(B.terrain==="mist"&&grounded(mon)){ log(`　${mon.name}はミストフィールドに守られて状態異常にならない！`); return; }
+  if(st==="slp"&&B.terrain==="elec"&&grounded(mon)){ log(`　${mon.name}はエレキフィールドで眠らない！`); return; }
   mon.status=st;
   if(st==="slp")mon.slpTurns=Math.random()<1/3?1:2;
   log(`　${mon.name}は${{brn:"やけどを負った",psn:"どくにおかされた",tox:"もうどくにおかされた",par:"まひして技が出にくくなった",slp:"眠ってしまった",frz:"凍りついた"}[st]}！`);
