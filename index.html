@@ -225,7 +225,7 @@ const MOVES = {
  "ほろびのうた":{cat:"X",rng:"FIELD",snd:1,fx:"perish"},
  "ヘドロウェーブ":{t:"どく",cat:"S",p:95,acc:100,rng:"ADJ",sec:{ch:10,st:"psn"}},
  "ニードルガード":{cat:"X",prio:4,rng:"SELF",fx:"spikyshield"},
- "サイドチェンジ":{cat:"X",prio:2,rng:"ALLY",fx:"allyswitch"},
+ "サイドチェンジ":{cat:"X",prio:2,rng:"SELF",fx:"allyswitch"},
  "ねっとう":{t:"みず",cat:"S",p:80,acc:100,rng:"S",sec:{ch:30,st:"brn"}},
  "あんこくきょうだ":{t:"あく",cat:"P",p:75,acc:100,rng:"S",c:1,crit:2},
  "もえあがるいかり":{t:"あく",cat:"S",p:90,acc:100,rng:"SP",sec:{ch:20,fl:1}},
@@ -238,7 +238,7 @@ const MOVES = {
  "せいなるつるぎ":{t:"かくとう",cat:"P",p:90,acc:100,rng:"S",c:1,fx:"sacredsword"},
  "いっちょうあがり":{t:"ドラゴン",cat:"P",p:80,acc:100,rng:"S",fx:"orderup"},
  "ふくろだたき":{t:"あく",cat:"P",p:15,acc:100,rng:"S",fx:"beatup"},
- "ネズミざん":{t:"ノーマル",cat:"P",p:20,acc:90,rng:"S",c:1,hits:10,mh:[1,10]},
+ "ネズミざん":{t:"ノーマル",cat:"P",p:20,acc:90,rng:"S",c:1,hits:10,mh:[1,10],fx:"popbomb"},
  "いかりのまえば":{t:"ノーマル",cat:"P",p:0,acc:90,rng:"S",c:1,fx:"superfang"},
  "ビルドアップ":{cat:"X",rng:"SELF",fx:"boost",bs:{a:1,b:1}},
  "ゴーストダイブ":{t:"ゴースト",cat:"P",p:90,acc:100,rng:"S",c:1,fx:"phantom"},
@@ -974,7 +974,8 @@ function startBattle(){
   entries.forEach(([sd,m])=>onEntry(m));
   render();
 }
-function log(s){ B.log.push(s); }
+function log(s){ if(B&&B._collect){ B._collect.push(s); return; } B.log.push(s); }
+function flushHitLogs(arr){ if(arr&&arr.length){ arr.forEach(s=>B.log.push(s)); arr.length=0; } }
 function foeSide(s){ return s===1?2:1; }
 function alive(mon){ return mon && !mon.fainted; }
 function fieldPos(mon){ const f=B.sides[mon.side].field; return f.indexOf(mon); }
@@ -1760,7 +1761,8 @@ function execMove(mon,name,M,targetInfo,movedSet,allActs){
     if(M.fx==="hurricane"){ if(B.weather==="rain")acc=0; else if(B.weather==="sun")acc=50; }
     if(M.fx==="blizzard"&&B.weather==="snow")acc=0;
     if(effAbility(mon)==="ノーガード"||effAbility(def)==="ノーガード")acc=0;
-    if(acc){
+    if(acc&&M.mh&&M.fx==="popbomb"){ /* 連続命中判定は各ヒットで行う */ }
+    else if(acc){
       let hitChance=acc/100;
       if(mon.item==="こうかくレンズ")hitChance*=1.1;
       if(effAbility(def)==="すながくれ"&&B.weather==="sand")hitChance*=0.8;
@@ -1783,18 +1785,33 @@ function execMove(mon,name,M,targetInfo,movedSet,allActs){
       anyHit=true; totalDealt+=dd; continue;
     }
     let hits=M.hits||1;
+    let perHitAcc=false;
+    void perHitAcc;
     if(M.mh){
-      if(mon.item==="いかさまダイス"){ hits=M.mh[1]; }
-      else {
-        const lo=M.mh[0], hi=M.mh[1];
-        if(hi-lo>=4){ const r=Math.random(); hits = r<0.35?lo+1 : r<0.7?lo+2 : r<0.85?hi-1 : hi; }
-        else hits = lo+Math.floor(Math.random()*(hi-lo+1));
+      const lo=M.mh[0], hi=M.mh[1];
+      const dice=(mon.item==="いかさまダイス");
+      if(M.fx==="popbomb"){
+        // ネズミざん系: 1回ごとに命中判定（ダイス時は最低4回保証）
+        perHitAcc=true;
+        const pAcc=(M.acc?M.acc/100:1)*(mon.item==="こうかくレンズ"?1.1:1);
+        let n=0;
+        if(dice){
+          if(Math.random()<pAcc){ n=4; while(n<hi&&Math.random()<pAcc)n++; }
+        } else {
+          while(n<hi&&Math.random()<pAcc)n++;
+        }
+        hits=n;
+      } else if(dice){
+        hits=(Math.random()<0.5)?4:5;
+      } else {
+        const r=Math.random();
+        hits = r<0.30?2 : r<0.60?3 : r<0.80?4 : 5;
       }
     }
     if(M.fx==="beatup")hits=Math.max(1,B.sides[p].team.filter(m=>!m.fainted&&!m.status).length);
     const pbond=effAbility(mon)==="おやこあい"&&M.cat!=="X"&&!M.hits&&M.rng==="S";
     if(pbond)hits=2;
-    let dealt=0; let lastRes=null;
+    let dealt=0; let lastRes=null; const hitLogs=[];
     for(let h=0;h<hits;h++){
       if(!alive(def))break;
       const res=calcDamage(mon,def,name,M,{spread:isSpread});
@@ -1802,7 +1819,8 @@ function execMove(mon,name,M,targetInfo,movedSet,allActs){
       if(protPierce)res.dmg=Math.max(1,Math.floor(res.dmg/4));
       lastRes=res;
       if(res.eff===0){ log(`　${def.name}には${res.imm||"効果がないようだ"}…`); break; }
-      dealt+=damage(def,res.dmg,null,{noFaint:true});
+      if(h===0&&hits===0)break;
+      dealt+=damage(def,res.dmg,null,{noFaint:true,hold:hitLogs});
       anyHit=true;
       def.rageHits=(def.rageHits||0)+1;
       if(def.item==="だっしゅつボタン"&&!def.itemUsed&&alive(def)&&benchMons(def.side).length&&!def.vol.commanded&&!def.vol.commander){
@@ -1814,9 +1832,12 @@ function execMove(mon,name,M,targetInfo,movedSet,allActs){
       if(effAbility(def)==="せいぎのこころ"&&res.mt==="あく")applyBoost(def,{a:1},def,`${def.name}のせいぎのこころ`);
       if(def.hp<=0)break;
     }
+    if(M.mh&&M.fx==="popbomb"&&hits===0){ log(`　${def.name}には当たらなかった！`); continue; }
+    if(hitLogs.length&&!(dealt>0&&lastRes))flushHitLogs(hitLogs);
     if(dealt>0&&lastRes){
       let note=lastRes.eff>1?"効果はバツグン！":(lastRes.eff<1?"効果はいまひとつ…":"");
-      log(`　→ ${def.name}に${dealt}ダメージ${lastRes.crit?"（急所！）":""}${note?`（${note}）`:""}`);
+      log(`　→ ${def.name}に${dealt}ダメージ${(M.mh||M.hits)?`（${Math.min(hits,(M.hits||1))}回ヒット）`:""}${lastRes.crit?"（急所！）":""}${note?`（${note}）`:""}`);
+      flushHitLogs(hitLogs);
       totalDealt+=dealt;
       if(def.hp<=0&&!def.fainted)faint(def);
       if(lastRes.eff>1&&alive(def)&&def.item==="じゃくてんほけん"&&!def.itemUsed){
@@ -2000,15 +2021,17 @@ function execStatus(mon,name,M,targetInfo){
       break;
     case "allyswitch":{
       const f=B.sides[p].field;
-      const myPos=fieldPos(mon), tPos=fieldPos(t);
-      if(myPos<0||tPos<0){ log(`　しかし失敗した！`); break; }
+      const myPos=fieldPos(mon);
+      if(myPos===1){ log(`　しかし失敗した！（中央では使えない）`); break; }
+      const other=(myPos===0)?2:0;
       const n=mon.vol.switchCount||0;
       if(Math.random()<Math.pow(1/3,n)){
-        f[myPos]=t; f[tPos]=mon;
+        const om=f[other];
+        f[other]=mon; f[myPos]=om||null;
         mon.vol.switchCount=n+1; mon.vol.switchSuccess=true;
         mon.vol.firstTurn=true; mon.vol.justEntered=true;
-        t.vol.firstTurn=true; t.vol.justEntered=true;
-        log(`　${mon.name}と${t.name}は位置を入れ替えた！`);
+        if(om){ om.vol.firstTurn=true; om.vol.justEntered=true; }
+        log(`　${mon.name}は${om?om.name+"と":""}位置を入れ替えた！（${POSNAME[myPos]}→${POSNAME[other]}）`);
       } else { mon.vol.switchCount=0; log(`　しかし失敗した！`); }
       break; }
     case "craftyshield": fx.crafty=true; log(`　${mon.name}たちはトリックガードで変化技から守られた！`); break;
@@ -2072,6 +2095,8 @@ function applyStatus(mon,st,src){
 }
 function damage(mon,amt,label,ctx){
   if(!alive(mon))return 0;
+  const outer=B._collect;
+  const col=[]; B._collect=col;
   amt=Math.min(mon.hp,Math.max(1,Math.floor(amt)));
   if(amt>=mon.hp){
     if(effAbility(mon)==="がんじょう"&&mon.hp===mon.maxhp){ amt=mon.hp-1; log(`　${mon.name}はがんじょうで持ちこたえた！`); }
@@ -2079,13 +2104,16 @@ function damage(mon,amt,label,ctx){
   }
   const wasAbove=mon.hp>mon.maxhp/2;
   mon.hp-=amt;
-  if(label)log(`　${label}！（${amt}ダメージ）`);
+  if(label)B.log.push(`　${label}！（${amt}ダメージ）`);
   if(wasAbove&&mon.hp>0&&mon.hp<=mon.maxhp/2&&effAbility(mon)==="ぎゃくじょう"){ applyBoost(mon,{c:1},mon,`${mon.name}のぎゃくじょう`); }
   if(mon.hp<=0){ if(!(ctx&&ctx.noFaint))faint(mon); }
   else if(mon.hp<=mon.maxhp/2&&mon.item==="オボンのみ"&&!mon.itemUsed){
     const blocked=B.sides[foeSide(mon.side)].field.some(m=>alive(m)&&effAbility(m)==="きんちょうかん");
     if(!blocked){ const h=Math.floor(mon.maxhp/4); mon.hp=Math.min(mon.maxhp,mon.hp+h); consumeItem(mon); log(`　${mon.name}はオボンのみでHPを回復した！`); }
   }
+  B._collect=outer;
+  if(label||!(ctx&&ctx.hold)){ col.forEach(s=>{ if(outer)outer.push(s); else B.log.push(s); }); }
+  else if(ctx&&ctx.hold){ ctx.hold.push(...col); }
   return amt;
 }
 function faint(mon){
