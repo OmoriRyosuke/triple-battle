@@ -155,7 +155,7 @@ const MOVES = {
  "きあいだま":{t:"かくとう",cat:"S",p:120,acc:70,rng:"S",sec:{ch:10,stat:{d:-1}}},
  "でんじほう":{t:"でんき",cat:"S",p:120,acc:50,rng:"S",sec:{ch:100,st:"par"}},
  "ボルトチェンジ":{t:"でんき",cat:"S",p:70,acc:100,rng:"S",fx:"uturn"},
- "ライジングボルト":{t:"でんき",cat:"S",p:70,acc:100,rng:"S",fx:"risingvolt"},
+ "ライジングボルト":{t:"でんき",cat:"S",p:70,acc:100,rng:"S"},
  "マジカルシャイン":{t:"フェアリー",cat:"S",p:80,acc:100,rng:"SP"},
  "はめつのひかり":{t:"フェアリー",cat:"S",p:140,acc:90,rng:"S",recoil:2},
  "ドレインキッス":{t:"フェアリー",cat:"S",p:50,acc:100,rng:"S",c:1,drain:.75},
@@ -173,7 +173,7 @@ const MOVES = {
  "このゆびとまれ":{cat:"X",prio:2,rng:"SELF",fx:"followme"},
  "いかりのこな":{cat:"X",prio:2,rng:"SELF",pow:1,fx:"followme"},
  "トリックルーム":{cat:"X",prio:-7,rng:"FIELD",fx:"trickroom"},
- "おいかぜ":{t:"ひこう",cat:"X",rng:"SIDE",fx:"tailwind"},
+ "おいかぜ":{cat:"X",rng:"SIDE",fx:"tailwind"},
  "リフレクター":{cat:"X",rng:"SIDE",fx:"reflect"},
  "ひかりのかべ":{cat:"X",rng:"SIDE",fx:"lightscreen"},
  "サイコフィールド":{cat:"X",rng:"FIELD",fx:"psyterrain"},
@@ -187,7 +187,7 @@ const MOVES = {
  "ねむりごな":{cat:"X",acc:75,rng:"S",pow:1,fx:"sleep"},
  "キノコのほうし":{cat:"X",acc:100,rng:"S",pow:1,fx:"sleep"},
  "いのちのしずく":{cat:"X",rng:"SIDE",fx:"lifedew"},
- "はねやすめ":{t:"ひこう",cat:"X",rng:"SELF",fx:"heal50"},
+ "はねやすめ":{cat:"X",rng:"SELF",fx:"heal50"},
  "じこさいせい":{cat:"X",rng:"SELF",fx:"heal50"},
  "つきのひかり":{cat:"X",rng:"SELF",fx:"heal50"},
  "やどりぎのタネ":{cat:"X",acc:90,rng:"S",fx:"leechseed"},
@@ -214,51 +214,10 @@ const MOVES = {
  "おにび":{cat:"X",acc:85,rng:"S",fx:"willowisp"},
  "ソーラーブレード":{t:"くさ",cat:"P",p:125,acc:100,rng:"S",c:1,fx:"solar"},
  "かふんだんご":{t:"むし",cat:"S",p:90,acc:100,rng:"S",fx:"pollenpuff"},
- "グラススライダー":{t:"くさ",cat:"P",p:55,acc:100,rng:"S",c:1,fx:"grassyglide"},
+ "グラススライダー":{t:"くさ",cat:"P",p:70,acc:100,rng:"S",c:1,fx:"grassyglide"},
  "ウッドハンマー":{t:"くさ",cat:"P",p:120,acc:100,rng:"S",c:1,recoil:3},
  "アクロバット":{t:"ひこう",cat:"P",p:55,acc:100,rng:"S",c:1,fx:"acrobatics"},
  "ドラムアタック":{t:"くさ",cat:"P",p:80,acc:100,rng:"S",c:1,sec:{ch:100,stat:{s:-1}}},
- "こごえるかぜ":{t:"こおり",cat:"S",p:55,acc:95,rng:"SP",sec:{ch:100,stat:{s:-1}}},
- "ハイドロポンプ":{t:"みず",cat:"S",p:110,acc:80,rng:"S"},
- "じんらい":{t:"でんき",cat:"S",p:70,acc:100,prio:1,rng:"S",fx:"sucker"},
- "ツタこんぼう":{t:"くさ",cat:"P",p:100,acc:100,rng:"S",c:1,crit:1},
- "ほろびのうた":{cat:"X",rng:"FIELD",snd:1,fx:"perish"},
- "ヘドロウェーブ":{t:"どく",cat:"S",p:95,acc:100,rng:"ADJ",sec:{ch:10,st:"psn"}},
- "ニードルガード":{cat:"X",prio:4,rng:"SELF",fx:"spikyshield"},
- "サイドチェンジ":{cat:"X",prio:2,rng:"SELF",fx:"allyswitch"},
- "ねっとう":{t:"みず",cat:"S",p:80,acc:100,rng:"S",sec:{ch:30,st:"brn"}},
- "あんこくきょうだ":{t:"あく",cat:"P",p:75,acc:100,rng:"S",c:1,crit:2},
- "もえあがるいかり":{t:"あく",cat:"S",p:90,acc:100,rng:"SP",sec:{ch:20,fl:1}},
- "エレキネット":{t:"でんき",cat:"S",p:55,acc:95,rng:"SP",sec:{ch:100,stat:{s:-1}}},
- "ふぶき":{t:"こおり",cat:"S",p:110,acc:70,rng:"SP",sec:{ch:10,st:"frz"},fx:"blizzard"},
- "フリーズドライ":{t:"こおり",cat:"S",p:70,acc:100,rng:"S",sec:{ch:10,st:"frz"},fx:"freezedry"},
- "オーロラベール":{cat:"X",rng:"SIDE",fx:"auroraveil"},
- "とっておき":{t:"ノーマル",cat:"P",p:140,acc:100,rng:"S",c:1,fx:"lastresort"},
- "ドレインパンチ":{t:"かくとう",cat:"P",p:75,acc:100,rng:"S",c:1,drain:.5},
- "せいなるつるぎ":{t:"かくとう",cat:"P",p:90,acc:100,rng:"S",c:1,fx:"sacredsword"},
- "いっちょうあがり":{t:"ドラゴン",cat:"P",p:80,acc:100,rng:"S",fx:"orderup"},
- "ふくろだたき":{t:"あく",cat:"P",p:15,acc:100,rng:"S",fx:"beatup"},
- "わるあがき":{t:"ノーマル",cat:"P",p:50,acc:0,rng:"S",fx:"struggle"},
- "おさきにどうぞ":{cat:"X",prio:0,rng:"ALLY",fx:"afteryou"},
- "ねっさのあらし":{t:"じめん",cat:"S",p:100,acc:80,rng:"SP",sec:{ch:20,st:"brn"},fx:"stormacc"},
- "こがらしあらし":{t:"ひこう",cat:"S",p:100,acc:80,rng:"SP",sec:{ch:30,stat:{s:-1}},fx:"stormacc"},
- "えらがみ":{t:"みず",cat:"P",p:85,acc:100,rng:"S",c:1,fx:"fishious"},
- "つららおとし":{t:"こおり",cat:"P",p:85,acc:90,rng:"S",sec:{ch:30,fl:1}},
- "げきりん":{t:"ドラゴン",cat:"P",p:120,acc:100,rng:"S",c:1},
- "ネズミざん":{t:"ノーマル",cat:"P",p:20,acc:90,rng:"S",c:1,hits:10,mh:[1,10],fx:"popbomb"},
- "いかりのまえば":{t:"ノーマル",cat:"P",p:0,acc:90,rng:"S",c:1,fx:"superfang"},
- "ビルドアップ":{cat:"X",rng:"SELF",fx:"boost",bs:{a:1,b:1}},
- "ゴーストダイブ":{t:"ゴースト",cat:"P",p:90,acc:100,rng:"S",c:1,fx:"phantom"},
- "スケイルノイズ":{t:"ドラゴン",cat:"S",p:110,acc:100,rng:"SP",snd:1,self:{b:-1}},
- "ソウルビート":{cat:"X",rng:"SELF",snd:1,fx:"soulbeat"},
- "かえんほうしゃ":{t:"ほのお",cat:"S",p:90,acc:100,rng:"S",sec:{ch:10,st:"brn"}},
- "ふんどのこぶし":{t:"ゴースト",cat:"P",p:50,acc:100,rng:"S",c:1,fx:"ragefist"},
- "マグマストーム":{t:"ほのお",cat:"S",p:100,acc:75,rng:"S",fx:"bind"},
- "かみなりパンチ":{t:"でんき",cat:"P",p:75,acc:100,rng:"S",c:1,sec:{ch:10,st:"par"}},
- "スケイルショット":{t:"ドラゴン",cat:"P",p:25,acc:90,rng:"S",hits:5,mh:[2,5],self:{b:-1,s:1}},
- "シャドークロー":{t:"ゴースト",cat:"P",p:70,acc:100,rng:"S",c:1,crit:1},
- "シザークロス":{t:"むし",cat:"P",p:80,acc:100,rng:"S",c:1},
- "かなしばり":{cat:"X",acc:100,rng:"S",fx:"disable"},
 };
 /* =============== 持ち物 =============== */
 const ITEMS = {
@@ -284,30 +243,8 @@ const ITEMS = {
  "するどいくちばし":{d:"ひこう技1.2倍"},
  "まがったスプーン":{d:"エスパー技1.2倍"},
  "ひかりのこな":{d:"相手の命中率0.9倍"},
- "じゃくてんほけん":{d:"効果抜群の技を受けると攻撃・特攻+2(1回)"},
- "こだわりハチマキ":{d:"攻撃1.5倍、同じ技しか出せない"},
- "こだわりメガネ":{d:"特攻1.5倍、同じ技しか出せない"},
- "とくせいガード":{d:"かがくへんかガス等で特性が無効化されない"},
- "クリアチャーム":{d:"相手から能力ランクを下げられない"},
- "ふうせん":{d:"浮いた状態になりじめん技を受けない。攻撃技を受けると割れる"},
- "いかさまダイス":{d:"連続technique（ネズミざん等）のヒット数が必ず最大になる"},
- "きれいなぬけがら":{d:"かげふみ等の交代封じを受けない"},
- "だっしゅつボタン":{d:"攻撃技を受けると控えと交代する(1回)"},
- "パワフルハーブ":{d:"ためる必要のある技を1ターンで出せる(1回)"},
- "ぼうじんゴーグル":{d:"粉技を受けず、砂あらしのダメージも受けない"},
- "とけないこおり":{d:"こおり技1.2倍"},
- "シルクのスカーフ":{d:"ノーマル技1.2倍"},
- "エレキシード":{d:"エレキフィールドで防御+1(1回)"},
- "グラスシード":{d:"グラスフィールドで防御+1(1回)"},
- "ミストシード":{d:"ミストフィールドで特防+1(1回)"},
- "サイコシード":{d:"サイコフィールドで特防+1(1回)"},
- "イバンのみ":{d:"HP1/4以下で同じ優先度なら先に行動(1回)"},
- "おんみつマント":{d:"技の追加効果（状態異常・ひるみ・能力ダウン）を受けない"},
- "おうじゃのしるし":{d:"攻撃技に10%のひるみ効果"},
- "りゅうのキバ":{d:"ドラゴン技1.2倍"},
- "ハバンのみ":{d:"効果抜群のドラゴン技半減(1回)",berry:"ドラゴン"},
 };
-const MEGASTONES = {"リザードナイトY":1,"プテラナイト":1,"ムクホークナイト":1,"カメックスナイト":1,"フシギバナイト":1,"マフォクシナイト":1,"フラエッテナイト":1,"ライチュウナイトY":1,"ラグラージナイト":1,"メタグロスナイト":1,"バンギラスナイト":1,"ニャオニクスナイト":1,"ヤミラミナイト":1,"ゲンガナイト":1,"ガルーラナイト":1,"ボーマンダナイト":1,"ライチュウナイトX":1};
+const MEGASTONES = {"リザードナイトY":1,"プテラナイト":1,"ムクホークナイト":1,"カメックスナイト":1,"フシギバナイト":1,"マフォクシナイト":1,"フラエッテナイト":1,"ライチュウナイトY":1,"ラグラージナイト":1,"メタグロスナイト":1,"バンギラスナイト":1,"ニャオニクスナイト":1};
 Object.keys(MEGASTONES).forEach(k=>ITEMS[k]={d:"メガシンカに必要",stone:1});
 /* =============== ポケモンデータ =============== */
 const DEX = [
@@ -377,7 +314,6 @@ const DEX = [
   items:[["フラエッテナイト",99.7]]},
  {n:"ライチュウ",t:["でんき"],bs:[60,90,55,90,80,110],abil:[["ひらいしん",97.9],["せいでんき",2.1]],
   mega:{n:"メガライチュウY",t:["でんき"],bs:[60,100,55,160,80,130],abil:"ノーガード",stone:"ライチュウナイトY"},
-  mega2:{n:"メガライチュウX",t:["でんき"],bs:[60,135,95,90,95,110],abil:"エレキメーカー",stone:"ライチュウナイトX"},
   mv:[["きあいだま",86.7],["でんじほう",86.5],["まもる",82.2],["ねこだまし",73.3],["くさむすび",19.2],["アンコール",11.3],["ボルトチェンジ",10.4],["ボルテッカー",3.8],["ライジングボルト",3.2],["マジカルシャイン",2.7]],
   items:[["ライチュウナイトY",86.7],["きあいのタスキ",4.0]]},
  {n:"オーロンゲ",t:["あく","フェアリー"],bs:[95,120,65,95,75,60],abil:[["いたずらごころ",99.4],["わるいてぐせ",0.4],["おみとおし",0.2]],
@@ -435,177 +371,37 @@ const DEX = [
  {n:"ゴリランダー",t:["くさ"],bs:[100,125,90,60,70,85],abil:[["グラスメイカー",null],["しんりょく",null]],est:1,
   mv:[["グラススライダー",null],["ウッドハンマー",null],["はたきおとす",null],["ねこだまし",null],["まもる",null],["とんぼがえり",null],["10まんばりき",null],["ドラムアタック",null]],
   items:[["とつげきチョッキ",null],["オボンのみ",null],["いのちのたま",null]]},
- {n:"ヤミラミ",t:["あく","ゴースト"],bs:[50,75,75,65,65,50],abil:[["いたずらごころ",99.7],["するどいめ",0.2],["あとだし",0.1]],
-  mega:{n:"メガヤミラミ",t:["あく","ゴースト"],bs:[50,85,125,85,115,20],abil:"マジックミラー",stone:"ヤミラミナイト"},
-  mv:[["アンコール",54.8],["あまごい",53.2],["ひかりのかべ",51.4],["おにび",39.7],["リフレクター",38.9],["ねこだまし",28.5],["イカサマ",23.9],["にほんばれ",9.4],["トリック",null],["ちょうはつ",null],["まもる",null]],
-  items:[["ひかりのねんど",33.4],["ロゼルのみ",30.7],["オボンのみ",9.4],["きあいのタスキ",6.0],["ヤミラミナイト",4.8],["こうかくレンズ",4.3],["たべのこし",3.5],["メンタルハーブ",1.7],["ひかりのこな",1.6]]},
- {n:"ゲンガー",t:["ゴースト","どく"],bs:[60,65,60,130,75,110],abil:[["のろわれボディ",100.0]],
-  mega:{n:"メガゲンガー",t:["ゴースト","どく"],bs:[60,65,80,170,95,130],abil:"かげふみ",stone:"ゲンガナイト"},
-  mv:[["シャドーボール",92.0],["まもる",87.3],["ほろびのうた",69.9],["ヘドロばくだん",47.6],["こごえるかぜ",8.2],["ヘドロウェーブ",6.7],["ちょうはつ",4.5],["10まんボルト",3.6],["きあいだま",null],["おにび",null]],
-  items:[["ゲンガナイト",84.7],["きあいのタスキ",10.8]]},
- {n:"ガラルマタドガス",t:["どく","フェアリー"],bs:[65,90,120,85,70,60],abil:[["かがくへんかガス",null],["ふゆう",null]],est:1,
-  mv:[["おにび",null],["ヘドロばくだん",null],["クリアスモッグ",null],["まもる",null],["ちょうはつ",null],["ヘドロウェーブ",null]],
-  items:[["オボンのみ",null],["たべのこし",null],["ゴツゴツメット",null]]},
- {n:"タケルライコ",t:["でんき","ドラゴン"],bs:[125,73,91,137,89,75],abil:[["こだいかっせい",null]],est:1,
-  mv:[["じんらい",null],["10まんボルト",null],["りゅうのはどう",null],["りゅうせいぐん",null],["ボルトチェンジ",null],["めいそう",null],["まもる",null]],
-  items:[["オボンのみ",null],["たべのこし",null],["じゃくてんほけん",null]]},
- {n:"オーガポン",t:["くさ"],bs:[80,120,84,60,96,110],abil:[["まけんき",null]],est:1,
-  mv:[["ツタこんぼう",null],["はたきおとす",null],["とんぼがえり",null],["つるぎのまい",null],["まもる",null],["ウッドハンマー",null]],
-  items:[["きあいのタスキ",null],["いのちのたま",null],["オボンのみ",null]]},
- {n:"ゴチルゼル",t:["エスパー"],bs:[70,55,95,95,110,65],abil:[["かげふみ",null]],est:1,
-  mv:[["サイコキネシス",null],["トリックルーム",null],["てだすけ",null],["まもる",null],["ちょうはつ",null],["こごえるかぜ",null],["ひかりのかべ",null],["リフレクター",null],["シャドーボール",null]],
-  items:[["オボンのみ",null],["たべのこし",null],["メンタルハーブ",null]]},
- {n:"ヘイラッシャ",t:["みず"],bs:[150,100,115,65,65,35],abil:[["てんねん",null]],est:1,
-  mv:[["ウェーブタックル",null],["いっちょうあがり",null],["ボディプレス",null],["じしん",null],["あくび",null],["まもる",null],["こわいかお",null]],
-  items:[["たべのこし",null],["オボンのみ",null],["ゴツゴツメット",null]]},
- {n:"ジャラランガ",t:["ドラゴン","かくとう"],bs:[75,110,125,100,105,85],abil:[["ぼうおん",85.5],["ぼうじん",10.9],["ぼうだん",3.6]],
-  mv:[["スケイルノイズ",93.4],["まもる",86.9],["はどうだん",84.1],["ソウルビート",43.7],["かえんほうしゃ",19.9],["しんくうは",15.9],["りゅうせいぐん",14.9],["ラスターカノン",9.0],["ドレインパンチ",4.7],["ボディプレス",3.1]],
-  items:[["いのちのたま",45.8],["たべのこし",25.7],["オボンのみ",8.7],["りゅうのキバ",7.5],["ロゼルのみ",1.7],["ハバンのみ",1.7]]},
- {n:"イッカネズミ",t:["ノーマル"],bs:[74,75,70,65,75,111],abil:[["フレンドガード",55.4],["テクニシャン",44.0],["ほおぶくろ",0.6]],
-  mv:[["このゆびとまれ",88.2],["まもる",80.4],["ネズミざん",56.2],["フェイント",38.9],["いかりのまえば",34.6],["ちょうはつ",22.6],["アンコール",17.8],["てだすけ",11.8],["ふくろだたき",10.7],["あまごい",5.5]],
-  items:[["こうかくレンズ",44.5],["ヨプのみ",25.1],["きあいのタスキ",17.8],["オボンのみ",4.7],["おうじゃのしるし",2.9]]},
- {n:"コノヨザル",t:["かくとう","ゴースト"],bs:[110,115,80,50,90,90],abil:[["まけんき",97.0],["せいしんりょく",2.3],["やるき",0.7]],
-  mv:[["まもる",72.6],["ふんどのこぶし",63.3],["ドレインパンチ",54.0],["インファイト",43.3],["ビルドアップ",34.8],["ゴーストダイブ",31.5],["がんせきふうじ",21.9],["れいとうパンチ",17.2],["いわなだれ",11.2],["ちょうはつ",9.0]],
-  items:[["たべのこし",26.8],["きあいのタスキ",26.2],["オボンのみ",15.2],["こだわりスカーフ",13.0],["いのちのたま",4.8],["たつじんのおび",2.0],["ラムのみ",1.7],["ロゼルのみ",1.5]]},
- {n:"ヒードラン",t:["ほのお","はがね"],bs:[91,90,106,130,106,77],abil:[["もらいび",null]],est:1,
-  mv:[["マグマストーム",null],["ねっぷう",null],["だいちのちから",null],["まもる",null],["ふんか",null],["ラスターカノン",null]],
-  items:[["たべのこし",null],["オボンのみ",null],["きあいのタスキ",null]]},
- {n:"テツノカイナ",t:["かくとう","でんき"],bs:[154,140,108,50,68,50],abil:[["クォークチャージ",null]],est:1,
-  mv:[["ドレインパンチ",null],["インファイト",null],["ねこだまし",null],["かみなりパンチ",null],["ワイドガード",null],["まもる",null]],
-  items:[["とつげきチョッキ",null],["たべのこし",null],["オボンのみ",null]]},
- {n:"ヌケニン",t:["むし","ゴースト"],bs:[1,90,45,30,30,40],abil:[["ふしぎなまもり",null]],est:1,hp1:1,
-  mv:[["シャドークロー",null],["シザークロス",null],["つるぎのまい",null],["まもる",null]],
-  items:[["おんみつマント",null],["ひかりのこな",null],["たべのこし",null]]},
- {n:"キュウコン(アローラ)",t:["こおり","フェアリー"],bs:[73,67,75,81,100,109],abil:[["ゆきふらし",99.2],["ゆきがくれ",0.8]],
-  mv:[["ふぶき",94.7],["フリーズドライ",77.1],["まもる",67.7],["オーロラベール",52.0],["アンコール",32.1],["ムーンフォース",29.4],["マジカルシャイン",8.0],["こごえるかぜ",6.3],["ほえる",6.2],["あまごい",5.9]],
-  items:[["とけないこおり",38.5],["きあいのタスキ",23.3],["ひかりのねんど",19.2],["こだわりスカーフ",8.8],["いのちのたま",3.2],["オボンのみ",1.6]]},
- {n:"ガルーラ",t:["ノーマル"],bs:[105,95,80,40,80,90],abil:[["きもったま",96.7],["せいしんりょく",3.1],["はやおき",0.1]],
-  mega:{n:"メガガルーラ",t:["ノーマル"],bs:[105,125,100,60,100,100],abil:"おやこあい",stone:"ガルーラナイト"},
-  mv:[["ねこだまし",98.7],["とっておき",48.3],["すてみタックル",46.0],["ふいうち",23.9],["れいとうパンチ",23.8],["かわらわり",13.4],["けたぐり",13.1],["ドレインパンチ",12.1],["アームハンマー",9.7],["まもる",5.2]],
-  items:[["ガルーラナイト",45.2],["シルクのスカーフ",42.1],["いのちのたま",6.5]]},
- {n:"テラキオン",t:["いわ","かくとう"],bs:[91,129,90,72,90,108],abil:[["せいぎのこころ",null]],est:1,
-  mv:[["せいなるつるぎ",null],["いわなだれ",null],["ワイドガード",null],["まもる",null],["でんこうせっか",null],["つるぎのまい",null],["インファイト",null]],
-  items:[["きあいのタスキ",null],["いのちのたま",null],["じゃくてんほけん",null]]},
- {n:"トルネロス",t:["ひこう"],bs:[79,115,70,125,80,111],abil:[["いたずらごころ",null]],est:1,
-  mv:[["おいかぜ",null],["ぼうふう",null],["あまごい",null],["ちょうはつ",null],["まもる",null],["とんぼがえり",null]],
-  items:[["きあいのタスキ",null],["メンタルハーブ",null],["オボンのみ",null]]},
- {n:"ボーマンダ",t:["ドラゴン","ひこう"],bs:[95,135,80,110,80,100],abil:[["いかく",null]],est:1,
-  mega:{n:"メガボーマンダ",t:["ドラゴン","ひこう"],bs:[95,145,130,120,90,120],abil:"スカイスキン",stone:"ボーマンダナイト"},
-  mv:[["すてみタックル",null],["ドラゴンクロー",null],["じしん",null],["まもる",null],["りゅうのまい",null],["はねやすめ",null]],
-  items:[["ボーマンダナイト",null],["いのちのたま",null]]},
- {n:"カプ・レヒレ",t:["みず","フェアリー"],bs:[70,75,115,95,130,85],abil:[["ミストメイカー",null],["テレパシー",null]],est:1,
-  mv:[["ムーンフォース",null],["ねっとう",null],["だくりゅう",null],["まもる",null],["めいそう",null],["てだすけ",null],["マジカルシャイン",null]],
-  items:[["たべのこし",null],["オボンのみ",null],["こだわりメガネ",null]]},
- {n:"ウーラオス(いちげき)",t:["かくとう","あく"],bs:[100,130,100,63,60,97],abil:[["ふかしのこぶし",null]],est:1,
-  mv:[["あんこくきょうだ",null],["インファイト",null],["ふいうち",null],["とんぼがえり",null],["いわなだれ",null],["まもる",null]],
-  items:[["きあいのタスキ",null],["こだわりハチマキ",null],["いのちのたま",null]]},
- {n:"ガラルファイヤー",t:["あく","ひこう"],bs:[90,85,90,100,125,90],abil:[["ぎゃくじょう",null]],est:1,
-  mv:[["もえあがるいかり",null],["ぼうふう",null],["あくのはどう",null],["おいかぜ",null],["まもる",null],["はねやすめ",null]],
-  items:[["じゃくてんほけん",null],["たべのこし",null],["オボンのみ",null]]},
- {n:"ランドロス(れいじゅう)",t:["じめん","ひこう"],bs:[89,145,90,105,80,91],abil:[["いかく",null]],est:1,
-  mv:[["じしん",null],["いわなだれ",null],["とんぼがえり",null],["ばかぢから",null],["まもる",null],["10まんばりき",null]],
-  items:[["こだわりスカーフ",null],["きあいのタスキ",null],["いのちのたま",null],["とつげきチョッキ",null]]},
- {n:"レジエレキ",t:["でんき"],bs:[80,100,50,100,50,200],abil:[["トランジスタ",null]],est:1,
-  mv:[["エレキネット",null],["10まんボルト",null],["ボルトチェンジ",null],["ライジングボルト",null],["まもる",null]],
-  items:[["きあいのタスキ",null],["いのちのたま",null],["じゃくてんほけん",null]]},
- {n:"シャリタツ",t:["ドラゴン","みず"],bs:[68,50,60,103,52,82],abil:[["しれいとう",null],["よびみず",null]],est:1,
-  mv:[["りゅうのはどう",null],["ハイドロポンプ",null],["みずのはどう",null],["わるだくみ",null],["まもる",null],["こごえるかぜ",null]],
-  items:[["きあいのタスキ",null],["オボンのみ",null],["いのちのたま",null]]},
- {n:"ランドロス(けしん)",t:["じめん","ひこう"],bs:[89,125,90,115,80,101],abil:[["すなのちから",null],["ちからずく",null]],est:1,
-  mv:[["ねっさのあらし",null],["だいちのちから",null],["きあいだま",null],["まもる",null],["とんぼがえり",null],["こごえるかぜ",null]],
-  items:[["いのちのたま",null],["こだわりメガネ",null],["きあいのタスキ",null]]},
- {n:"パオジアン",t:["あく","こおり"],bs:[80,120,80,90,65,135],abil:[["わざわいのつるぎ",null]],est:1,
-  mv:[["つららおとし",null],["ふいうち",null],["せいなるつるぎ",null],["まもる",null],["こごえるかぜ",null],["つじぎり",null]],
-  items:[["きあいのタスキ",null],["いのちのたま",null],["こだわりハチマキ",null]]},
- {n:"イーユイ",t:["あく","ほのお"],bs:[55,80,80,135,120,100],abil:[["わざわいのたま",null]],est:1,
-  mv:[["ねっぷう",null],["あくのはどう",null],["かえんほうしゃ",null],["おにび",null],["まもる",null],["ちょうはつ",null]],
-  items:[["いのちのたま",null],["こだわりメガネ",null],["きあいのタスキ",null]]},
- {n:"ヒスイドレディア",t:["くさ","かくとう"],bs:[70,105,95,70,105,90],abil:[["リーフガード",null],["しゅうかく",null]],est:1,
-  mv:[["おさきにどうぞ",null],["インファイト",null],["ソーラーブレード",null],["まもる",null],["ちょうはつ",null],["ねむりごな",null]],
-  items:[["きあいのタスキ",null],["いのちのたま",null],["オボンのみ",null]]},
- {n:"サンダー",t:["でんき","ひこう"],bs:[90,90,85,125,90,100],abil:[["プレッシャー",null],["せいでんき",null]],est:1,
-  mv:[["ぼうふう",null],["10まんボルト",null],["こがらしあらし",null],["おいかぜ",null],["まもる",null],["はねやすめ",null]],
-  items:[["オボンのみ",null],["いのちのたま",null],["たべのこし",null]]},
- {n:"ドリュウズ",t:["じめん","はがね"],bs:[110,135,60,50,65,88],abil:[["すなかき",null],["かたやぶり",null],["すなのちから",null]],est:1,
-  mv:[["じしん",null],["アイアンヘッド",null],["いわなだれ",null],["まもる",null],["つるぎのまい",null],["10まんばりき",null]],
-  items:[["いのちのたま",null],["きあいのタスキ",null],["こだわりハチマキ",null]]},
- {n:"ウオノラゴン",t:["みず","ドラゴン"],bs:[90,90,100,70,80,75],abil:[["がんじょうあご",null],["すいすい",null]],est:1,
-  mv:[["えらがみ",null],["げきりん",null],["じしん",null],["まもる",null],["こおりのキバ",null],["とんぼがえり",null]],
-  items:[["こだわりスカーフ",null],["いのちのたま",null],["とつげきチョッキ",null]]},
 ];
-const GENERAL_ITEMS = Object.keys(ITEMS);
+const GENERAL_ITEMS = Object.keys(ITEMS).filter(k=>!ITEMS[k].stone);
 const POSNAME=["左","中","右"];
 const STATN={h:"HP",a:"攻撃",b:"防御",c:"特攻",d:"特防",s:"素早"};
 const STATKEYS=["h","a","b","c","d","s"];
 /* =============== ステータス計算 =============== */
 function calcStats(dexIdx, ev, mega, nat){
-  const d=DEX[dexIdx]; const bs=(mega&&mega.bs)?mega.bs:((mega&&d.mega)?d.mega.bs:d.bs);
+  const d=DEX[dexIdx]; const bs=(mega&&d.mega)?d.mega.bs:d.bs;
   const st={ h:bs[0]+75+(ev.h||0), a:bs[1]+20+(ev.a||0), b:bs[2]+20+(ev.b||0), c:bs[3]+20+(ev.c||0), d:bs[4]+20+(ev.d||0), s:bs[5]+20+(ev.s||0) };
   if(nat&&nat.plus!==nat.minus){
     if(nat.plus&&nat.plus!=="none"&&st[nat.plus]!==undefined) st[nat.plus]=Math.floor(st[nat.plus]*1.1);
     if(nat.minus&&nat.minus!=="none"&&st[nat.minus]!==undefined) st[nat.minus]=Math.floor(st[nat.minus]*0.9);
   }
-  if(d.hp1)st.h=1;
   return st;
-}
-function megaFor(mon){
-  const d=DEX[mon.dex];
-  if(d.mega&&mon.item===d.mega.stone)return d.mega;
-  if(d.mega2&&mon.item===d.mega2.stone)return d.mega2;
-  return null;
 }
 function boostMul(st){ return st>=0 ? (2+st)/2 : 2/(2-st); }
 /* =============== セーブ =============== */
-function loadTeams(){
-  try{
-    const ts=JSON.parse(localStorage.getItem("tb_teams")||"[]");
-    // 図鑑に新ポケモンが増えても崩れないよう、保存された名前から番号を引き直す
-    ts.forEach(t=>{ (t.mons||[]).forEach(m=>{
-      if(m.n){ const i=DEX.findIndex(d=>d.n===m.n); if(i>=0)m.dex=i; }
-      else if(DEX[m.dex]) m.n=DEX[m.dex].n;
-    }); });
-    return ts;
-  }catch(e){return [];}
-}
-function saveTeams(ts){
-  try{
-    (ts||[]).forEach(t=>{ (t.mons||[]).forEach(m=>{ if(DEX[m.dex])m.n=DEX[m.dex].n; }); });
-    localStorage.setItem("tb_teams",JSON.stringify(ts));
-  }catch(e){alert("保存に失敗しました（ブラウザのlocalStorageが使えない環境かもしれません）");}
-}
+function loadTeams(){ try{return JSON.parse(localStorage.getItem("tb_teams")||"[]");}catch(e){return [];} }
+function saveTeams(ts){ try{localStorage.setItem("tb_teams",JSON.stringify(ts));}catch(e){alert("保存に失敗しました（ブラウザのlocalStorageが使えない環境かもしれません）");} }
 function loadCustom(){ try{return JSON.parse(localStorage.getItem("tb_customdex")||"[]");}catch(e){return [];} }
 function saveCustomDex(l){ try{localStorage.setItem("tb_customdex",JSON.stringify(l));}catch(e){} }
 loadCustom().forEach(c=>DEX.push(c));
-function loadCustomMoves(){ try{return JSON.parse(localStorage.getItem("tb_custommoves")||"[]");}catch(e){return [];} }
-function saveCustomMoves(l){ try{localStorage.setItem("tb_custommoves",JSON.stringify(l));}catch(e){} }
-loadCustomMoves().forEach(c=>{ if(!MOVES[c.n])MOVES[c.n]=c.d; });
 /* =============== 全体状態 =============== */
 let S={mode:"menu"};
 function $(id){return document.getElementById(id);}
 function esc(s){return String(s).replace(/</g,"&lt;");}
 function render(){ const app=$("app");
-  if(S.mode==="menu") rMenu(app);
-  else if(S.mode==="builder") rBuilder(app);
-  else if(S.mode==="setup") rSetup(app);
-  else if(S.mode==="battle") rBattle(app);
-  applySearchFilters();
-}
-function kanaNorm(s){ return String(s||"").replace(/[ァ-ヶ]/g,ch=>String.fromCharCode(ch.charCodeAt(0)-0x60)).toLowerCase(); }
-window.filterEls=function(inp,contId,searchOnly){
-  const q=inp.value; const c=document.getElementById(contId); if(!c||!c.children)return;
-  [...c.children].forEach(el=>{
-    if(!el.getAttribute)return;
-    const nm=el.getAttribute("data-n");
-    if(nm===null||nm===undefined)return;
-    if(searchOnly&&!q){ el.style.display="none"; return; }
-    el.style.display=(!q||kanaNorm(nm).includes(kanaNorm(q)))?"":"none";
-  });
-};
-window.filterMoves=function(inp){ window.filterEls(inp,"mvlist"); window.filterEls(inp,"mvlist2",true); };
-function applySearchFilters(){
-  const el1=$("monsearch"); if(el1){ if(S.qMon)el1.value=S.qMon; window.filterEls(el1,"rosterlist"); }
-  const el2=$("mvsearch"); if(el2){ if(S.qMove)el2.value=S.qMove; window.filterMoves(el2); }
-  const el3=$("itemsearch"); if(el3){ if(S.qItem)el3.value=S.qItem; window.filterEls(el3,"itemlist",true); }
+  if(S.mode==="menu") return rMenu(app);
+  if(S.mode==="builder") return rBuilder(app);
+  if(S.mode==="setup") return rSetup(app);
+  if(S.mode==="battle") return rBattle(app);
 }
 /* =============== メニュー =============== */
 function rMenu(app){
@@ -618,64 +414,10 @@ function rMenu(app){
   if(ts.length===0) html+=`<div class="note">まだありません</div>`;
   ts.forEach((t,i)=>{ html+=`<div style="margin:4px 0;"><b>${esc(t.name)}</b>: ${t.mons.map(m=>esc(dispName(m))).join("、")}
     <button onclick="editTeam(${i})">編集</button><button class="danger" onclick="delTeam(${i})">削除</button></div>`; });
-  html+=`</div>`;
-  html+=`<div class="panel"><h2>データのバックアップ（書き出し・読み込み）</h2>
-   <div class="note">チーム・カスタムポケモン・カスタム技はこのブラウザ内にだけ保存されています。下のボタンでテキストとして書き出して保存しておけば、別のPCやスマホでも復元できます。</div>
-   <button class="big" onclick="exportData()">データを書き出す</button>
-   <button class="big" onclick="downloadData()">ファイルで保存</button>
-   <button class="big" onclick="S.showImport=!S.showImport;render()">データを読み込む</button>
-   <div id="expbox" style="margin-top:8px;">${S.exportText?`<div class="note">下のテキストを全部コピーして、メモ帳やメール等に保存してください（Ctrl+A→Ctrl+C）</div><textarea id="exparea" style="width:100%;height:110px;background:#12141a;color:#e8e8e8;border:1px solid #444c60;border-radius:4px;">${esc(S.exportText)}</textarea>`:""}</div>
-   ${S.showImport?`<div style="margin-top:8px;"><div class="note">書き出したテキストを貼り付けて「読み込む」を押してください（現在のデータは上書きされます）</div>
-     <textarea id="imparea" style="width:100%;height:110px;background:#12141a;color:#e8e8e8;border:1px solid #444c60;border-radius:4px;"></textarea>
-     <button class="sel" onclick="importData()">読み込む</button>
-     <input type="file" id="impfile" accept=".json,.txt" onchange="importFile(this)" style="margin-left:8px;"></div>`:""}
-  </div>`;
-  html+=`<div class="note">※技・特性・持ち物の使用率はポケモン徹底攻略のポケチャン ダブル使用率(2026/07/10更新)を元にしています。カラミンゴ/イエッサン♀/ガチグマ2種/モロバレル/ポリゴン2はポケチャン未実装のためSVでの標準的な型を推定で収録（★印）。ふういん・スキルスワップ・じこあんじ等の一部の技は未対応のため除外。チームはこのブラウザ内に保存されます。</div>`;
+  html+=`</div><div class="note">※技・特性・持ち物の使用率はポケモン徹底攻略のポケチャン ダブル使用率(2026/07/10更新)を元にしています。カラミンゴ/イエッサン♀/ガチグマ2種/モロバレル/ポリゴン2はポケチャン未実装のためSVでの標準的な型を推定で収録（★印）。ふういん・スキルスワップ・じこあんじ等の一部の技は未対応のため除外。チームはこのブラウザ内に保存されます。</div>`;
   app.innerHTML=html;
 }
 function dispName(cfg){ return DEX[cfg.dex].n; }
-function collectData(){
-  return {v:1, savedAt:new Date().toISOString(), teams:loadTeams(), customDex:loadCustom(), customMoves:loadCustomMoves()};
-}
-window.exportData=function(){
-  S.exportText=JSON.stringify(collectData());
-  render();
-  const ta=document.getElementById("exparea");
-  if(ta&&ta.select){ ta.select(); }
-};
-window.downloadData=function(){
-  try{
-    const blob=new Blob([JSON.stringify(collectData(),null,1)],{type:"application/json"});
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement("a");
-    a.href=url; a.download="triple_battle_data.json";
-    document.body.appendChild(a); a.click();
-    setTimeout(()=>{ document.body.removeChild(a); URL.revokeObjectURL(url); },100);
-  }catch(e){ alert("ファイル保存に失敗しました。「データを書き出す」でテキストをコピーしてください。"); }
-};
-function applyImport(txt){
-  let d;
-  try{ d=JSON.parse(txt); }catch(e){ alert("データの形式が正しくありません"); return; }
-  if(!d||typeof d!=="object"||!d.teams){ alert("このデータには保存内容が入っていません"); return; }
-  const nT=(d.teams||[]).length, nD=(d.customDex||[]).length, nM=(d.customMoves||[]).length;
-  if(!confirm(`チーム${nT}件・カスタムポケモン${nD}件・カスタム技${nM}件を読み込みます。現在のデータは上書きされます。よろしいですか？`))return;
-  saveTeams(d.teams||[]);
-  saveCustomDex(d.customDex||[]);
-  saveCustomMoves(d.customMoves||[]);
-  alert("読み込みました。ページを再読み込みします。");
-  location.reload();
-}
-window.importData=function(){
-  const ta=document.getElementById("imparea");
-  applyImport(ta?ta.value:"");
-};
-window.importFile=function(inp){
-  const f=inp.files&&inp.files[0];
-  if(!f)return;
-  const r=new FileReader();
-  r.onload=e=>applyImport(e.target.result);
-  r.readAsText(f);
-};
 window.goBuilder=function(){ S={mode:"builder", team:{name:"新しいチーム", mons:[]}, editIdx:-1, srcIdx:null}; render(); };
 window.editTeam=function(i){ const ts=loadTeams(); S={mode:"builder", team:JSON.parse(JSON.stringify(ts[i])), editIdx:i, srcIdx:null}; render(); };
 window.delTeam=function(i){ if(!confirm("削除しますか？"))return; const ts=loadTeams(); ts.splice(i,1); saveTeams(ts); render(); };
@@ -690,7 +432,7 @@ function defaultCfg(di){
   if(d.bs[5]>=80){ev.s=32; ev.h=2;} else {ev.h=32; ev.b=2;}
   const plus = d.bs[1]>=d.bs[3] ? "a" : "c";
   const minus = plus==="a" ? "c" : "a";
-  return {dex:di, n:d.n, ability:d.abil[0][0], moves:mv, item:(d.items[0]?d.items[0][0]:"なし"), ev, plus, minus};
+  return {dex:di, ability:d.abil[0][0], moves:mv, item:(d.items[0]?d.items[0][0]:"なし"), ev, plus, minus};
 }
 function rBuilder(app){
   const T=S.team;
@@ -710,10 +452,10 @@ function rBuilder(app){
   html+=`</div>`;
   if(S.srcIdx!==null){ html+=monEditor(); }
   else {
-    html+=`<div class="panel"><h2>ポケモンを追加</h2>検索: <input type="text" id="monsearch" placeholder="ポケモン名（ひらがな可）" oninput="S.qMon=this.value;filterEls(this,'rosterlist')" style="width:180px;"><div class="roster" id="rosterlist">`;
+    html+=`<div class="panel"><h2>ポケモンを追加</h2><div class="roster">`;
     DEX.forEach((d,i)=>{
       const used=T.mons.some(m=>m.dex===i);
-      html+=`<button data-n="${esc(d.n)}" ${used||T.mons.length>=6?"disabled":""} onclick="addMon(${i})">${esc(d.n)}${d.mega?" ⓜ":""}${d.est?" ★":""}${d.custom?" ✎":""}<br><span class="note">${d.t.join("/")}</span></button>`;
+      html+=`<button ${used||T.mons.length>=6?"disabled":""} onclick="addMon(${i})">${esc(d.n)}${d.mega?" ⓜ":""}${d.est?" ★":""}${d.custom?" ✎":""}<br><span class="note">${d.t.join("/")}</span></button>`;
     });
     html+=`</div><div class="note">ⓜ=メガシンカ可能 ★=使用率データなし（推定型） ✎=カスタム</div></div>`;
     html+=customPanel();
@@ -737,35 +479,30 @@ function monEditor(){
   let html=`<div class="panel"><h2>${esc(d.n)} の育成 <button onclick="closeEditor()" class="sel">完了</button> <button class="danger" onclick="removeMon()">チームから外す</button></h2>`;
   html+=`<h3>特性</h3>`;
   d.abil.forEach(a=>{
-    html+=`<button class="${effAbility(m)===a[0]?"sel":""}" onclick="setAbil('${a[0]}')">${a[0]}${a[1]!==null?` <span class="note">${a[1]}%</span>`:""}</button>`;
+    html+=`<button class="${m.ability===a[0]?"sel":""}" onclick="setAbil('${a[0]}')">${a[0]}${a[1]!==null?` <span class="note">${a[1]}%</span>`:""}</button>`;
   });
   if(d.mega) html+=`<div class="note">メガシンカ後は「${d.mega.abil}」に変化（${d.mega.stone}を持たせると戦闘中にメガシンカ可能）</div>`;
-  html+=`<h3>技（最大4つ / 使用率順）</h3>検索: <input type="text" id="mvsearch" placeholder="技名（ひらがな可）" oninput="S.qMove=this.value;filterMoves(this)" style="width:180px;"><div id="mvlist">`;
+  html+=`<h3>技（最大4つ / 使用率順）</h3><div>`;
   d.mv.forEach(mv=>{
     const name=mv[0]; const on=m.moves.includes(name); const M=MOVES[name];
     const info=M.cat==="X"?"変化":`${M.t} ${M.cat==="P"?"物理":"特殊"} 威力${M.p}`;
-    html+=`<label data-n="${name}" class="chk ${on?"on":""}"><input type="checkbox" ${on?"checked":""} onchange="toggleMove('${name}')">${name}${mv[1]!==null?` <span class="note">${mv[1]}%</span>`:""}<br><span class="note">${info}${M.acc?` 命中${M.acc}`:" 必中"}${rangeNote(M)}</span></label>`;
+    html+=`<label class="chk ${on?"on":""}"><input type="checkbox" ${on?"checked":""} onchange="toggleMove('${name}')">${name}${mv[1]!==null?` <span class="note">${mv[1]}%</span>`:""}<br><span class="note">${info}${M.acc?` 命中${M.acc}`:" 必中"}${rangeNote(M)}</span></label>`;
   });
-  html+=`</div><div class="note">▼ 追加習得: 上の検索ボックスに技名を入れると、実装済みの全技から候補が表示されます（選択中の追加技は表示され続けます）</div><div id="mvlist2">`;
-  {
+  if(d.allMoves){
+    html+=`<div class="note" style="margin-top:6px;">▼ ドーブルは実装済みの全技から選べます</div>`;
     const rec=new Set(d.mv.map(x=>x[0]));
     Object.keys(MOVES).filter(nm=>!rec.has(nm)).forEach(nm=>{
       const on=m.moves.includes(nm); const M=MOVES[nm];
-      if(!on&&!S.qMove){ /* 検索前は非表示（filterで制御） */ }
       const info=M.cat==="X"?"変化":`${M.t} ${M.cat==="P"?"物理":"特殊"} 威力${M.p}`;
-      html+=`<label data-n="${nm}" class="chk ${on?"on":""}" ${on?'style="display:inline-block;"':""}><input type="checkbox" ${on?"checked":""} onchange="toggleMove('${nm}')">${nm}<br><span class="note">${info}${M.acc?` 命中${M.acc}`:" 必中"}${rangeNote(M)}</span></label>`;
+      html+=`<label class="chk ${on?"on":""}"><input type="checkbox" ${on?"checked":""} onchange="toggleMove('${nm}')">${nm}<br><span class="note">${info}${M.acc?` 命中${M.acc}`:" 必中"}${rangeNote(M)}</span></label>`;
     });
   }
   html+=`</div><div class="note">選択中: ${m.moves.length}/4</div>`;
-  html+=`<h3>持ち物（現在: ${esc(m.item)}${ITEMS[m.item]?"｜"+ITEMS[m.item].d:""}）</h3>使用率順: `;
+  html+=`<h3>持ち物</h3>使用率順: `;
   d.items.forEach(it=>{ html+=`<button class="${m.item===it[0]?"sel":""}" onclick="setItem('${it[0]}')">${it[0]}${it[1]!==null?` <span class="note">${it[1]}%</span>`:""}</button>`; });
-  [d.mega,d.mega2].forEach(mg=>{
-    if(mg&&!d.items.some(it=>it[0]===mg.stone))
-      html+=`<button class="${m.item===mg.stone?"sel":""}" onclick="setItem('${mg.stone}')">${mg.stone} <span class="note">→${mg.n}</span></button>`;
-  });
-  html+=`<br>検索: <input type="text" id="itemsearch" placeholder="持ち物名（ひらがな可・検索すると候補表示）" oninput="S.qItem=this.value;filterEls(this,'itemlist',true)" style="width:180px;"><div id="itemlist">`;
-  GENERAL_ITEMS.forEach(k=>{ html+=`<button data-n="${k}" class="${m.item===k?"sel":""}" onclick="setItem('${k}')">${k}<br><span class="note">${ITEMS[k].d}</span></button>`; });
-  html+=`</div>`;
+  html+=`<br>その他: <select onchange="setItem(this.value)"><option value="">--選択--</option>`;
+  GENERAL_ITEMS.forEach(k=>{ html+=`<option ${m.item===k?"selected":""}>${k}</option>`; });
+  html+=`</select> <span class="note">${ITEMS[m.item]?ITEMS[m.item].d:""}</span>`;
   html+=`<h3>性格補正（上昇1.1倍・下降0.9倍・小数点切り捨て）</h3>上げる: <select onchange="setNat('plus',this.value)">`+natOpts(m.plus)+`</select>　下げる: <select onchange="setNat('minus',this.value)">`+natOpts(m.minus)+`</select> <span class="note">HPは補正不可・同じ能力は不可</span>`;
   html+=`<h3>能力ポイント（残り <b style="color:${rest<0?"#d05050":"#4caf7d"}">${rest}</b> / 66、各32まで）</h3><table class="evt"><tr><th></th>`;
   STATKEYS.forEach(k=>html+=`<th>${STATN[k]}</th>`);
@@ -777,7 +514,6 @@ function monEditor(){
   STATKEYS.forEach(k=>html+=`<td><b>${st[k]}</b></td>`);
   html+=`</tr>`;
   if(stM){ html+=`<tr><td>メガ後</td>`; STATKEYS.forEach(k=>html+=`<td class="note">${stM[k]}</td>`); html+=`</tr>`; }
-  if(d.mega2){ const stM2=calcStats(m.dex,m.ev,d.mega2,{plus:m.plus,minus:m.minus}); html+=`<tr><td>${d.mega2.n}後</td>`; STATKEYS.forEach(k=>html+=`<td class="note">${stM2[k]}</td>`); html+=`</tr>`; }
   html+=`</table></div>`;
   return html;
 }
@@ -786,7 +522,7 @@ function rangeNote(M){
   let n=[];
   if(M.rng==="SP")n.push("相手全体");
   if(M.rng==="ADJ")n.push("自分以外全体");
-  if(M.t==="ひこう"||M.pul||M.lr)n.push("位置無視");
+  if(M.t==="ひこう"||M.pul)n.push("位置無視");
   return n.length?" ["+n.join("/")+"]":"";
 }
 window.setAbil=function(a){ S.team.mons[S.srcIdx].ability=a; render(); };
@@ -815,17 +551,16 @@ window.setNat=function(which,v){
   if(m.plus&&m.minus&&m.plus!=="none"&&m.plus===m.minus){ alert("同じ能力に補正はかけられません"); m[which==="plus"?"minus":"plus"]="none"; }
   render();
 };
-const IMPL_ABILITIES=["いかく","ひでり","あめふらし","すなおこし","サイコメイカー","グラスメイカー","ダウンロード","おもてなし","きょうえん","トレース","まけんき","そうだいしょう","さめはだ","すながくれ","フェアリースキン","てきおうりょく","すいすい","ようりょくそ","かるわざ","どくしゅ","かたいツメ","あまのじゃく","いしあたま","すてみ","クリアボディ","しろいけむり","シェルアーマー","メガランチャー","じきゅうりょく","がんじょう","あついしぼう","たいねつ","いたずらごころ","すりぬけ","ふゆう","フェアリーオーラ","フラワーベール","ノーガード","ひらいしん","せいでんき","おうごんのからだ","こんじょう","しんがん","きもったま","さいせいりょく","アナライズ","テクニシャン","ムラっけ","はやてのつばさ","ほのおのからだ","フラワーギフト","テレパシー","せいしんりょく","きんちょうかん","かたやぶり","マジシャン","サンパワー","もうか","げきりゅう","しんりょく","テイルアーマー","そうしょく","かがくへんかガス","てんねん","しれいとう","よびみず","かげふみ","こだいかっせい","マジックミラー","ミストメイカー","ふかしのこぶし","ぎゃくじょう","トランジスタ","ゆきふらし","ゆきがくれ","おやこあい","スカイスキン","せいぎのこころ","ぼうおん","ぼうじん","フレンドガード","やるき","もらいび","ふしぎなまもり","クォークチャージ","きょうせい","エレキメーカー","ほおぶくろ","するどいめ","あとだし","はやおき","すじがねいり","はんすう","メロメロボディ","かたやぶり","わるいてぐせ","おみとおし","しめりけ","ライトメタル","プレッシャー","いしあたま","ぼうだん","しんりょく","わざわいのつるぎ","わざわいのたま","わざわいのうつわ","わざわいのおふだ","すなのちから","ちからずく","がんじょうあご","すなかき","リーフガード","しゅうかく"];
+const IMPL_ABILITIES=["いかく","ひでり","あめふらし","すなおこし","サイコメイカー","グラスメイカー","ダウンロード","おもてなし","きょうえん","トレース","まけんき","そうだいしょう","さめはだ","すながくれ","フェアリースキン","てきおうりょく","すいすい","ようりょくそ","かるわざ","どくしゅ","かたいツメ","あまのじゃく","いしあたま","すてみ","クリアボディ","しろいけむり","シェルアーマー","メガランチャー","じきゅうりょく","がんじょう","あついしぼう","たいねつ","いたずらごころ","すりぬけ","ふゆう","フェアリーオーラ","フラワーベール","ノーガード","ひらいしん","せいでんき","おうごんのからだ","こんじょう","しんがん","きもったま","さいせいりょく","アナライズ","テクニシャン","ムラっけ","はやてのつばさ","ほのおのからだ","フラワーギフト","テレパシー","せいしんりょく","きんちょうかん","かたやぶり","マジシャン","サンパワー","もうか","げきりゅう","しんりょく","テイルアーマー","そうしょく"];
 function customPanel(){
   let html=`<div class="panel"><h2>カスタムポケモンを追加（手動入力）</h2>
    名前: <input type="text" id="cname" style="width:130px">
    タイプ1: <select id="ct1">${Object.keys(CHART).map(t=>`<option>${t}</option>`).join("")}</select>
    タイプ2: <select id="ct2"><option value="">なし</option>${Object.keys(CHART).map(t=>`<option>${t}</option>`).join("")}</select><br>
    種族値　${["HP","攻撃","防御","特攻","特防","素早"].map((n,i)=>`${n}:<input type="number" id="cb${i}" value="100" min="1" max="255">`).join(" ")}<br>
-   特性1: <input type="text" id="cab1" placeholder="検索して選択" oninput="filterEls(this,'ablist1',true)" style="width:150px">
-   特性2: <input type="text" id="cab2" placeholder="（任意）検索して選択" oninput="filterEls(this,'ablist2',true)" style="width:150px"><br>
-   <div id="ablist1">${IMPL_ABILITIES.map(x=>`<button data-n="${x}" style="display:none;" onclick="pickAb('cab1','ablist1','${x}')">${x}</button>`).join("")}</div>
-   <div id="ablist2">${IMPL_ABILITIES.map(x=>`<button data-n="${x}" style="display:none;" onclick="pickAb('cab2','ablist2','${x}')">${x}</button>`).join("")}</div>
+   特性1: <input type="text" id="cab1" list="abilist" style="width:140px">
+   特性2: <input type="text" id="cab2" list="abilist" style="width:140px">（任意）
+   <datalist id="abilist">${IMPL_ABILITIES.map(x=>`<option value="${x}">`).join("")}</datalist>
    <button class="sel" onclick="createCustom()">作成</button>
    <div class="note">技は追加後にロスターから選んで設定（全実装技から選択可能）。特性は候補一覧にある実装済みの名前のみ効果があります。メガシンカは非対応。</div>`;
   const cl=loadCustom();
@@ -835,77 +570,8 @@ function customPanel(){
     html+=`</div>`;
   }
   html+=`</div>`;
-  html+=`<div class="panel"><h2>カスタム技を追加（手動入力）</h2>
-   技名: <input type="text" id="cmname" style="width:130px">
-   タイプ: <select id="cmtype">${Object.keys(CHART).map(t=>`<option>${t}</option>`).join("")}</select>
-   分類: <select id="cmcat"><option value="P">物理</option><option value="S">特殊</option><option value="X">変化</option></select>
-   威力: <input type="number" id="cmpow" value="80" min="0" max="300">
-   命中: <input type="number" id="cmacc" value="100" min="0" max="100">（0=必中）
-   優先度: <input type="number" id="cmprio" value="0" min="-7" max="5"><br>
-   対象: <select id="cmrng"><option value="S">単体（味方も選択可）</option><option value="SP">相手全体</option><option value="ADJ">自分以外全体（味方巻き込み）</option></select>
-   <label class="chk" style="width:auto;"><input type="checkbox" id="cmlr">位置無視</label>
-   <label class="chk" style="width:auto;"><input type="checkbox" id="cmsnd">音技</label>
-   <label class="chk" style="width:auto;"><input type="checkbox" id="cmc">直接攻撃</label><br>
-   追加効果: <input type="number" id="cmch" value="0" min="0" max="100">% で
-   <select id="cmeff"><option value="">なし</option><option value="par">まひ</option><option value="slp">ねむり</option><option value="brn">やけど</option><option value="frz">こおり</option><option value="psn">どく</option><option value="tox">もうどく</option><option value="fl">ひるみ</option></select>
-   ＋能力変化: <select id="cmstatTgt"><option value="">なし</option><option value="t">相手の</option><option value="s">自分の</option></select>
-   <select id="cmstatKey"><option value="a">攻撃</option><option value="b">防御</option><option value="c">特攻</option><option value="d">特防</option><option value="s">素早さ</option></select>
-   を<select id="cmstatAmt"><option value="2">+2</option><option value="1">+1</option><option value="-1">-1</option><option value="-2">-2</option></select>
-   <button class="sel" onclick="createCustomMove()">技を作成</button>
-   <div class="note">変化技の場合、威力・直接は無視され「相手1体に追加効果を確率でかける技」になります。作成した技は各ポケモンの「追加習得」検索で覚えさせられます。</div>`;
-  const cm=loadCustomMoves();
-  if(cm.length){
-    html+=`<div style="margin-top:6px;">登録済み: `;
-    cm.forEach(c=>{ html+=`<span class="tag">${esc(c.n)} <a href="#" onclick="delCustomMove('${esc(c.n)}');return false;" style="color:#d05050;">✕</a></span>`; });
-    html+=`</div>`;
-  }
-  html+=`</div>`;
   return html;
 }
-window.createCustomMove=function(){
-  const g=id=>document.getElementById(id);
-  const name=(g("cmname").value||"").trim();
-  if(!name){alert("技名を入力してください");return;}
-  if(MOVES[name]){alert("同名の技が既に存在します");return;}
-  const cat=g("cmcat").value;
-  const d={t:g("cmtype").value,cat,rng:g("cmrng").value};
-  const pow=Math.max(0,Math.min(300,parseInt(g("cmpow").value)||0));
-  const acc=Math.max(0,Math.min(100,parseInt(g("cmacc").value)||0));
-  if(cat!=="X"){ d.p=pow; if(acc>0)d.acc=acc; else d.acc=0; if(g("cmc").checked)d.c=1; }
-  else { d.acc=acc>0?acc:100; d.fx="customstatus"; d.rng="S"; }
-  if(g("cmlr").checked)d.lr=1;
-  if(g("cmsnd").checked)d.snd=1;
-  const pr=Math.max(-7,Math.min(5,parseInt(g("cmprio").value)||0));
-  if(pr)d.prio=pr;
-  const ch=Math.max(0,Math.min(100,parseInt(g("cmch").value)||0));
-  const eff=g("cmeff").value;
-  const stg=g("cmstatTgt").value;
-  if(ch>0&&(eff||stg)){
-    d.sec={ch};
-    if(eff==="fl")d.sec.fl=1; else if(eff)d.sec.st=eff;
-    if(stg){
-      const key=g("cmstatKey").value, amt=parseInt(g("cmstatAmt").value)||1;
-      if(stg==="t"){ d.sec.stat={}; d.sec.stat[key]=amt; }
-      else { d.sec.selfstat={}; d.sec.selfstat[key]=amt; }
-    }
-  }
-  if(cat==="X"&&(!d.sec)){alert("変化技には追加効果（％と、状態異常か能力変化）を設定してください");return;}
-  const cm=loadCustomMoves(); cm.push({n:name,d}); saveCustomMoves(cm);
-  MOVES[name]=d;
-  alert(name+"を追加しました。各ポケモンの「追加習得」検索から覚えさせられます。");
-  render();
-};
-window.delCustomMove=function(name){
-  if(!confirm(name+"を削除しますか？（この技を覚えた保存チームは技を失います）"))return;
-  saveCustomMoves(loadCustomMoves().filter(c=>c.n!==name));
-  delete MOVES[name];
-  render();
-};
-window.pickAb=function(inputId,listId,v){
-  const el=document.getElementById(inputId); if(el)el.value=v;
-  const c=document.getElementById(listId);
-  if(c&&c.children)[...c.children].forEach(e=>{ if(e.style)e.style.display="none"; });
-};
 window.createCustom=function(){
   const g=id=>document.getElementById(id);
   const name=(g("cname").value||"").trim();
@@ -942,7 +608,6 @@ function rSetup(app){
   if(S.step==="team1"||S.step==="team2"){
     const p=S.step==="team1"?1:2;
     html+=`<div class="panel"><h2>プレイヤー${p}：使うチームを選択</h2>`;
-    if(p===1) html+=`<label class="chk" style="width:auto;"><input type="checkbox" ${S.hideInfo?"checked":""} onchange="S.hideInfo=this.checked">相手の持ち物・HP実数値を隠す（相手のHPは％表示）</label><br>`;
     ts.forEach((t,i)=>{ html+=`<div style="margin:4px 0;"><button onclick="pickTeam(${p},${i})">${esc(t.name)}</button> <span class="note">${t.mons.map(m=>esc(dispName(m))).join("、")}</span></div>`; });
     html+=`</div>`;
   } else {
@@ -987,10 +652,10 @@ function mkBattleMon(cfg, side){
   };
 }
 function megaEvolve(mon){
-  const mg=megaFor(mon); if(!mg) return;
+  const d=DEX[mon.dex]; if(!d.mega) return;
   const hpRatio=mon.hp;
-  mon.isMega=true; mon.name=mg.n; mon.types=mg.t.slice(); mon.ability=mg.abil;
-  const st=calcStats(mon.dex,mon.cfg.ev,mg,{plus:mon.cfg.plus,minus:mon.cfg.minus});
+  mon.isMega=true; mon.name=d.mega.n; mon.types=d.mega.t.slice(); mon.ability=d.mega.abil;
+  const st=calcStats(mon.dex,mon.cfg.ev,true,{plus:mon.cfg.plus,minus:mon.cfg.minus});
   mon.stats=st;
   mon.hp=hpRatio;
 }
@@ -1005,7 +670,6 @@ function startBattle(){
       1:{team:t1, field:[t1[0],t1[1],t1[2]], megaUsed:false, fx:{}},
       2:{team:t2, field:[t2[0],t2[1],t2[2]], megaUsed:false, fx:{}}
     },
-    hideInfo:!!S.hideInfo,
     weather:null, weatherTurns:0, terrain:null, terrainTurns:0, trickroom:0,
     phase:"handoff", inputPlayer:1, pending:{}, winner:null, replaceQueue:[],
   };
@@ -1017,40 +681,21 @@ function startBattle(){
   entries.forEach(([sd,m])=>onEntry(m));
   render();
 }
-function log(s){ if(B&&B._collect){ B._collect.push(s); return; } B.log.push(s); }
-function flushHitLogs(arr){ if(arr&&arr.length){ arr.forEach(s=>B.log.push(s)); arr.length=0; } }
+function log(s){ B.log.push(s); }
 function foeSide(s){ return s===1?2:1; }
 function alive(mon){ return mon && !mon.fainted; }
 function fieldPos(mon){ const f=B.sides[mon.side].field; return f.indexOf(mon); }
 function reachable(myPos,foePos){ return Math.abs((2-myPos)-foePos)<=1; }
-function ignoresReach(M){ return M.t==="ひこう"||M.pul||M.lr; }
-function grounded(mon){ return !(mon.types.includes("ひこう")||effAbility(mon)==="ふゆう"||mon.item==="ふうせん"); }
-function effAbility(mon){
-  if(!mon)return null;
-  if(typeof B==="undefined"||!B||!B.sides)return mon.ability;
-  if(mon.ability==="かがくへんかガス")return mon.ability;
-  if(mon.item==="とくせいガード")return mon.ability;
-  const gas=[1,2].some(pp=>B.sides[pp].field.some(mm=>mm&&!mm.fainted&&mm!==mon&&mm.ability==="かがくへんかガス"));
-  return gas?null:mon.ability;
-}
-function highestStat(mon){ let best="a"; for(const k of ["b","c","d","s"]) if(mon.stats[k]>mon.stats[best])best=k; return best; }
-function isChoiceItem(it){ return it==="こだわりスカーフ"||it==="こだわりハチマキ"||it==="こだわりメガネ"; }
-function isTrapped(mon,pos){
-  if(mon.types.includes("ゴースト")||mon.item==="きれいなぬけがら")return false;
-  return B.sides[foeSide(mon.side)].field.some((m,fp2)=>alive(m)&&effAbility(m)==="かげふみ"&&reachable(pos,fp2));
-}
+function ignoresReach(M){ return M.t==="ひこう"||M.pul; }
+function grounded(mon){ return !(mon.types.includes("ひこう")||mon.ability==="ふゆう"); }
 /* =============== 特性・場効果 =============== */
 function onEntry(mon){
-  const a=effAbility(mon);
+  const a=mon.ability;
   if(a==="ひでり"){ setWeather("sun",mon); }
   if(a==="あめふらし"){ setWeather("rain",mon); }
   if(a==="すなおこし"){ setWeather("sand",mon); }
-  if(a==="ゆきふらし"){ setWeather("snow",mon); }
-  if(a==="サイコメイカー"&&B.terrain!=="psy"){ B.terrain="psy"; B.terrainTurns=5; log(`${mon.name}のサイコメイカー！足下がふしぎな感じになった！`); }
-  if(a==="グラスメイカー"&&B.terrain!=="grass"){ B.terrain="grass"; B.terrainTurns=5; log(`${mon.name}のグラスメイカー！足下に草がしげった！`); }
-  if(a==="ミストメイカー"&&B.terrain!=="mist"){ B.terrain="mist"; B.terrainTurns=5; log(`${mon.name}のミストメイカー！足下に霧が立ちこめた！`); }
-  if(a==="エレキメーカー"&&B.terrain!=="elec"){ B.terrain="elec"; B.terrainTurns=5; log(`${mon.name}のエレキメーカー！足下に電気が流れた！`); }
-  checkSeeds();
+  if(a==="サイコメイカー"){ B.terrain="psy"; B.terrainTurns=5; log(`${mon.name}のサイコメイカー！足下がふしぎな感じになった！`); }
+  if(a==="グラスメイカー"){ B.terrain="grass"; B.terrainTurns=5; log(`${mon.name}のグラスメイカー！足下に草がしげった！`); }
   if(a==="いかく"){
     const fs=B.sides[foeSide(mon.side)].field; const p=fieldPos(mon);
     fs.forEach((f,fp)=>{ if(alive(f)&&reachable(p,fp)){ applyBoost(f,{a:-1},mon,`${mon.name}のいかく`); } });
@@ -1069,14 +714,13 @@ function onEntry(mon){
     const foes=B.sides[foeSide(mon.side)].field.filter(alive);
     if(foes.length){
       const t=foes[Math.floor(Math.random()*foes.length)];
-      if(t.ability&&effAbility(t)!=="トレース"){
+      if(t.ability&&t.ability!=="トレース"){
         mon.ability=t.ability;
         log(`${mon.name}のトレース！${t.name}の${t.ability}をコピーした！`);
         onEntry(mon);
       }
     }
   }
-  if(a==="しれいとう"||mon.name==="ヘイラッシャ"){ tryCommander(mon.side); }
   if(a==="きょうえん"){
     const f=B.sides[mon.side].field; const pos=fieldPos(mon);
     const allies=f.filter(m=>alive(m)&&m!==mon);
@@ -1093,38 +737,6 @@ function onEntry(mon){
     }
   }
 }
-function checkSeeds(){
-  const map={"エレキシード":["elec","b"],"グラスシード":["grass","b"],"ミストシード":["mist","d"],"サイコシード":["psy","d"]};
-  for(const pp of [1,2]) for(const m of B.sides[pp].field){
-    if(!alive(m))continue;
-    const sd=map[m.item];
-    if(sd&&B.terrain===sd[0]&&!m.itemUsed){
-      const nm=m.item; consumeItem(m);
-      const dd={}; dd[sd[1]]=1;
-      applyBoost(m,dd,m,`${m.name}は${nm}を使った`);
-    }
-  }
-}
-function gasGone(entering){
-  const active=[1,2].some(pp=>B.sides[pp].field.some(m=>alive(m)&&m.ability==="かがくへんかガス"));
-  if(active){ if(entering)onEntry(entering); return; }
-  log("かがくへんかガスが消え去った！みんなの特性が発動した！");
-  const all=[];
-  for(const pp of [1,2]) for(const m of B.sides[pp].field) if(alive(m)) all.push(m);
-  all.sort((x,y)=>effSpe(y)-effSpe(x));
-  all.forEach(m=>onEntry(m));
-}
-function tryCommander(side){
-  const f=B.sides[side].field;
-  const tatsu=f.find(m=>alive(m)&&m.name==="シャリタツ"&&effAbility(m)==="しれいとう"&&!m.vol.commander);
-  const don=f.find(m=>alive(m)&&m.name==="ヘイラッシャ"&&!m.vol.commanded);
-  if(tatsu&&don){
-    tatsu.vol.commander=true; don.vol.commanded=true;
-    log(`${tatsu.name}のしれいとう！${don.name}の口の中に入って指令を出し始めた！`);
-    applyBoost(don,{a:2,b:2,c:2,d:2,s:2},don,``);
-    log(`${tatsu.name}には技が当たらない！（行動不可・${don.name}は交代不可）`);
-  }
-}
 function setWeather(w,mon){
   if(B.weather===w) return;
   B.weather=w;
@@ -1132,18 +744,17 @@ function setWeather(w,mon){
   if(mon&&mon.item==="しめったいわ"&&w==="rain")turns=8;
   if(mon&&mon.item==="あついいわ"&&w==="sun")turns=8;
   B.weatherTurns=turns;
-  log(w==="sun"?"日ざしが強くなった！":w==="rain"?"雨が降り始めた！":w==="snow"?"雪が降り始めた！":"砂あらしが吹き始めた！");
+  log(w==="sun"?"日ざしが強くなった！":w==="rain"?"雨が降り始めた！":"砂あらしが吹き始めた！");
 }
 function applyBoost(mon,delta,src,label){
   const isSelf = src===mon;
   let d={...delta};
-  if(effAbility(mon)==="あまのじゃく"){ for(const k in d) d[k]=-d[k]; }
+  if(mon.ability==="あまのじゃく"){ for(const k in d) d[k]=-d[k]; }
   const lowering = Object.values(d).some(v=>v<0);
   if(!isSelf && lowering){
-    if(effAbility(mon)==="クリアボディ"||effAbility(mon)==="しろいけむり"){ log(`${mon.name}は${mon.ability}で能力が下がらない！`); return; }
-    if(mon.item==="クリアチャーム"){ log(`${mon.name}はクリアチャームで能力が下がらない！`); return; }
+    if(mon.ability==="クリアボディ"||mon.ability==="しろいけむり"){ log(`${mon.name}は${mon.ability}で能力が下がらない！`); return; }
     const allies=B.sides[mon.side].field;
-    if(mon.types.includes("くさ") && allies.some(m=>alive(m)&&effAbility(m)==="フラワーベール")){ log(`フラワーベールで${mon.name}の能力は下がらない！`); return; }
+    if(mon.types.includes("くさ") && allies.some(m=>alive(m)&&m.ability==="フラワーベール")){ log(`フラワーベールで${mon.name}の能力は下がらない！`); return; }
   }
   let changed=[];
   for(const k in d){
@@ -1153,98 +764,60 @@ function applyBoost(mon,delta,src,label){
     if(mon.boosts[k]!==old) changed.push(`${STATN[k]}が${mon.boosts[k]>old?"上がった":"下がった"}`);
   }
   if(changed.length){ log(`${label?label+"！ ":""}${mon.name}の${changed.join("、")}！`);
-    if(!isSelf && lowering && effAbility(mon)==="まけんき"){ mon.boosts.a=Math.min(6,mon.boosts.a+2); log(`${mon.name}のまけんき！攻撃がぐーんと上がった！`); }
+    if(!isSelf && lowering && mon.ability==="まけんき"){ mon.boosts.a=Math.min(6,mon.boosts.a+2); log(`${mon.name}のまけんき！攻撃がぐーんと上がった！`); }
     if(Object.values(mon.boosts).some(v=>v<0) && mon.item==="しろいハーブ" && !mon.itemUsed){
       for(const k in mon.boosts) if(mon.boosts[k]<0) mon.boosts[k]=0;
       consumeItem(mon); log(`${mon.name}はしろいハーブで能力ダウンを回復した！`);
     }
   }
 }
-function consumeItem(mon){
-  mon.item="なし"; mon.itemUsed=true;
-  if(effAbility(mon)==="かるわざ"&&!mon.vol.unburden){ mon.vol.unburden=true; log(`　${mon.name}のかるわざ！持ち物がなくなって素早さが2倍になった！`); }
-  symbiosisGive(mon);
-}
-function symbiosisGive(receiver){
-  if(!receiver||receiver.item!=="なし")return;
-  const f=B.sides[receiver.side].field;
-  const giver=f.find(m=>alive(m)&&m!==receiver&&effAbility(m)==="きょうせい"&&m.item!=="なし"&&!ITEMS[m.item].stone);
-  if(!giver)return;
-  receiver.item=giver.item; receiver.itemUsed=false;
-  log(`　${giver.name}のきょうせい！${receiver.name}に${receiver.item}を渡した！`);
-  giver.item="なし";
-  if(effAbility(giver)==="かるわざ"&&!giver.vol.unburden){ giver.vol.unburden=true; log(`　${giver.name}のかるわざ！素早さが2倍になった！`); }
-  if(receiver.vol.unburden){ receiver.vol.unburden=false; }
-  checkSeeds();
-}
-function loseItem(mon){
-  mon.item="なし";
-  if(effAbility(mon)==="かるわざ"&&!mon.vol.unburden){ mon.vol.unburden=true; log(`　${mon.name}のかるわざ！持ち物がなくなって素早さが2倍になった！`); }
-}
+function consumeItem(mon){ mon.item="なし"; mon.itemUsed=true; if(mon.ability==="かるわざ")mon.vol.unburden=true; }
 function effSpe(mon){
   let s=mon.stats.s*boostMul(mon.boosts.s);
   if(mon.status==="par")s*=0.5;
   if(mon.item==="こだわりスカーフ")s*=1.5;
-  if(effAbility(mon)==="すいすい"&&B.weather==="rain")s*=2;
-  if(effAbility(mon)==="ようりょくそ"&&B.weather==="sun")s*=2;
-  if(effAbility(mon)==="すなかき"&&B.weather==="sand")s*=2;
-  if(effAbility(mon)==="こだいかっせい"&&B.weather==="sun"&&highestStat(mon)==="s")s*=1.5;
+  if(mon.ability==="すいすい"&&B.weather==="rain")s*=2;
+  if(mon.ability==="ようりょくそ"&&B.weather==="sun")s*=2;
   if(mon.vol.unburden)s*=2;
   if(B.sides[mon.side].fx.tailwind)s*=2;
   return s;
 }
 /* =============== 画面（バトル） =============== */
-function slotHtml(mon,posLabel,acting,hide){
+function slotHtml(mon,posLabel,acting){
   if(!mon) return `<div class="slot dead"><div class="pos">${posLabel}</div><div class="nm">（空き）</div></div>`;
   const pct=Math.max(0,mon.hp/mon.maxhp*100);
   const cls=pct<=25?"crit":(pct<=50?"low":"");
-  const stTag=mon.status?`<span class="st ${mon.status==="tox"?"psn":mon.status}">${{brn:"やけど",psn:"どく",tox:"猛毒",par:"まひ",slp:"ねむり",frz:"こおり"}[mon.status]}</span>`:"";
+  const stTag=mon.status?`<span class="st ${mon.status}">${{brn:"やけど",psn:"どく",par:"まひ",slp:"ねむり",frz:"こおり"}[mon.status]}</span>`:"";
   const megaTag=mon.isMega?`<span class="st mega">メガ</span>`:"";
   const boosts=STATKEYS.slice(1).filter(k=>mon.boosts[k]!==0).map(k=>`${STATN[k]}${mon.boosts[k]>0?"+":""}${mon.boosts[k]}`).join(" ");
-  const cmdTag=((mon.vol&&mon.vol.commander)?`<span class="st mega">合体中</span>`:"")
-    +((mon.vol&&mon.vol.unburden)?`<span class="st par">かるわざ×2</span>`:"");
-  const hpTxt=hide?`HP ${Math.ceil(pct)}%`:`HP ${Math.max(0,mon.hp)}/${mon.maxhp}`;
-  return `<div class="slot ${acting?"acting":""}"><div class="pos">${posLabel}</div><div class="nm">${esc(mon.name)}${megaTag}${stTag}${cmdTag}</div>
-   <div class="tp">${mon.types.join("/")} ${(mon.item!=="なし"&&!hide)?"@"+esc(mon.item):""}</div>
+  return `<div class="slot ${acting?"acting":""}"><div class="pos">${posLabel}</div><div class="nm">${esc(mon.name)}${megaTag}${stTag}</div>
+   <div class="tp">${mon.types.join("/")} ${mon.item!=="なし"?"@"+esc(mon.item):""}</div>
    <div class="hpbar"><div class="${cls}" style="width:${pct}%"></div></div>
-   <div class="hpnum">${hpTxt} ${boosts?`<span class="note">${boosts}</span>`:""}</div></div>`;
+   <div class="hpnum">HP ${Math.max(0,mon.hp)}/${mon.maxhp} ${boosts?`<span class="note">${boosts}</span>`:""}</div></div>`;
 }
-function boardHtml(activeSide,activePos,viewer){
-  const hideFor=s=>B.hideInfo&&viewer&&s!==viewer;
+function boardHtml(activeSide,activePos){
   const f1=B.sides[1].field, f2=B.sides[2].field;
   const cond=[];
-  if(B.weather)cond.push(`${{sun:"晴れ",rain:"あめ",sand:"砂あらし",snow:"ゆき"}[B.weather]}(残${B.weatherTurns})`);
-  if(B.terrain==="psy")cond.push(`サイコフィールド(残${B.terrainTurns})`);
-  if(B.terrain==="grass")cond.push(`グラスフィールド(残${B.terrainTurns})`);
-  if(B.terrain==="mist")cond.push(`ミストフィールド(残${B.terrainTurns})`);
-  if(B.terrain==="elec")cond.push(`エレキフィールド(残${B.terrainTurns})`);
-  if([1,2].some(pp=>B.sides[pp].field.some(m=>alive(m)&&m.ability==="かがくへんかガス")))cond.push("かがくへんかガス（特性無効）");
-  if(B.trickroom)cond.push(`トリックルーム(残${B.trickroom})`);
-  [1,2].forEach(p=>{
-    const fx=B.sides[p].fx; const t=[];
-    const mask=B.hideInfo&&viewer&&p!==viewer;
-    const rem=(v,clay)=>{ if(mask&&clay){ const r=v-3; return r>0?r:"?"; } return v; };
-    if(fx.reflect)t.push(`リフレクター(残${rem(fx.reflect,fx.reflectClay)})`);
-    if(fx.light)t.push(`ひかりのかべ(残${rem(fx.light,fx.lightClay)})`);
-    if(fx.tailwind)t.push(`おいかぜ(残${fx.tailwind})`);
-    if(fx.safeguard)t.push(`しんぴのまもり(残${fx.safeguard})`);
-    if(t.length)cond.push(`P${p}:${t.join("/")}`);
-  });
-  let html=`<div class="note" style="text-align:center;">${cond.join("　")||""}</div><div class="board"><div class="note" style="text-align:center;">プレイヤー2　控え:${benchList(2,hideFor(2))}</div><div class="row">`;
-  [2,1,0].forEach(p=>{ html+=slotHtml(f2[p],"P2の"+POSNAME[p],activeSide===2&&activePos===p,hideFor(2)); });
+  if(B.weather)cond.push({sun:"晴れ",rain:"あめ",sand:"砂あらし"}[B.weather]);
+  if(B.terrain==="psy")cond.push("サイコフィールド");
+  if(B.terrain==="grass")cond.push("グラスフィールド");
+  if(B.trickroom)cond.push("トリックルーム");
+  [1,2].forEach(p=>{const fx=B.sides[p].fx; const t=[]; if(fx.reflect)t.push("リフレクター"); if(fx.light)t.push("ひかりのかべ"); if(fx.tailwind)t.push("おいかぜ"); if(t.length)cond.push(`P${p}:${t.join("/")}`);});
+  let html=`<div class="note" style="text-align:center;">${cond.join("　")||""}</div><div class="board"><div class="note" style="text-align:center;">プレイヤー2　控え:${benchList(2)}</div><div class="row">`;
+  [2,1,0].forEach(p=>{ html+=slotHtml(f2[p],"P2の"+POSNAME[p],activeSide===2&&activePos===p); });
   html+=`</div><div class="row">`;
-  [0,1,2].forEach(p=>{ html+=slotHtml(f1[p],"P1の"+POSNAME[p],activeSide===1&&activePos===p,hideFor(1)); });
-  html+=`</div><div class="note" style="text-align:center;">プレイヤー1　控え:${benchList(1,hideFor(1))}</div></div>`;
+  [0,1,2].forEach(p=>{ html+=slotHtml(f1[p],"P1の"+POSNAME[p],activeSide===1&&activePos===p); });
+  html+=`</div><div class="note" style="text-align:center;">プレイヤー1　控え:${benchList(1)}</div></div>`;
   return html;
 }
-function benchList(p,hide){
+function benchList(p){
   const b=benchMons(p);
-  return b.length? b.map(m=>hide?`${esc(m.name)}(${Math.ceil(m.hp/m.maxhp*100)}%)`:`${esc(m.name)}(${m.hp}/${m.maxhp})`).join("、") : "なし";
+  return b.length? b.map(m=>`${esc(m.name)}(${m.hp}/${m.maxhp})`).join("、") : "なし";
 }
 function benchMons(p){ return B.sides[p].team.filter(m=>!m.fainted && !B.sides[p].field.includes(m)); }
 function rBattle(app){
   if(B.phase==="handoff"){
-    app.innerHTML=`<h1>ターン${B.turn}</h1>`+boardHtml(null,null,B.inputPlayer)+logHtml()+
+    app.innerHTML=`<h1>ターン${B.turn}</h1>`+boardHtml()+logHtml()+
      `<div class="overlay"><p>プレイヤー${B.inputPlayer}にデバイスを渡してください</p>
       <button class="big" onclick="startInput()">プレイヤー${B.inputPlayer}：コマンド入力</button></div>`;
     scrollLog(); return;
@@ -1264,7 +837,7 @@ function scrollLog(){ const l=$("log"); if(l)l.scrollTop=l.scrollHeight; }
 window.startInput=function(){
   B.phase="input";
   B.cmd={acts:{}, mega:null};
-  B.cmdList=[0,1,2].filter(p=>alive(B.sides[B.inputPlayer].field[p])&&!B.sides[B.inputPlayer].field[p].vol.commander);
+  B.cmdList=[0,1,2].filter(p=>alive(B.sides[B.inputPlayer].field[p]));
   B.cmdIdx=0; B.sub="action"; B.chosenMove=null;
   render();
 };
@@ -1279,7 +852,7 @@ function rInput(app){
   const pos=B.cmdList[B.cmdIdx]; const mon=fs[pos];
   const lock=lockedAction(mon);
   if(lock){ B.cmd.acts[pos]={kind:lock.kind, pos}; B.cmdIdx++; rInput(app); return; }
-  let html=`<h1>ターン${B.turn}｜プレイヤー${pl} 入力</h1>`+boardHtml(pl,pos,pl);
+  let html=`<h1>ターン${B.turn}｜プレイヤー${pl} 入力</h1>`+boardHtml(pl,pos);
   html+=`<div class="panel"><h2>${POSNAME[pos]}：${esc(mon.name)} の行動</h2>`;
   const done=Object.keys(B.cmd.acts).map(p=>{
     const a=B.cmd.acts[p]; const m=fs[p];
@@ -1291,44 +864,27 @@ function rInput(app){
   if(done.length)html+=`<div class="note">決定済み: ${done.map(esc).join(" ／ ")}</div>`;
   if(B.sub==="action"){
     const d=DEX[mon.dex];
-    if((d.mega||d.mega2) && !mon.isMega && !B.sides[pl].megaUsed && megaFor(mon)){
+    if(d.mega && !mon.isMega && !B.sides[pl].megaUsed && mon.item===d.mega.stone){
       const on=B.cmd.mega===pos;
       html+=`<div><label class="chk ${on?"on":""}" style="width:auto;"><input type="checkbox" ${on?"checked":""} onchange="toggleMega(${pos})">このターン、メガシンカする！</label></div>`;
     }
     let usable=mon.cfg.moves.slice();
     if(mon.vol.encore && usable.includes(mon.vol.encore)) usable=[mon.vol.encore];
-    if(mon.vol.choiceMove && isChoiceItem(mon.item) && usable.includes(mon.vol.choiceMove)) usable=[mon.vol.choiceMove];
-    const blocked=name=>{
-      const M=MOVES[name]; if(!M)return true;
-      if(mon.vol.taunt && M.cat==="X")return true;
-      if(mon.item==="とつげきチョッキ" && M.cat==="X")return true;
-      if(name==="ブラッドムーン" && mon.vol.lastMove==="ブラッドムーン")return true;
-      if(name===mon.vol.disabled)return true;
-      return false;
-    };
-    if(usable.every(blocked)){
-      const M=MOVES["わるあがき"];
-      html+=`<button class="mvbtn" onclick="pickMove('わるあがき')">わるあがき<br><span class="note">出せる技がない／ノーマル 物理 威力50 必中・相性無視・反動1/4・対象ランダム</span></button>`;
-    } else {
-      usable.forEach(name=>{
-        const M=MOVES[name];
-        const dis=blocked(name)?"disabled":"";
-        const info=M.cat==="X"?"変化":`${M.t} ${M.cat==="P"?"物理":"特殊"} 威力${M.p}`;
-        html+=`<button class="mvbtn" ${dis} onclick="pickMove('${name}')">${name}<br><span class="note">${info}${rangeNote(M)}</span></button>`;
-      });
-    }
+    if(mon.vol.choiceMove && mon.item==="こだわりスカーフ" && usable.includes(mon.vol.choiceMove)) usable=[mon.vol.choiceMove];
+    usable.forEach(name=>{
+      const M=MOVES[name];
+      let dis="";
+      if(mon.vol.taunt && M.cat==="X") dis="disabled";
+      if(mon.item==="とつげきチョッキ" && M.cat==="X") dis="disabled";
+      if(name==="ブラッドムーン" && mon.vol.lastMove==="ブラッドムーン") dis="disabled";
+      const info=M.cat==="X"?"変化":`${M.t} ${M.cat==="P"?"物理":"特殊"} 威力${M.p}`;
+      html+=`<button class="mvbtn" ${dis} onclick="pickMove('${name}')">${name}<br><span class="note">${info}${rangeNote(M)}</span></button>`;
+    });
     html+=`<br>`;
     if(pos!==1) html+=`<button onclick="pickShift(${pos})">ムーブ（中央と入替）</button>`;
     const bench=availableBench(pl);
-    const trapped=isTrapped(mon,pos);
-    if(bench.length&&!mon.vol.commanded&&!trapped) html+=`<button onclick="B.sub='switch';render()">交代する</button>`;
-    else if(bench.length&&trapped) html+=`<span class="note">かげふみで交代できない！</span>`;
-    else if(mon.vol.commanded) html+=`<span class="note">合体中は交代できない</span>`;
+    if(bench.length) html+=`<button onclick="B.sub='switch';render()">交代する</button>`;
     if(B.cmdIdx>0) html+=`<button class="danger" onclick="backCmd()">前に戻る</button>`;
-  } else if(B.sub==="orderstat"){
-    html+=`<div>いっちょうあがり：上げる能力を選択（一度選ぶとこのポケモンは以後同じ能力のみ）</div>`;
-    [["a","攻撃"],["b","防御"],["s","素早さ"]].forEach(pr=>{ html+=`<button onclick="pickOrderStat('${pr[0]}')">${pr[1]}</button>`; });
-    html+=`<br><button class="danger" onclick="B.sub='action';B.chosenMove=null;B.pendTgt=null;render()">戻る</button>`;
   } else if(B.sub==="switch"){
     html+=`<div>交代先を選択:</div>`;
     availableBench(pl).forEach(m=>{
@@ -1337,25 +893,14 @@ function rInput(app){
     html+=`<br><button class="danger" onclick="B.sub='action';render()">戻る</button>`;
   } else {
     const name=B.chosenMove; const M=MOVES[name];
-    html+=`<div>技: ${esc(name)} → 対象を選択（盤面と同じ配置／赤=相手・青=味方）</div>`;
+    html+=`<div>技: ${esc(name)} → 対象を選択</div>`;
     const tgts=legalTargets(mon,pos,M);
-    const foeTg=tgts.filter(([s])=>s!==pl);
-    if(tgts.length===0) html+=`<div class="note">対象がいません</div>`;
-    if(foeTg.length===0) html+=`<button onclick="pickTarget(-1,-1)">空打ちする（相手に届かず失敗する）</button>`;
-    const cell=(s,i)=>{
-      const t=B.sides[s].field[i];
-      const sel=tgts.some(x=>x[0]===s&&x[1]===i);
-      if(sel&&t) return `<button class="${s===pl?"tally":"tfoe"}" style="width:160px;" onclick="pickTarget(${s},${i})">${esc(t.name)}</button>`;
-      let label="";
-      if(t&&alive(t)) label=(s===pl&&i===pos)?`（自分）`:esc(t.name);
-      return `<span class="note" style="display:inline-block;width:160px;margin:3px;text-align:center;">${label}</span>`;
-    };
-    html+=`<div style="margin:6px 0;"><div>`;
-    [2,1,0].forEach(i=>{ html+=cell(2,i); });
-    html+=`</div><div>`;
-    [0,1,2].forEach(i=>{ html+=cell(1,i); });
-    html+=`</div></div>`;
-    html+=`<button class="danger" onclick="B.sub='action';B.chosenMove=null;render()">技選択に戻る</button>`;
+    if(tgts.length===0) html+=`<div class="note">対象がいません（そのまま選ぶと失敗します）</div><button onclick="pickTarget(-1,-1)">それでも使う</button>`;
+    tgts.forEach(([ts,tp])=>{
+      const t=B.sides[ts].field[tp];
+      html+=`<button class="${ts===pl?"tally":"tfoe"}" onclick="pickTarget(${ts},${tp})">${ts===pl?"味方":"相手"}の${POSNAME[tp]} ${esc(t.name)}</button>`;
+    });
+    html+=`<br><button class="danger" onclick="B.sub='action';B.chosenMove=null;render()">技選択に戻る</button>`;
   }
   html+=`</div>`+logHtml();
   app.innerHTML=html;
@@ -1368,10 +913,10 @@ function legalTargets(mon,pos,M){
   const pl=mon.side, fp=foeSide(pl);
   const res=[];
   if(M.rng==="ALLY"){
-    B.sides[pl].field.forEach((m,p2)=>{ if(alive(m)&&m!==mon&&!m.vol.commander&&(!M.adj||Math.abs(p2-pos)===1))res.push([pl,p2]); });
+    B.sides[pl].field.forEach((m,p2)=>{ if(alive(m)&&m!==mon&&(!M.adj||Math.abs(p2-pos)===1))res.push([pl,p2]); });
   } else if(M.rng==="S"){
-    B.sides[fp].field.forEach((m,p2)=>{ if(alive(m)&&!m.vol.commander&&(ignoresReach(M)||reachable(pos,p2)))res.push([fp,p2]); });
-    B.sides[pl].field.forEach((m,p2)=>{ if(alive(m)&&m!==mon&&!m.vol.commander&&(ignoresReach(M)||Math.abs(p2-pos)===1))res.push([pl,p2]); });
+    B.sides[fp].field.forEach((m,p2)=>{ if(alive(m)&&(ignoresReach(M)||reachable(pos,p2)))res.push([fp,p2]); });
+    B.sides[pl].field.forEach((m,p2)=>{ if(alive(m)&&m!==mon&&(ignoresReach(M)||Math.abs(p2-pos)===1))res.push([pl,p2]); });
   }
   return res;
 }
@@ -1384,17 +929,8 @@ window.pickMove=function(name){
 };
 window.pickTarget=function(ts,tp){
   const pos=B.cmdList[B.cmdIdx];
-  const mon=B.sides[B.inputPlayer].field[pos];
-  if(MOVES[B.chosenMove]&&MOVES[B.chosenMove].fx==="orderup"&&!mon.orderLock){
-    B.pendTgt={ts,tp}; B.sub="orderstat"; render(); return;
-  }
   B.cmd.acts[pos]={kind:"move",pos,move:B.chosenMove,ts,tp};
   B.chosenMove=null; B.cmdIdx++; B.sub="action"; render();
-};
-window.pickOrderStat=function(k){
-  const pos=B.cmdList[B.cmdIdx];
-  B.cmd.acts[pos]={kind:"move",pos,move:B.chosenMove,ts:B.pendTgt.ts,tp:B.pendTgt.tp,orderStat:k};
-  B.chosenMove=null; B.pendTgt=null; B.cmdIdx++; B.sub="action"; render();
 };
 window.pickShift=function(pos){ B.cmd.acts[pos]={kind:"shift",pos}; B.cmdIdx++; render(); };
 window.pickSwitch=function(pos,benchName){
@@ -1414,13 +950,11 @@ function finishInput(){
 }
 /* =============== ダメージ計算 =============== */
 function typeEff(att,M,mType,def){
-  if(M&&M.fx==="struggle")return 1;
   let e=1;
   for(const t of def.types){
     let m=(CHART[mType]&&CHART[mType][t]!==undefined)?CHART[mType][t]:1;
-    if(M&&M.fx==="freezedry"&&t==="みず")m=2;
     if(m===0){
-      if(t==="ゴースト"&&(mType==="ノーマル"||mType==="かくとう")&&(effAbility(att)==="きもったま"||effAbility(att)==="しんがん"))m=1;
+      if(t==="ゴースト"&&(mType==="ノーマル"||mType==="かくとう")&&(att.ability==="きもったま"||att.ability==="しんがん"))m=1;
     }
     e*=m;
   }
@@ -1428,9 +962,8 @@ function typeEff(att,M,mType,def){
 }
 function moveTypeOf(att,name,M){
   let mt=M.t;
-  if(M.fx==="weatherball"){ mt = B.weather==="sun"?"ほのお":B.weather==="rain"?"みず":B.weather==="sand"?"いわ":B.weather==="snow"?"こおり":"ノーマル"; }
-  if(effAbility(att)==="フェアリースキン"&&mt==="ノーマル") mt="フェアリー";
-  if(effAbility(att)==="スカイスキン"&&mt==="ノーマル") mt="ひこう";
+  if(M.fx==="weatherball"){ mt = B.weather==="sun"?"ほのお":B.weather==="rain"?"みず":B.weather==="sand"?"いわ":"ノーマル"; }
+  if(att.ability==="フェアリースキン"&&mt==="ノーマル") mt="フェアリー";
   return mt;
 }
 function movePowerOf(att,name,M,def){
@@ -1442,64 +975,33 @@ function movePowerOf(att,name,M,def){
   if(M.fx==="storedpower"){ p=20+20*STATKEYS.slice(1).reduce((s,k)=>s+Math.max(0,att.boosts[k]),0); }
   if(M.fx==="expandingforce"&&B.terrain==="psy")p=Math.floor(p*1.5);
   if(M.fx==="knockoff"&&def&&def.item!=="なし"&&!ITEMS[def.item].stone)p=Math.floor(p*1.5);
-  if(effAbility(att)==="フェアリースキン"&&M.t==="ノーマル")p=Math.floor(p*1.2);
-  if(effAbility(att)==="スカイスキン"&&M.t==="ノーマル")p=Math.floor(p*1.2);
-  if(effAbility(att)==="すてみ"&&M.recoil)p=Math.floor(p*1.2);
+  if(att.ability==="フェアリースキン"&&M.t==="ノーマル")p=Math.floor(p*1.2);
+  if(att.ability==="すてみ"&&M.recoil)p=Math.floor(p*1.2);
   if(M.fx==="acrobatics"&&att.item==="なし")p*=2;
-  if(M.fx==="ragefist")p=Math.min(350,50+50*(att.rageHits||0));
-  if(M.fx==="fishious"&&def&&!def.vol.movedThisTurn)p*=2;
-  if(M.fx==="risingvolt"&&B.terrain==="elec"&&def&&grounded(def))p*=2;
-  if(B.terrain==="grass"&&name==="じしん"&&def&&grounded(def))p=Math.floor(p/2);
-  if(effAbility(att)==="テクニシャン"&&p<=60)p=Math.floor(p*1.5);
+  if(B.terrain==="grass"&&name==="じしん")p=Math.floor(p/2);
+  if(att.ability==="テクニシャン"&&p<=60)p=Math.floor(p*1.5);
   return p;
 }
 function calcDamage(att,def,name,M,opts){
   const mt=moveTypeOf(att,name,M);
-  if(mt==="じめん"&&!grounded(def)&&effAbility(att)!=="かたやぶり") return {dmg:0,eff:0,imm:`当たらない`};
+  if(mt==="じめん"&&!grounded(def)&&att.ability!=="かたやぶり") return {dmg:0,eff:0,imm:`${def.name}には当たらない`};
   const eff=typeEff(att,M,mt,def);
   if(eff===0) return {dmg:0,eff:0};
-  if(effAbility(def)==="ふしぎなまもり"&&eff<=1) return {dmg:0,eff:0,imm:"ふしぎなまもりで効かない"};
   const p=movePowerOf(att,name,M,def);
   if(p<=0) return {dmg:0,eff:1};
   const phys = M.fx==="psyshock" ? false : M.cat==="P";
   const defPhys = M.fx==="psyshock" ? true : M.cat==="P";
-  let crit=false;
-  { const critChance=M.crit===2?1:(M.crit?1/8:1/24);
-    if(effAbility(def)!=="シェルアーマー"&&Math.random()<critChance)crit=true; }
-  const igAtk = effAbility(def)==="てんねん";
-  const igDef = effAbility(att)==="てんねん"||M.fx==="sacredsword";
-  const aBoost=b=> igAtk?1:boostMul(crit?Math.max(0,b):b);
-  const dBoost=b=> igDef?1:boostMul(crit?Math.min(0,b):b);
   let A;
-  if(M.fx==="foulplay") A=def.stats.a*aBoost(def.boosts.a);
-  else if(M.fx==="bodypress") A=att.stats.b*aBoost(att.boosts.b);
-  else A = M.cat==="P" ? att.stats.a*aBoost(att.boosts.a) : att.stats.c*aBoost(att.boosts.c);
-  let D = defPhys ? def.stats.b*dBoost(def.boosts.b) : def.stats.d*dBoost(def.boosts.d);
-  // わざわい系（本人以外すべてに影響）
-  {
-    const ruin=(nm,self)=>[1,2].some(pp=>B.sides[pp].field.some(m=>alive(m)&&m!==self&&effAbility(m)===nm));
-    if(defPhys && ruin("わざわいのつるぎ",def)) D*=0.75;      // 防御ダウン
-    if(!defPhys && ruin("わざわいのうつわ",def)) D*=0.75;      // 特防ダウン
-    if(M.cat==="S" && ruin("わざわいのたま",att)) A*=0.75;     // 特攻ダウン
-    if(M.cat==="P" && ruin("わざわいのおふだ",att)) A*=0.75;   // 攻撃ダウン
-  }
-  if(B.weather==="sun"){
-    const hsA=highestStat(att), hsD=highestStat(def);
-    if(effAbility(att)==="こだいかっせい"&&((M.cat==="P"&&hsA==="a")||(M.cat==="S"&&hsA==="c")))A*=1.3;
-    if(effAbility(def)==="こだいかっせい"&&((defPhys&&hsD==="b")||(!defPhys&&hsD==="d")))D*=1.3;
-  }
-  if(B.terrain==="elec"){
-    const hsA=highestStat(att), hsD=highestStat(def);
-    if(effAbility(att)==="クォークチャージ"&&((M.cat==="P"&&hsA==="a")||(M.cat==="S"&&hsA==="c")))A*=1.3;
-    if(effAbility(def)==="クォークチャージ"&&((defPhys&&hsD==="b")||(!defPhys&&hsD==="d")))D*=1.3;
-  }
+  if(M.fx==="foulplay") A=def.stats.a*boostMul(def.boosts.a);
+  else if(M.fx==="bodypress") A=att.stats.b*boostMul(att.boosts.b);
+  else A = M.cat==="P" ? att.stats.a*boostMul(att.boosts.a) : att.stats.c*boostMul(att.boosts.c);
+  let D = defPhys ? def.stats.b*boostMul(def.boosts.b) : def.stats.d*boostMul(def.boosts.d);
   if(!defPhys && B.weather==="sand"&&def.types.includes("いわ"))D*=1.5;
-  if(defPhys && B.weather==="snow"&&def.types.includes("こおり"))D*=1.5;
   if(def.item==="しんかのきせき")D*=1.5;
   if(!defPhys && def.item==="とつげきチョッキ")D*=1.5;
   if(B.weather==="sun"){
-    if(M.cat==="P"&&M.fx!=="foulplay"&&M.fx!=="bodypress"&&B.sides[att.side].field.some(m=>alive(m)&&effAbility(m)==="フラワーギフト"))A*=1.5;
-    if(!defPhys&&B.sides[def.side].field.some(m=>alive(m)&&effAbility(m)==="フラワーギフト"))D*=1.5;
+    if(M.cat==="P"&&M.fx!=="foulplay"&&M.fx!=="bodypress"&&B.sides[att.side].field.some(m=>alive(m)&&m.ability==="フラワーギフト"))A*=1.5;
+    if(!defPhys&&B.sides[def.side].field.some(m=>alive(m)&&m.ability==="フラワーギフト"))D*=1.5;
   }
   let dmg=(22*p*(A/D))/50+2;
   let mod=1;
@@ -1508,42 +1010,34 @@ function calcDamage(att,def,name,M,opts){
   if(B.weather==="rain"){ if(mt==="みず")mod*=1.5; if(mt==="ほのお")mod*=0.5; }
   if(B.terrain==="psy"&&mt==="エスパー"&&grounded(att))mod*=1.3;
   if(B.terrain==="grass"&&mt==="くさ"&&grounded(att))mod*=1.3;
-  if(B.terrain==="mist"&&mt==="ドラゴン"&&grounded(def))mod*=0.5;
-  if(B.terrain==="elec"&&mt==="でんき"&&grounded(att))mod*=1.3;
-  if(crit)mod*=1.5;
+  let crit=false;
+  const critChance=M.crit?1/8:1/24;
+  if(def.ability!=="シェルアーマー"&&Math.random()<critChance){crit=true;mod*=1.5;}
   const dfx=B.sides[def.side].fx;
-  if(!crit&&effAbility(att)!=="すりぬけ"){
+  if(!crit&&att.ability!=="すりぬけ"){
     if(defPhys&&dfx.reflect)mod*=0.5;
     if(!defPhys&&dfx.light)mod*=0.5;
   }
-  if(att.types.includes(mt))mod*=(effAbility(att)==="てきおうりょく")?2:1.5;
+  if(att.types.includes(mt))mod*=(att.ability==="てきおうりょく")?2:1.5;
   mod*=eff;
-  if(phys&&att.status==="brn"&&effAbility(att)!=="こんじょう")mod*=0.5;
-  if(effAbility(att)==="かたいツメ"&&M.c)mod*=1.3;
-  if(effAbility(att)==="メガランチャー"&&M.pul)mod*=1.5;
-  if(effAbility(att)==="フェアリーオーラ"&&mt==="フェアリー")mod*=1.33;
-  if(effAbility(att)==="トランジスタ"&&mt==="でんき")mod*=1.3;
-  if(effAbility(att)==="すなのちから"&&B.weather==="sand"&&["いわ","じめん","はがね"].includes(mt))mod*=1.3;
-  if(effAbility(att)==="ちからずく"&&M.sec)mod*=1.3;
-  if(effAbility(att)==="がんじょうあご"&&["こおりのキバ","かみなりのキバ","ほのおのキバ","えらがみ","サイコファング","かみくだく"].includes(name))mod*=1.5;
-  if(att.vol.flashfire&&mt==="ほのお")mod*=1.5;
-  if(B.sides[def.side].field.some(m=>alive(m)&&m!==def&&effAbility(m)==="フレンドガード"))mod*=0.75;
-  if(effAbility(att)==="こんじょう"&&att.status&&phys)mod*=1.5;
-  if(effAbility(att)==="サンパワー"&&B.weather==="sun"&&M.cat==="S")mod*=1.5;
-  if((effAbility(att)==="もうか"&&mt==="ほのお"||effAbility(att)==="げきりゅう"&&mt==="みず"||effAbility(att)==="しんりょく"&&mt==="くさ")&&att.hp<=att.maxhp/3)mod*=1.5;
-  if(effAbility(att)==="そうだいしょう"){ const f=B.sides[att.side].team.filter(m=>m.fainted).length; mod*=(1+0.1*f); }
-  if(effAbility(att)!=="かたやぶり"){
-    if(effAbility(def)==="あついしぼう"&&(mt==="ほのお"||mt==="こおり"))mod*=0.5;
-    if(effAbility(def)==="たいねつ"&&mt==="ほのお")mod*=0.5;
+  if(phys&&att.status==="brn"&&att.ability!=="こんじょう")mod*=0.5;
+  if(att.ability==="かたいツメ"&&M.c)mod*=1.3;
+  if(att.ability==="メガランチャー"&&M.pul)mod*=1.5;
+  if(att.ability==="フェアリーオーラ"&&mt==="フェアリー")mod*=1.33;
+  if(att.ability==="こんじょう"&&att.status&&phys)mod*=1.5;
+  if(att.ability==="サンパワー"&&B.weather==="sun"&&M.cat==="S")mod*=1.5;
+  if((att.ability==="もうか"&&mt==="ほのお"||att.ability==="げきりゅう"&&mt==="みず"||att.ability==="しんりょく"&&mt==="くさ")&&att.hp<=att.maxhp/3)mod*=1.5;
+  if(att.ability==="そうだいしょう"){ const f=B.sides[att.side].team.filter(m=>m.fainted).length; mod*=(1+0.1*f); }
+  if(att.ability!=="かたやぶり"){
+    if(def.ability==="あついしぼう"&&(mt==="ほのお"||mt==="こおり"))mod*=0.5;
+    if(def.ability==="たいねつ"&&mt==="ほのお")mod*=0.5;
   }
   if(att.item==="いのちのたま")mod*=1.3;
-  if(att.item==="こだわりハチマキ"&&M.cat==="P")mod*=1.5;
-  if(att.item==="こだわりメガネ"&&M.cat==="S")mod*=1.5;
-  const typeBoost={"くろいメガネ":"あく","もくたん":"ほのお","しんぴのしずく":"みず","ようせいのハネ":"フェアリー","メタルコート":"はがね","のろいのおふだ":"ゴースト","するどいくちばし":"ひこう","まがったスプーン":"エスパー","とけないこおり":"こおり","シルクのスカーフ":"ノーマル","りゅうのキバ":"ドラゴン"};
+  const typeBoost={"くろいメガネ":"あく","もくたん":"ほのお","しんぴのしずく":"みず","ようせいのハネ":"フェアリー","メタルコート":"はがね","のろいのおふだ":"ゴースト","するどいくちばし":"ひこう","まがったスプーン":"エスパー"};
   if(typeBoost[att.item]===mt)mod*=1.2;
   if(att.item==="たつじんのおび"&&eff>1)mod*=1.2;
   if(def.item&&ITEMS[def.item]&&ITEMS[def.item].berry===mt&&eff>1&&!def.itemUsed){
-    const blocked = B.sides[att.side].field.some(m=>alive(m)&&effAbility(m)==="きんちょうかん");
+    const blocked = B.sides[att.side].field.some(m=>alive(m)&&m.ability==="きんちょうかん");
     if(!blocked){ mod*=0.5; log(`${def.name}は${def.item}で威力を弱めた！`); consumeItem(def); }
   }
   dmg=Math.max(1,Math.floor(dmg*mod*(0.85+Math.random()*0.15)));
@@ -1566,7 +1060,7 @@ function resolveTurn(){
     const mp=B.pending[p].mega;
     if(mp!==null&&mp!==undefined){
       const mon=B.sides[p].field[mp];
-      if(alive(mon)&&!mon.isMega&&megaFor(mon)&&!B.sides[p].megaUsed){
+      if(alive(mon)&&!mon.isMega&&DEX[mon.dex].mega&&!B.sides[p].megaUsed){
         B.sides[p].megaUsed=true;
         const old=mon.name;
         megaEvolve(mon);
@@ -1583,8 +1077,8 @@ function actPrio(x){
   let prio=0;
   if(x.a.kind==="move"){
     const M=MOVES[x.a.move]; prio=M.prio||0;
-    if(effAbility(x.mon)==="いたずらごころ"&&M.cat==="X")prio+=1;
-    if(effAbility(x.mon)==="はやてのつばさ"&&x.mon.hp===x.mon.maxhp&&M.t==="ひこう")prio+=1;
+    if(x.mon.ability==="いたずらごころ"&&M.cat==="X")prio+=1;
+    if(x.mon.ability==="はやてのつばさ"&&M.t==="ひこう"&&x.mon.hp===x.mon.maxhp)prio+=1;
     if(M.fx==="grassyglide"&&B.terrain==="grass")prio+=1;
   }
   return prio;
@@ -1594,18 +1088,15 @@ function continueResolution(){
   for(;;){
     E.remaining=E.remaining.filter(x=>alive(x.mon)&&fieldPos(x.mon)>=0);
     if(E.remaining.length===0)break;
-    let best=E.remaining.find(x=>x.forceFirst)||null, bestSpd=0, bestPrio=0;
-    if(!best)for(const x of E.remaining){
-      let pr=actPrio(x);
-      if(x.mon.item==="イバンのみ"&&!x.mon.itemUsed&&x.mon.hp<=x.mon.maxhp/4&&x.a.kind==="move")pr+=0.5;
+    let best=null, bestSpd=0, bestPrio=0;
+    for(const x of E.remaining){
+      const pr=actPrio(x);
       const spd=(B.trickroom? -effSpe(x.mon) : effSpe(x.mon))+Math.random()*0.01;
       if(!best||pr>bestPrio||(pr===bestPrio&&spd>bestSpd)){ best=x; bestSpd=spd; bestPrio=pr; }
     }
-    best.forceFirst=false;
     E.remaining.splice(E.remaining.indexOf(best),1);
     execAction(best, E.movedSet, E.remaining);
     E.movedSet.add(best.mon);
-    best.mon.vol.movedThisTurn=true;
     if(checkWin())return;
     if(B.midSwitch){ B.phase="midswitch"; render(); return; }
   }
@@ -1626,42 +1117,38 @@ function continueResolution(){
 }
 function autoCenter(){
   const f1=B.sides[1].field, f2=B.sides[2].field;
-  const a1=[0,1,2].filter(i=>alive(f1[i])&&!f1[i].vol.commander), a2=[0,1,2].filter(i=>alive(f2[i])&&!f2[i].vol.commander);
+  const a1=[0,1,2].filter(i=>alive(f1[i])), a2=[0,1,2].filter(i=>alive(f2[i]));
   if(a1.length===0||a2.length===0)return;
   let reach=false;
   for(const i of a1)for(const j of a2){ if(Math.abs(2-i-j)<=1)reach=true; }
   if(reach)return;
-  [1,2].forEach(p=>{
-    const f=B.sides[p].field;
-    const idx=f.findIndex(m=>alive(m)&&!m.vol.commander);
-    if(idx>=0&&idx!==1){ const tmp=f[1]; f[1]=f[idx]; f[idx]=tmp||null; f[1].vol.firstTurn=true; f[1].vol.justEntered=true; if(f[idx])f[idx].vol.firstTurn=true; }
-  });
+  [1,2].forEach(p=>{ const f=B.sides[p].field; const idx=f.findIndex(m=>alive(m)); if(idx>=0&&idx!==1){ f[1]=f[idx]; f[idx]=null; } });
   log("お互いの攻撃が届かないため自動リセットムーブ！両者のポケモンが中央へ移動した");
 }
 function doSwitch(mon, benchName){
   const p=mon.side;
-  if(mon.vol.commanded||mon.vol.commander){ log(`${mon.name}は合体していて交代できない！`); return; }
   const bench=benchMons(p).find(m=>m.name===benchName);
   const pos=fieldPos(mon);
   if(!bench||pos<0)return;
-  if(effAbility(mon)==="さいせいりょく"&&mon.hp>0){ mon.hp=Math.min(mon.maxhp,mon.hp+Math.floor(mon.maxhp/3)); }
+  if(mon.ability==="さいせいりょく"&&mon.hp>0){ mon.hp=Math.min(mon.maxhp,mon.hp+Math.floor(mon.maxhp/3)); }
   mon.boosts={a:0,b:0,c:0,d:0,s:0}; mon.vol={};
   B.sides[p].field[pos]=bench;
-  bench.vol.firstTurn=true; bench.vol.justEntered=true;
+  bench.vol.firstTurn=true;
   log(`P${p}は${mon.name}を引っ込めて${bench.name}を繰り出した！`);
-  if(mon.ability==="かがくへんかガス"){ gasGone(bench); } else { onEntry(bench); }
+  onEntry(bench);
 }
 function protectedCheck(att,def,M,isSpread){
   const dfx=B.sides[def.side].fx;
   if(def.vol.protect){
+    if(M.fx==="feint"){ def.vol.protect=false; log(`${att.name}のフェイント！${def.name}の守りを打ち破った！`); return false; }
     return "protect";
   }
   if(isSpread&&dfx.wide)return "wide";
   let eprio=(M.prio||0);
   if(M.fx==="grassyglide"&&B.terrain==="grass")eprio+=1;
-  if(effAbility(att)==="はやてのつばさ"&&att.hp===att.maxhp&&M.t==="ひこう")eprio+=1;
+  if(att.ability==="はやてのつばさ"&&M.t==="ひこう"&&att.hp===att.maxhp)eprio+=1;
   if(eprio>0&&M.cat!=="X"&&dfx.fast)return "fast";
-  if(eprio>0&&att.side!==def.side&&B.sides[def.side].field.some(m=>alive(m)&&effAbility(m)==="テイルアーマー"))return "armortail";
+  if(eprio>0&&att.side!==def.side&&B.sides[def.side].field.some(m=>alive(m)&&m.ability==="テイルアーマー"))return "armortail";
   if(eprio>0&&B.terrain==="psy"&&grounded(def)&&att.side!==def.side)return "terrain";
   return false;
 }
@@ -1689,7 +1176,7 @@ function execAction(x, movedSet, allActs){
     else { log(`${mon.name}は凍って動けない！`); return; }
   }
   if(mon.vol.flinch){ mon.vol.flinch=false;
-    if(effAbility(mon)!=="せいしんりょく"){ log(`${mon.name}はひるんで動けない！`); return; }
+    if(mon.ability!=="せいしんりょく"){ log(`${mon.name}はひるんで動けない！`); return; }
   }
   if(mon.status==="par"&&Math.random()<0.1){ log(`${mon.name}は体がしびれて動けない！`); return; }
   if(mon.vol.confusion){
@@ -1707,7 +1194,6 @@ function execAction(x, movedSet, allActs){
     if(cur===1){ log(`${mon.name}のムーブは失敗した（既に中央）`); return; }
     const f=B.sides[p].field; const other=f[1];
     f[1]=mon; f[cur]=other||null;
-    mon.vol.firstTurn=true; mon.vol.justEntered=true;
     log(`P${p} ${mon.name}はムーブで中央へ移動！${other?`（${other.name}は${POSNAME[cur]}へ）`:""}`);
     return;
   }
@@ -1718,33 +1204,28 @@ function execAction(x, movedSet, allActs){
     mon.vol.charging=null;
   } else {
     name=a.move; M=MOVES[name];
-    targetInfo={ts:a.ts, tp:a.tp, orderStat:a.orderStat};
-    if(!M){ log(`${mon.name}は技を思い出せない！`); return; }
+    targetInfo={ts:a.ts, tp:a.tp};
     if(mon.vol.encore&&MOVES[mon.vol.encore]&&name!==mon.vol.encore){
       log(`${mon.name}はアンコールで${mon.vol.encore}しか出せない！`);
       name=mon.vol.encore; M=MOVES[name];
     }
   }
-  if(a.kind==="move"&&mon.item==="イバンのみ"&&!mon.itemUsed&&mon.hp<=mon.maxhp/4){ consumeItem(mon); log(`${mon.name}はイバンのみで先に動ける！`); }
-  if(a.kind==="move"&&mon.vol.taunt&&M&&M.cat==="X"){ log(`${mon.name}はちょうはつで変化技が出せない！`); return; }
-  if(a.kind!=="chargefire"&&mon.vol.disabled===name){ log(`${mon.name}は かなしばりで ${name} が出せない！`); return; }
   if(M.fx==="solar"&&a.kind!=="chargefire"){
     if(B.weather!=="sun"){
-      if(mon.item==="パワフルハーブ"&&!mon.itemUsed){ consumeItem(mon); log(`${mon.name}はパワフルハーブで力を蓄えた！`); }
-      else { mon.vol.charging={move:name,ts:targetInfo.ts,tp:targetInfo.tp}; log(`${mon.name}は日光を吸収している！`); return; }
+      mon.vol.charging={move:name,ts:targetInfo.ts,tp:targetInfo.tp};
+      log(`${mon.name}は日光を吸収している！`); return;
     }
   }
   if(M.fx==="electroshot"&&a.kind!=="chargefire"){
     applyBoost(mon,{c:1},mon,`${mon.name}は電気を溜めている`);
     if(B.weather!=="rain"){
-      if(mon.item==="パワフルハーブ"&&!mon.itemUsed){ consumeItem(mon); log(`${mon.name}はパワフルハーブで一気に放った！`); }
-      else { mon.vol.charging={move:name,ts:targetInfo.ts,tp:targetInfo.tp}; return; }
+      mon.vol.charging={move:name,ts:targetInfo.ts,tp:targetInfo.tp};
+      return;
     }
   }
   mon.vol.lastMove=name;
-  (mon.vol.usedMoves=mon.vol.usedMoves||{})[name]=1;
   mon.vol.lastTarget=targetInfo;
-  if(isChoiceItem(mon.item))mon.vol.choiceMove=name;
+  if(mon.item==="こだわりスカーフ")mon.vol.choiceMove=name;
   if(M.fx==="fakeout"&&!mon.vol.firstTurn){ log(`${mon.name}のねこだまし！しかし失敗した`); return; }
   log(`P${p} ${mon.name}（${POSNAME[fieldPos(mon)]}）の ${name}！`);
   execMove(mon,name,M,targetInfo,movedSet,allActs);
@@ -1752,26 +1233,16 @@ function execAction(x, movedSet, allActs){
 function execMove(mon,name,M,targetInfo,movedSet,allActs){
   const p=mon.side, fp=foeSide(p), pos=fieldPos(mon);
   if(M.cat==="X"){ execStatus(mon,name,M,targetInfo); return; }
-  if(M.fx==="lastresort"){
-    const others=(mon.cfg.moves||[]).filter(n=>n!=="とっておき");
-    const used=mon.vol.usedMoves||{};
-    if(others.length&&!others.every(n=>used[n])){ log(`　しかし失敗した！（他の技をすべて使ってから）`); return; }
-  }
   let targets=[];
-  const wideNow = (M.fx==="expandingforce"&&B.terrain==="psy"&&grounded(mon));
-  if(M.rng==="SP"||wideNow){
-    targets=B.sides[fp].field.map((m,i)=>[fp,i,m]).filter(([s,i,m])=>alive(m)&&!m.vol.commander&&(ignoresReach(M)||reachable(pos,i)));
+  if(M.rng==="SP"){
+    targets=B.sides[fp].field.map((m,i)=>[fp,i,m]).filter(([s,i,m])=>alive(m)&&(ignoresReach(M)||reachable(pos,i)));
   } else if(M.rng==="ADJ"){
-    targets=B.sides[fp].field.map((m,i)=>[fp,i,m]).filter(([s,i,m])=>alive(m)&&!m.vol.commander&&reachable(pos,i));
-    B.sides[p].field.forEach((m,i)=>{ if(alive(m)&&m!==mon&&!m.vol.commander&&Math.abs(i-pos)===1)targets.push([p,i,m]); });
+    targets=B.sides[fp].field.map((m,i)=>[fp,i,m]).filter(([s,i,m])=>alive(m)&&reachable(pos,i));
+    B.sides[p].field.forEach((m,i)=>{ if(alive(m)&&m!==mon&&Math.abs(i-pos)===1)targets.push([p,i,m]); });
   } else {
     let ts=targetInfo.ts, tp=targetInfo.tp;
-    if(M.fx==="struggle"){ ts=-1; tp=-1; }
-    const redir=B.sides[fp].field.find(m=>alive(m)&&!m.vol.commander&&m.vol.redirect&&!(m.vol.redirectPow&&(mon.types.includes("くさ")||effAbility(mon)==="ぼうじん"||mon.item==="ぼうじんゴーグル")));
-    if(redir&&ts===fp){
-      const rp=fieldPos(redir);
-      if(ignoresReach(M)||reachable(pos,rp)){ tp=rp; log(`　${redir.name}が技を引き寄せた！`); }
-    }
+    const redir=B.sides[fp].field.find(m=>alive(m)&&m.vol.redirect&&!(m.vol.redirectPow&&mon.types.includes("くさ")));
+    if(redir&&ts===fp){ tp=fieldPos(redir); }
     let t=(ts>=0&&ts!==null)?B.sides[ts].field[tp]:null;
     let valid=false;
     if(t&&alive(t)){
@@ -1802,174 +1273,86 @@ function execMove(mon,name,M,targetInfo,movedSet,allActs){
       const h=Math.floor(def.maxhp/2); def.hp=Math.min(def.maxhp,def.hp+h);
       log(`　${def.name}のHPが回復した！`); anyHit=true; continue;
     }
-    {
-      const mtH=moveTypeOf(mon,name,M);
-      const rodA = mtH==="でんき"?"ひらいしん" : mtH==="みず"?"よびみず" : null;
-      if(rodA&&!isSpread){
-        const rod=B.sides[ts].field.find(m=>alive(m)&&!m.vol.commander&&effAbility(m)===rodA);
-        if(rod&&rod!==def&&ts===fp){ def=rod; log(`　${rod.name}の${rodA}が${mtH==="でんき"?"電気":"水"}を引き寄せた！`); }
-        if(effAbility(def)===rodA){ applyBoost(def,{c:1},def,`${def.name}の${rodA}`); log(`　${def.name}には効かない！`); continue; }
-      }
+    if(moveTypeOf(mon,name,M)==="でんき"&&!isSpread){
+      const rod=B.sides[ts].field.find(m=>alive(m)&&m.ability==="ひらいしん");
+      if(rod&&rod!==def&&ts===fp){ def=rod; log(`　${rod.name}のひらいしんが電気を引き寄せた！`); }
+      if(def.ability==="ひらいしん"){ applyBoost(def,{c:1},def,`${def.name}のひらいしん`); log(`　${def.name}には効かない！`); continue; }
     }
-    if(effAbility(def)==="そうしょく"&&moveTypeOf(mon,name,M)==="くさ"){ applyBoost(def,{a:1},def,`${def.name}のそうしょく`); continue; }
-    if(M.snd&&effAbility(def)==="ぼうおん"){ log(`　${def.name}はぼうおんで音技を受けない！`); continue; }
-    if(moveTypeOf(mon,name,M)==="ほのお"&&effAbility(def)==="もらいび"){ def.vol.flashfire=true; log(`　${def.name}のもらいび！炎を吸収して威力が上がった！`); continue; }
-    if(M.fx==="feint"){
-      const dfx2=B.sides[def.side].fx;
-      let broke=false;
-      if(def.vol.protect){ def.vol.protect=false; def.vol.spiky=false; broke=true; }
-      if(dfx2.wide){ dfx2.wide=false; broke=true; }
-      if(dfx2.fast){ dfx2.fast=false; broke=true; }
-      if(broke)log(`　${mon.name}のフェイント！${def.name}側の守りを打ち破った！`);
-    }
+    if(def.ability==="そうしょく"&&moveTypeOf(mon,name,M)==="くさ"){ applyBoost(def,{a:1},def,`${def.name}のそうしょく`); continue; }
     const prot=protectedCheck(mon,def,M,isSpreadMove);
-    let protPierce=false;
-    if(prot==="protect"&&M.fx==="phantom"){
-      def.vol.protect=false; def.vol.spiky=false;
-      log(`　${mon.name}のゴーストダイブ！守りを消し去って攻撃した！`);
-    }
-    else if(prot==="protect"&&effAbility(mon)==="ふかしのこぶし"&&M.c){
-      log(`　${mon.name}のふかしのこぶし！守りを貫通した！（ダメージ1/4）`);
-      protPierce=true;
-    }
-    else if(prot){ log(`　${def.name}は${prot==="protect"?"まもっている":prot==="wide"?"ワイドガードに守られた":prot==="fast"?"ファストガードに守られた":prot==="armortail"?"テイルアーマーで先制技を防がれた":"サイコフィールドで先制技を防がれた"}！`);
-      if(prot==="protect"&&def.vol.spiky&&M.c){ damage(mon,Math.floor(mon.maxhp/8),`${def.name}のニードルガード`); }
-      continue; }
+    if(prot){ log(`　${def.name}は${prot==="protect"?"まもっている":prot==="wide"?"ワイドガードに守られた":prot==="fast"?"ファストガードに守られた":prot==="armortail"?"テイルアーマーで先制技を防がれた":"サイコフィールドで先制技を防がれた"}！`); continue; }
     let acc=M.acc;
     if(M.fx==="hurricane"){ if(B.weather==="rain")acc=0; else if(B.weather==="sun")acc=50; }
-    if(M.fx==="stormacc"&&B.weather==="rain")acc=0;
-    if(M.fx==="blizzard"&&B.weather==="snow")acc=0;
-    if(effAbility(mon)==="ノーガード"||effAbility(def)==="ノーガード")acc=0;
-    if(acc&&M.mh&&M.fx==="popbomb"){ /* 連続命中判定は各ヒットで行う */ }
-    else if(acc){
+    if(mon.ability==="ノーガード"||def.ability==="ノーガード")acc=0;
+    if(acc){
       let hitChance=acc/100;
       if(mon.item==="こうかくレンズ")hitChance*=1.1;
-      if(effAbility(def)==="すながくれ"&&B.weather==="sand")hitChance*=0.8;
-      if(effAbility(def)==="ゆきがくれ"&&B.weather==="snow")hitChance*=0.8;
+      if(def.ability==="すながくれ"&&B.weather==="sand")hitChance*=0.8;
       if(def.item==="ひかりのこな")hitChance*=0.9;
       if(Math.random()>hitChance){ log(`　${def.name}には当たらなかった！`); continue; }
     }
-    if(def.side===p&&effAbility(def)==="テレパシー"){ log(`　${def.name}はテレパシーで攻撃をかわした！`); continue; }
+    if(def.side===p&&def.ability==="テレパシー"){ log(`　${def.name}はテレパシーで攻撃をかわした！`); continue; }
     if(M.fx==="finalgambit"){
       const d=mon.hp;
       damage(def,d,`${mon.name}のいのちがけ`);
       mon.hp=0; faint(mon);
       anyHit=true; continue;
     }
-    if(M.fx==="superfang"){
-      if(typeEff(mon,M,moveTypeOf(mon,name,M),def)===0){ log(`　${def.name}には効果がないようだ…`); continue; }
-      const dd=damage(def,Math.max(1,Math.floor(def.hp/2)),null,{noFaint:true});
-      log(`　→ ${def.name}に${dd}ダメージ（いかりのまえば）`);
-      if(def.hp<=0&&!def.fainted)faint(def);
-      anyHit=true; totalDealt+=dd; continue;
-    }
-    let hits=M.hits||1;
-    let perHitAcc=false;
-    void perHitAcc;
-    if(M.mh){
-      const lo=M.mh[0], hi=M.mh[1];
-      const dice=(mon.item==="いかさまダイス");
-      if(M.fx==="popbomb"){
-        // ネズミざん系: 1回ごとに命中判定（ダイス時は最低4回保証）
-        perHitAcc=true;
-        const pAcc=(M.acc?M.acc/100:1)*(mon.item==="こうかくレンズ"?1.1:1);
-        let n=0;
-        if(dice){
-          if(Math.random()<pAcc){ n=4; while(n<hi&&Math.random()<pAcc)n++; }
-        } else {
-          while(n<hi&&Math.random()<pAcc)n++;
-        }
-        hits=n;
-      } else if(dice){
-        hits=(Math.random()<0.5)?4:5;
-      } else {
-        const r=Math.random();
-        hits = r<0.30?2 : r<0.60?3 : r<0.80?4 : 5;
-      }
-    }
-    if(M.fx==="beatup")hits=Math.max(1,B.sides[p].team.filter(m=>!m.fainted&&!m.status).length);
-    const pbond=effAbility(mon)==="おやこあい"&&M.cat!=="X"&&!M.hits&&M.rng==="S";
-    if(pbond)hits=2;
-    let dealt=0; let lastRes=null; const hitLogs=[];
+    const hits=M.hits||1;
+    let dealt=0; let lastRes=null;
     for(let h=0;h<hits;h++){
       if(!alive(def))break;
       const res=calcDamage(mon,def,name,M,{spread:isSpread});
-      if(pbond&&h===1)res.dmg=Math.max(1,Math.floor(res.dmg*0.25));
-      if(protPierce)res.dmg=Math.max(1,Math.floor(res.dmg/4));
       lastRes=res;
       if(res.eff===0){ log(`　${def.name}には${res.imm||"効果がないようだ"}…`); break; }
-      if(h===0&&hits===0)break;
-      dealt+=damage(def,res.dmg,null,{noFaint:true,hold:hitLogs});
+      dealt+=damage(def,res.dmg,null,{noFaint:true});
       anyHit=true;
-      def.rageHits=(def.rageHits||0)+1;
-      if(def.item==="だっしゅつボタン"&&!def.itemUsed&&alive(def)&&benchMons(def.side).length&&!def.vol.commanded&&!def.vol.commander){
-        consumeItem(def);
-        log(`　${def.name}はだっしゅつボタンで交代する！`);
-        B.midSwitch={mon:def, label:"だっしゅつボタン"};
-      }
-      if(def.item==="ふうせん"){ def.item="なし"; log(`　${def.name}のふうせんが割れた！`); if(effAbility(def)==="かるわざ"&&!def.vol.unburden){ def.vol.unburden=true; log(`　${def.name}のかるわざ！素早さが2倍になった！`); } checkSeeds(); }
-      if(effAbility(def)==="せいぎのこころ"&&res.mt==="あく")applyBoost(def,{a:1},def,`${def.name}のせいぎのこころ`);
       if(def.hp<=0)break;
     }
-    if(M.mh&&M.fx==="popbomb"&&hits===0){ log(`　${def.name}には当たらなかった！`); continue; }
-    if(hitLogs.length&&!(dealt>0&&lastRes))flushHitLogs(hitLogs);
     if(dealt>0&&lastRes){
       let note=lastRes.eff>1?"効果はバツグン！":(lastRes.eff<1?"効果はいまひとつ…":"");
-      log(`　→ ${def.name}に${dealt}ダメージ${(M.mh||M.hits)?`（${Math.min(hits,(M.hits||1))}回ヒット）`:""}${lastRes.crit?"（急所！）":""}${note?`（${note}）`:""}`);
-      flushHitLogs(hitLogs);
+      log(`　→ ${def.name}に${dealt}ダメージ${lastRes.crit?"（急所！）":""}${note?`（${note}）`:""}`);
       totalDealt+=dealt;
       if(def.hp<=0&&!def.fainted)faint(def);
-      if(lastRes.eff>1&&alive(def)&&def.item==="じゃくてんほけん"&&!def.itemUsed){
-        consumeItem(def); applyBoost(def,{a:2,c:2},def,`${def.name}のじゃくてんほけん`);
-      }
       if(M.drain){ const heal=Math.max(1,Math.floor(dealt*M.drain)); mon.hp=Math.min(mon.maxhp,mon.hp+heal); log(`　${mon.name}はHPを吸い取った！`); }
-      if(M.sec&&alive(def)&&def.item!=="おんみつマント"&&Math.random()*100<M.sec.ch){
+      if(M.sec&&alive(def)&&Math.random()*100<M.sec.ch){
         if(M.sec.fl&&!movedSet.has(def))def.vol.flinch=true;
         if(M.sec.st)applyStatus(def,M.sec.st,mon);
         if(M.sec.stat)applyBoost(def,M.sec.stat,mon,``);
         if(M.sec.selfstat)applyBoost(mon,M.sec.selfstat,mon,``);
       }
-      if(M.fx==="direclaw"&&alive(def)&&def.item!=="おんみつマント"&&Math.random()<0.5){
+      if(M.fx==="direclaw"&&alive(def)&&Math.random()<0.5){
         applyStatus(def,["psn","par","slp"][Math.floor(Math.random()*3)],mon);
       }
-      if(M.fx==="triattack"&&alive(def)&&def.item!=="おんみつマント"&&Math.random()<0.2){
+      if(M.fx==="triattack"&&alive(def)&&Math.random()<0.2){
         applyStatus(def,["brn","par"][Math.floor(Math.random()*2)],mon);
       }
       if(M.fx==="clearsmog"&&alive(def)){ def.boosts={a:0,b:0,c:0,d:0,s:0}; log(`　${def.name}の能力変化が元に戻った！`); }
-      if(M.fx==="knockoff"&&alive(def)&&def.item!=="なし"&&!ITEMS[def.item].stone){ log(`　${mon.name}は${def.name}の${def.item}をはたき落とした！`); loseItem(def); }
+      if(M.fx==="knockoff"&&alive(def)&&def.item!=="なし"&&!ITEMS[def.item].stone){ log(`　${mon.name}は${def.name}の${def.item}をはたき落とした！`); def.item="なし"; }
       if(M.fx==="breakscreen"){ const dfx=B.sides[def.side].fx; if(dfx.reflect||dfx.light){dfx.reflect=0;dfx.light=0;log(`　壁が砕け散った！`);} }
       if(M.fx==="dragontail"&&alive(def)){
         const bn=benchMons(def.side);
         if(bn.length){ const nb=bn[Math.floor(Math.random()*bn.length)]; doSwitch(def,nb.name); }
       }
       if(M.c&&alive(def)){
-        if(effAbility(def)==="さめはだ"){ damage(mon,Math.floor(mon.maxhp/8),`${def.name}のさめはだ`); }
+        if(def.ability==="さめはだ"){ damage(mon,Math.floor(mon.maxhp/8),`${def.name}のさめはだ`); }
         if(def.item==="ゴツゴツメット"){ damage(mon,Math.floor(mon.maxhp/6),`${def.name}のゴツゴツメット`); }
-        if(effAbility(def)==="せいでんき"&&Math.random()<0.3)applyStatus(mon,"par",def);
-        if(effAbility(def)==="ほのおのからだ"&&Math.random()<0.3)applyStatus(mon,"brn",def);
-        if(effAbility(mon)==="どくしゅ"&&Math.random()<0.3)applyStatus(def,"psn",mon);
+        if(def.ability==="せいでんき"&&Math.random()<0.3)applyStatus(mon,"par",def);
+        if(def.ability==="ほのおのからだ"&&Math.random()<0.3)applyStatus(mon,"brn",def);
+        if(mon.ability==="どくしゅ"&&Math.random()<0.3)applyStatus(def,"psn",mon);
       }
-      if(alive(def)&&effAbility(def)==="じきゅうりょく")applyBoost(def,{b:1},def,`${def.name}のじきゅうりょく`);
-      if(M.fx==="bind"&&alive(def)&&!def.vol.bind){ def.vol.bind=4; log(`　${def.name}は渦に閉じ込められた！`); }
-      if(mon.item==="おうじゃのしるし"&&alive(def)&&def.item!=="おんみつマント"&&!movedSet.has(def)&&Math.random()<0.1){ def.vol.flinch=true; log(`　おうじゃのしるしで${def.name}がひるんだ！`); }
-      if(effAbility(mon)==="マジシャン"&&mon.item==="なし"&&alive(def)&&def.item!=="なし"&&!ITEMS[def.item].stone){ mon.item=def.item; loseItem(def); log(`　${mon.name}は${def.name}の${mon.item}を奪った！`); mon.vol.unburden=false; }
+      if(alive(def)&&def.ability==="じきゅうりょく")applyBoost(def,{b:1},def,`${def.name}のじきゅうりょく`);
+      if(mon.ability==="マジシャン"&&mon.item==="なし"&&alive(def)&&def.item!=="なし"&&!ITEMS[def.item].stone){ mon.item=def.item; def.item="なし"; log(`　${mon.name}は${def.name}の${mon.item}を奪った！`); }
     }
     if(!alive(mon))break;
   }
   if(anyHit){
-    if(M.fx==="struggle"&&alive(mon)){ damage(mon,Math.max(1,Math.floor(mon.maxhp/4)),`${mon.name}はわるあがきの反動を受けた`); }
-    if(M.recoil&&alive(mon)&&effAbility(mon)!=="いしあたま"){
+    if(M.recoil&&alive(mon)&&mon.ability!=="いしあたま"){
       damage(mon,Math.max(1,Math.floor(totalDealt/M.recoil)),`${mon.name}は反動を受けた`);
     }
     if(mon.item==="いのちのたま"&&totalDealt>0&&alive(mon)){ damage(mon,Math.floor(mon.maxhp/10),`${mon.name}はいのちのたまでHPを削られた`); }
     if(M.self&&alive(mon))applyBoost(mon,M.self,mon,``);
     if(M.fx==="recharge"&&alive(mon))mon.vol.recharge=true;
-    if(M.fx==="orderup"&&alive(mon)){
-      const k=mon.orderLock||targetInfo.orderStat||"a";
-      mon.orderLock=k;
-      const dd={}; dd[k]=1;
-      applyBoost(mon,dd,mon,`${mon.name}のいっちょうあがり`);
-    }
     if(M.fx==="uturn"&&alive(mon)){
       if(benchMons(p).length){ B.midSwitch={mon, label:name}; }
     }
@@ -1978,55 +1361,27 @@ function execMove(mon,name,M,targetInfo,movedSet,allActs){
 function execStatus(mon,name,M,targetInfo){
   const p=mon.side, fp=foeSide(p), fx=B.sides[p].fx, pos=fieldPos(mon);
   if(mon.item==="とつげきチョッキ"){ log(`　とつげきチョッキのせいで変化技が出せない！`); return; }
-  {
-    const SNATCHABLE=["boost","heal50","lifedew","tailwind","reflect","lightscreen","auroraveil","craftyshield","wideguard","fastguard","safeguard"];
-    if(SNATCHABLE.includes(M.fx)){
-      const sns=[];
-      for(const pp of [1,2]) for(const m of B.sides[pp].field) if(alive(m)&&m.vol.snatch&&m!==mon) sns.push(m);
-      sns.sort((x,y)=>effSpe(y)-effSpe(x));
-      const sn=sns[0];
-      if(sn){
-        sn.vol.snatch=false;
-        log(`　${sn.name}が${mon.name}の${name}を横取りした！`);
-        execStatus(sn,name,M,{ts:null,tp:null});
-        return;
-      }
+  if(M.fx==="boost"||M.fx==="heal50"){
+    const sn=B.sides[fp].field.find(m=>alive(m)&&m.vol.snatch);
+    if(sn){
+      sn.vol.snatch=false;
+      log(`　${sn.name}が${name}を横取りした！`);
+      if(M.fx==="boost")applyBoost(sn,M.bs,sn,``);
+      else { sn.hp=Math.min(sn.maxhp,sn.hp+Math.floor(sn.maxhp/2)); log(`　${sn.name}のHPが回復した！`); }
+      return;
     }
   }
   let t=null;
   if(M.rng==="S"||M.rng==="ALLY"){
     const cands=legalTargets(mon,pos,M);
-    if(M.rng==="S"){
-      const rd=B.sides[fp].field.find(m=>alive(m)&&!m.vol.commander&&m.vol.redirect&&!(m.vol.redirectPow&&(mon.types.includes("くさ")||effAbility(mon)==="ぼうじん"||mon.item==="ぼうじんゴーグル")));
-      if(rd){
-        const rp=fieldPos(rd);
-        if(ignoresReach(M)||reachable(pos,rp)){
-          if(targetInfo.ts===fp||targetInfo.ts===undefined||targetInfo.ts===null||targetInfo.ts<0){
-            targetInfo={ts:fp,tp:rp};
-            if(!(B.sides[fp].field[rp]===rd)){} 
-            log(`　${rd.name}が技を引き寄せた！`);
-          }
-        }
-      }
-    }
     if(targetInfo.ts>=0&&targetInfo.ts!==null&&B.sides[targetInfo.ts]&&alive(B.sides[targetInfo.ts].field[targetInfo.tp])
        &&cands.some(([s,i])=>s===targetInfo.ts&&i===targetInfo.tp)) t=B.sides[targetInfo.ts].field[targetInfo.tp];
     else { const pool=(M.rng==="S")?cands.filter(([s])=>s===fp):cands; if(pool.length){ const c=pool[Math.floor(Math.random()*pool.length)]; t=B.sides[c[0]].field[c[1]]; } }
     if(!t){ log(`　しかし失敗した！`); return; }
     if(t.side!==p){
-      let eprio=(M.prio||0);
-      if(effAbility(mon)==="いたずらごころ")eprio+=1;
-      if(effAbility(mon)==="はやてのつばさ"&&mon.hp===mon.maxhp&&M.t==="ひこう")eprio+=1;
-      if(eprio>0){
-        if(B.sides[t.side].field.some(m=>alive(m)&&effAbility(m)==="テイルアーマー")){ log(`　${t.name}はテイルアーマーで先制技を防いだ！`); return; }
-        if(B.sides[t.side].fx.fast){ log(`　${t.name}はファストガードに守られた！`); return; }
-        if(B.terrain==="psy"&&grounded(t)){ log(`　${t.name}はサイコフィールドで先制技を防いだ！`); return; }
-      }
       if(B.sides[t.side].fx.crafty){ log(`　${t.name}はトリックガードに守られた！`); return; }
-      if(M.snd&&effAbility(t)==="ぼうおん"){ log(`　${t.name}はぼうおんで音技を受けない！`); return; }
-      if(effAbility(t)==="マジックミラー"){ log(`　${t.name}のマジックミラー！${name}を跳ね返した！`); t=mon; }
-      if(effAbility(t)==="おうごんのからだ"){ log(`　${t.name}はおうごんのからだで防いだ！`); return; }
-      if(effAbility(mon)==="いたずらごころ"&&t.types.includes("あく")){ log(`　${t.name}には効かない！（いたずらごころ）`); return; }
+      if(t.ability==="おうごんのからだ"){ log(`　${t.name}はおうごんのからだで防いだ！`); return; }
+      if(mon.ability==="いたずらごころ"&&t.types.includes("あく")){ log(`　${t.name}には効かない！（いたずらごころ）`); return; }
       if(t.vol.protect){ log(`　${t.name}はまもっている！`); return; }
       if(M.acc&&Math.random()*100>M.acc){ log(`　${t.name}には当たらなかった！`); return; }
     }
@@ -2045,17 +1400,9 @@ function execStatus(mon,name,M,targetInfo){
       else{B.trickroom=5;log(`　${mon.name}は時空をゆがめた！（すばやさが遅い順に行動）`);}
       break;
     case "tailwind": if(fx.tailwind){log(`　しかし失敗した！`);}else{fx.tailwind=4;log(`　P${p}側に追い風が吹き始めた！`);} break;
-    case "reflect": if(fx.reflect){log(`　しかし失敗した！`);}else{fx.reflect=mon.item==="ひかりのねんど"?8:5;fx.reflectClay=(mon.item==="ひかりのねんど");log(`　P${p}側にリフレクターが張られた！`);} break;
-    case "lightscreen": if(fx.light){log(`　しかし失敗した！`);}else{fx.light=mon.item==="ひかりのねんど"?8:5;fx.lightClay=(mon.item==="ひかりのねんど");log(`　P${p}側にひかりのかべが張られた！`);} break;
-    case "psyterrain":
-      if(B.terrain==="psy"){ log(`　しかし失敗した！（すでにサイコフィールド）`); }
-      else { B.terrain="psy"; B.terrainTurns=5; log(`　足下がふしぎな感じになった！`); checkSeeds(); }
-      break;
-    case "auroraveil":
-      if(B.weather!=="snow"){ log(`　しかし失敗した！（ゆきの時だけ使える）`); }
-      else if(fx.reflect||fx.light){ log(`　しかし失敗した！`); }
-      else { const tn=mon.item==="ひかりのねんど"?8:5; fx.reflect=tn; fx.light=tn; fx.reflectClay=fx.lightClay=(tn===8); log(`　P${p}側にオーロラベールが張られた！（物理・特殊とも半減）`); }
-      break;
+    case "reflect": if(fx.reflect){log(`　しかし失敗した！`);}else{fx.reflect=mon.item==="ひかりのねんど"?8:5;log(`　P${p}側にリフレクターが張られた！`);} break;
+    case "lightscreen": if(fx.light){log(`　しかし失敗した！`);}else{fx.light=mon.item==="ひかりのねんど"?8:5;log(`　P${p}側にひかりのかべが張られた！`);} break;
+    case "psyterrain": B.terrain="psy"; B.terrainTurns=5; log(`　足下がふしぎな感じになった！`); break;
     case "sun": setWeather("sun",mon); break;
     case "rain": setWeather("rain",mon); break;
     case "boost": applyBoost(mon,M.bs,mon,``); break;
@@ -2080,7 +1427,7 @@ function execStatus(mon,name,M,targetInfo){
       break;
     case "yawn": if(!t.status&&!t.vol.yawn){ t.vol.yawn=2; log(`　${t.name}は眠気を誘われた！`); } else log(`　しかし失敗した！`); break;
     case "sleep":
-      if(M.pow&&(t.types.includes("くさ")||effAbility(t)==="ぼうじん"||t.item==="ぼうじんゴーグル")){ log(`　${t.name}には効かない！（粉技無効）`); break; }
+      if(M.pow&&t.types.includes("くさ")){ log(`　${t.name}には効かない！（くさタイプ）`); break; }
       applyStatus(t,"slp",mon); break;
     case "leechseed":
       if(t.types.includes("くさ")){ log(`　${t.name}には効かない！`); break; }
@@ -2088,10 +1435,6 @@ function execStatus(mon,name,M,targetInfo){
     case "trick":{
       if(ITEMS[mon.item].stone||ITEMS[t.item||"なし"].stone){ log(`　しかし失敗した！`); break; }
       const tmp=mon.item; mon.item=t.item; t.item=tmp;
-      if(mon.item==="なし"&&effAbility(mon)==="かるわざ"&&!mon.vol.unburden){ mon.vol.unburden=true; log(`　${mon.name}のかるわざ！素早さが2倍になった！`); }
-      if(mon.item!=="なし")mon.vol.unburden=false;
-      if(t.item==="なし"&&effAbility(t)==="かるわざ"&&!t.vol.unburden){ t.vol.unburden=true; log(`　${t.name}のかるわざ！素早さが2倍になった！`); }
-      if(t.item!=="なし")t.vol.unburden=false;
       log(`　${mon.name}は${t.name}と持ち物を入れ替えた！（${mon.item||"なし"}⇔${t.item||"なし"}）`); break; }
     case "coaching": applyBoost(t,{a:1,b:1},mon,`${mon.name}のコーチング`); break;
     case "partingshot":
@@ -2102,38 +1445,6 @@ function execStatus(mon,name,M,targetInfo){
       const bn=benchMons(t.side);
       if(bn.length){ const nb=bn[Math.floor(Math.random()*bn.length)]; doSwitch(t,nb.name); }
       else log(`　しかし失敗した！`);
-      break; }
-    case "perish":{
-      let n=0;
-      for(const pp of [1,2]) for(const mm of B.sides[pp].field){ if(alive(mm)&&!mm.vol.perish&&effAbility(mm)!=="ぼうおん"){ mm.vol.perish=4; n++; } }
-      log(`　ほろびのうたが響き渡った！（3ターン後にひんし・交代でリセット）`);
-      break; }
-    case "spikyshield":{
-      const n=mon.vol.protCount||0;
-      if(Math.random()<Math.pow(1/3,n)){ mon.vol.protect=true; mon.vol.spiky=true; mon.vol.protCount=n+1; mon.vol.protSuccess=true; log(`　${mon.name}はトゲのある守りの体勢に入った！`); }
-      else { mon.vol.protCount=0; log(`　しかし失敗した！`); }
-      break; }
-    case "disable":
-      if(t.vol.lastMove&&MOVES[t.vol.lastMove]&&!t.vol.disabled){
-        if(t.item==="メンタルハーブ"&&!t.itemUsed){consumeItem(t);log(`　${t.name}はメンタルハーブでかなしばりを防いだ！`);break;}
-        t.vol.disabled=t.vol.lastMove; t.vol.disableTurns=4;
-        log(`　${t.name}の${t.vol.lastMove}をかなしばりで封じた！`);
-      } else log(`　しかし失敗した！`);
-      break;
-    case "allyswitch":{
-      const f=B.sides[p].field;
-      const myPos=fieldPos(mon);
-      if(myPos===1){ log(`　しかし失敗した！（中央では使えない）`); break; }
-      const other=(myPos===0)?2:0;
-      const n=mon.vol.switchCount||0;
-      if(Math.random()<Math.pow(1/3,n)){
-        const om=f[other];
-        f[other]=mon; f[myPos]=om||null;
-        mon.vol.switchCount=n+1; mon.vol.switchSuccess=true;
-        mon.vol.firstTurn=true; mon.vol.justEntered=true;
-        if(om){ om.vol.firstTurn=true; om.vol.justEntered=true; }
-        log(`　${mon.name}は${om?om.name+"と":""}位置を入れ替えた！（${POSNAME[myPos]}→${POSNAME[other]}）`);
-      } else { mon.vol.switchCount=0; log(`　しかし失敗した！`); }
       break; }
     case "craftyshield": fx.crafty=true; log(`　${mon.name}たちはトリックガードで変化技から守られた！`); break;
     case "snatch": mon.vol.snatch=true; log(`　${mon.name}は横取りの体勢に入った！`); break;
@@ -2147,33 +1458,6 @@ function execStatus(mon,name,M,targetInfo){
       mon.ability=t.ability; mon.boosts={...t.boosts};
       mon.cfg={...mon.cfg, moves:(t.cfg&&t.cfg.moves?t.cfg.moves.slice():mon.cfg.moves)};
       log(`　${mon.name}は${t.name}にへんしんした！`); break; }
-    case "soulbeat":
-      if(mon.hp<=Math.floor(mon.maxhp/3)){ log(`　しかし失敗した！（HPが足りない）`); }
-      else {
-        mon.hp-=Math.floor(mon.maxhp/3);
-        applyBoost(mon,{a:1,b:1,c:1,d:1,s:1},mon,`${mon.name}はソウルビートで全能力が上がった`);
-      }
-      break;
-    case "customstatus":
-      if(M.sec&&Math.random()*100<M.sec.ch){
-        if(t.item==="おんみつマント"&&t.side!==p){ log(`　${t.name}はおんみつマントで防いだ！`); break; }
-        if(M.sec.st)applyStatus(t,M.sec.st,mon);
-        if(M.sec.fl&&!t.vol.flinch)t.vol.flinch=true;
-        if(M.sec.stat)applyBoost(t,M.sec.stat,mon,``);
-        if(M.sec.selfstat)applyBoost(mon,M.sec.selfstat,mon,``);
-      } else log(`　しかし効果がなかった！`);
-      break;
-    case "afteryou":
-      if(!B.exec||!B.exec.remaining){ log(`　しかし失敗した！`); break; }
-      {
-        const idx=B.exec.remaining.findIndex(x=>x.mon===t);
-        if(idx<0){ log(`　しかし失敗した！`); break; }
-        const it=B.exec.remaining.splice(idx,1)[0];
-        it.forceFirst=true;
-        B.exec.remaining.unshift(it);
-        log(`　${t.name}は${mon.name}のおかげで先に動ける！`);
-      }
-      break;
     case "strengthsap":{
       const amt=Math.floor(t.stats.a*boostMul(t.boosts.a));
       mon.hp=Math.min(mon.maxhp,mon.hp+amt);
@@ -2185,65 +1469,51 @@ function execStatus(mon,name,M,targetInfo){
 function addConfusion(t,src){
   if(t.vol.confusion||!alive(t))return;
   if(src&&src.side!==t.side&&B.sides[t.side].fx.safeguard){ log(`　${t.name}はしんぴのまもりに守られている！`); return; }
-  if(B.terrain==="mist"&&grounded(t)){ log(`　${t.name}はミストフィールドに守られている！`); return; }
   t.vol.confusion=2+Math.floor(Math.random()*3);
   log(`　${t.name}は混乱した！`);
 }
 function applyStatus(mon,st,src){
   if(mon.status||!alive(mon))return;
   if(st==="brn"&&mon.types.includes("ほのお"))return;
-  if((st==="psn"||st==="tox")&&(mon.types.includes("どく")||mon.types.includes("はがね")))return;
+  if(st==="psn"&&(mon.types.includes("どく")||mon.types.includes("はがね")))return;
   if(st==="par"&&mon.types.includes("でんき"))return;
   if(st==="frz"&&mon.types.includes("こおり"))return;
-  if(st==="slp"&&effAbility(mon)==="やるき")return;
-  if(src&&src!==mon&&mon.types.includes("くさ")&&B.sides[mon.side].field.some(m=>alive(m)&&effAbility(m)==="フラワーベール"))return;
+  if(src&&src!==mon&&mon.types.includes("くさ")&&B.sides[mon.side].field.some(m=>alive(m)&&m.ability==="フラワーベール"))return;
   if(src&&src!==mon&&src.side!==mon.side&&B.sides[mon.side].fx.safeguard){ log(`　${mon.name}はしんぴのまもりに守られている！`); return; }
-  if(B.terrain==="mist"&&grounded(mon)){ log(`　${mon.name}はミストフィールドに守られて状態異常にならない！`); return; }
-  if(st==="slp"&&B.terrain==="elec"&&grounded(mon)){ log(`　${mon.name}はエレキフィールドで眠らない！`); return; }
   mon.status=st;
   if(st==="slp")mon.slpTurns=Math.random()<1/3?1:2;
-  log(`　${mon.name}は${{brn:"やけどを負った",psn:"どくにおかされた",tox:"もうどくにおかされた",par:"まひして技が出にくくなった",slp:"眠ってしまった",frz:"凍りついた"}[st]}！`);
+  log(`　${mon.name}は${{brn:"やけどを負った",psn:"どくにおかされた",par:"まひして技が出にくくなった",slp:"眠ってしまった",frz:"凍りついた"}[st]}！`);
   if(mon.item==="ラムのみ"&&!mon.itemUsed){ mon.status=null; consumeItem(mon); log(`　${mon.name}はラムのみで状態異常を治した！`); }
 }
 function damage(mon,amt,label,ctx){
   if(!alive(mon))return 0;
-  const outer=B._collect;
-  const col=[]; B._collect=col;
   amt=Math.min(mon.hp,Math.max(1,Math.floor(amt)));
   if(amt>=mon.hp){
-    if(effAbility(mon)==="がんじょう"&&mon.hp===mon.maxhp){ amt=mon.hp-1; log(`　${mon.name}はがんじょうで持ちこたえた！`); }
+    if(mon.ability==="がんじょう"&&mon.hp===mon.maxhp){ amt=mon.hp-1; log(`　${mon.name}はがんじょうで持ちこたえた！`); }
     else if(mon.item==="きあいのタスキ"&&mon.hp===mon.maxhp&&!mon.itemUsed){ amt=mon.hp-1; consumeItem(mon); log(`　${mon.name}はきあいのタスキで持ちこたえた！`); }
   }
-  const wasAbove=mon.hp>mon.maxhp/2;
   mon.hp-=amt;
-  if(label)B.log.push(`　${label}！（${amt}ダメージ）`);
-  if(wasAbove&&mon.hp>0&&mon.hp<=mon.maxhp/2&&effAbility(mon)==="ぎゃくじょう"){ applyBoost(mon,{c:1},mon,`${mon.name}のぎゃくじょう`); }
+  if(label)log(`　${label}！（${amt}ダメージ）`);
   if(mon.hp<=0){ if(!(ctx&&ctx.noFaint))faint(mon); }
   else if(mon.hp<=mon.maxhp/2&&mon.item==="オボンのみ"&&!mon.itemUsed){
-    const blocked=B.sides[foeSide(mon.side)].field.some(m=>alive(m)&&effAbility(m)==="きんちょうかん");
+    const blocked=B.sides[foeSide(mon.side)].field.some(m=>alive(m)&&m.ability==="きんちょうかん");
     if(!blocked){ const h=Math.floor(mon.maxhp/4); mon.hp=Math.min(mon.maxhp,mon.hp+h); consumeItem(mon); log(`　${mon.name}はオボンのみでHPを回復した！`); }
   }
-  B._collect=outer;
-  if(label||!(ctx&&ctx.hold)){ col.forEach(s=>{ if(outer)outer.push(s); else B.log.push(s); }); }
-  else if(ctx&&ctx.hold){ ctx.hold.push(...col); }
   return amt;
 }
 function faint(mon){
   mon.fainted=true; mon.hp=0;
   log(`　${mon.name}はたおれた！`);
-  if(mon.vol.commanded){ const t=B.sides[mon.side].field.find(m=>alive(m)&&m.vol.commander); if(t){ t.vol.commander=false; log(`　${t.name}は口の中から出てきた！`); } }
-  if(mon.vol.commander){ const d2=B.sides[mon.side].field.find(m=>alive(m)&&m.vol.commanded); if(d2){ d2.vol.commanded=false; } }
-  if(mon.ability==="かがくへんかガス"){ gasGone(null); }
   const pos=fieldPos(mon);
   if(pos>=0)B.sides[mon.side].field[pos]=null;
 }
 function endOfTurn(){
   if(B.weather){
     B.weatherTurns--;
-    if(B.weatherTurns<=0){ log({sun:"日ざしが元に戻った",rain:"雨が上がった",sand:"砂あらしがおさまった",snow:"雪がやんだ"}[B.weather]); B.weather=null; }
+    if(B.weatherTurns<=0){ log({sun:"日ざしが元に戻った",rain:"雨が上がった",sand:"砂あらしがおさまった"}[B.weather]); B.weather=null; }
     else if(B.weather==="sand"){
       for(const p of [1,2])for(const m of B.sides[p].field){
-        if(alive(m)&&!m.types.some(t=>["いわ","じめん","はがね"].includes(t))&&effAbility(m)!=="すながくれ"&&m.item!=="ぼうじんゴーグル"){
+        if(alive(m)&&!m.types.some(t=>["いわ","じめん","はがね"].includes(t))&&m.ability!=="すながくれ"){
           damage(m,Math.floor(m.maxhp/16),`砂あらしが${m.name}を襲う`);
         }
       }
@@ -2257,9 +1527,9 @@ function endOfTurn(){
     fx.wide=false; fx.fast=false; fx.crafty=false;
     for(const m of B.sides[p].field){
       if(!alive(m))continue;
-      if(effAbility(m)==="あめうけざら"&&B.weather==="rain"){ m.hp=Math.min(m.maxhp,m.hp+Math.floor(m.maxhp/16)); }
+      if(m.ability==="あめうけざら"&&B.weather==="rain"){ m.hp=Math.min(m.maxhp,m.hp+Math.floor(m.maxhp/16)); }
       if(B.terrain==="grass"&&grounded(m)){ m.hp=Math.min(m.maxhp,m.hp+Math.floor(m.maxhp/16)); }
-      if(alive(m)&&effAbility(m)==="ムラっけ"){
+      if(alive(m)&&m.ability==="ムラっけ"){
         const ks=["a","b","c","d","s"];
         const up=ks[Math.floor(Math.random()*5)];
         let dn=ks[Math.floor(Math.random()*5)]; while(dn===up)dn=ks[Math.floor(Math.random()*5)];
@@ -2267,12 +1537,9 @@ function endOfTurn(){
         applyBoost(m,dd,m,`${m.name}のムラっけ`);
       }
       if(m.item==="たべのこし"){ m.hp=Math.min(m.maxhp,m.hp+Math.floor(m.maxhp/16)); }
-      if(effAbility(m)==="サンパワー"&&B.weather==="sun")damage(m,Math.floor(m.maxhp/8),`サンパワーで${m.name}のHPが削れた`);
+      if(m.ability==="サンパワー"&&B.weather==="sun")damage(m,Math.floor(m.maxhp/8),`サンパワーで${m.name}のHPが削れた`);
       if(m.status==="brn")damage(m,Math.floor(m.maxhp/16),`${m.name}はやけどのダメージを受けた`);
       if(m.status==="psn")damage(m,Math.floor(m.maxhp/8),`${m.name}はどくのダメージを受けた`);
-      if(m.status==="tox"){ m.toxN=Math.min(15,(m.toxN||0)+1); damage(m,Math.max(1,Math.floor(m.maxhp*m.toxN/16)),`${m.name}はもうどくのダメージを受けた`); }
-      if(m.status!=="tox")m.toxN=0;
-      if(alive(m)&&m.vol.bind){ m.vol.bind--; damage(m,Math.max(1,Math.floor(m.maxhp/8)),`${m.name}は渦のダメージを受けた`); }
       if(alive(m)&&m.vol.seed){
         const d=Math.floor(m.maxhp/8); damage(m,d,`やどりぎが${m.name}のHPを奪う`);
         const healers=B.sides[m.vol.seed].field.filter(alive);
@@ -2282,25 +1549,9 @@ function endOfTurn(){
       if(alive(m)&&m.item==="かえんだま"&&!m.status){ applyStatus(m,"brn",m); }
       if(m.vol.encoreTurns){ m.vol.encoreTurns--; if(m.vol.encoreTurns<=0){m.vol.encore=null;log(`${m.name}のアンコールが解けた`);} }
       if(m.vol.taunt){ m.vol.taunt--; if(m.vol.taunt<=0)log(`${m.name}のちょうはつが解けた`); }
-      if(m.vol.disableTurns){ m.vol.disableTurns--; if(m.vol.disableTurns<=0&&m.vol.disabled){ log(`${m.name}のかなしばりが解けた`); m.vol.disabled=null; } }
       if(!m.vol.protSuccess)m.vol.protCount=0;
       m.vol.protSuccess=false;
-      if(!m.vol.switchSuccess)m.vol.switchCount=0;
-      m.vol.switchSuccess=false;
-      m.vol.protect=false; m.vol.spiky=false; m.vol.redirect=false; m.vol.redirectPow=false; m.vol.snatch=false; m.vol.movedThisTurn=false;
-      if(m.vol.justEntered){ m.vol.justEntered=false; } else { m.vol.firstTurn=false; }
-      m.vol.helpinghand=false;
-    }
-  }
-  // ほろびのうたカウント: 素早い順（トリックルーム時は遅い順）に処理
-  {
-    const all=[];
-    for(const pp of [1,2]) for(const mm of B.sides[pp].field) if(alive(mm)&&mm.vol.perish) all.push(mm);
-    all.sort((x,y)=> B.trickroom ? effSpe(x)-effSpe(y) : effSpe(y)-effSpe(x));
-    for(const mm of all){
-      mm.vol.perish--;
-      if(mm.vol.perish<=0){ log(`${mm.name}はほろびのうたでたおれた！（がんじょう・きあいのタスキでも耐えられない）`); mm.hp=0; faint(mm); }
-      else log(`${mm.name}のほろびのカウント: ${mm.vol.perish}`);
+      m.vol.protect=false; m.vol.redirect=false; m.vol.redirectPow=false; m.vol.helpinghand=false; m.vol.firstTurn=false; m.vol.snatch=false;
     }
   }
 }
@@ -2315,7 +1566,7 @@ function checkWin(){
 /* =============== 途中交代（クイックターン等） =============== */
 function rMidSwitch(app){
   const ms=B.midSwitch; const mon=ms.mon;
-  let html=`<h1>ターン${B.turn}</h1>`+boardHtml(null,null,mon.side)+
+  let html=`<h1>ターン${B.turn}</h1>`+boardHtml()+
    `<div class="panel"><h2>プレイヤー${mon.side}：${esc(ms.label)}！ ${esc(mon.name)}の交代先を選択</h2>`;
   benchMons(mon.side).forEach(m=>{ html+=`<button onclick="doMidSwitch('${esc(m.name)}')">${esc(m.name)} (HP ${m.hp}/${m.maxhp})</button>`; });
   html+=`</div>`+logHtml();
@@ -2328,53 +1579,24 @@ window.doMidSwitch=function(name){
   continueResolution();
 };
 /* =============== ひんし補充 =============== */
-function replaceReserved(p){ return (B.pendReplace||[]).filter(x=>x.p===p).map(x=>x.name); }
 function rReplace(app){
-  B.pendReplace=B.pendReplace||[];
   const q=B.replaceQueue[0];
-  if(!q){ finishReplace(); return; }
-  // 別プレイヤーの番に移るときは受け渡し画面を挟む（相手の選出を見せない）
-  const bothSides=B.replaceQueue.some(x=>x.p!==q.p)||(B.pendReplace||[]).some(x=>x.p!==q.p);
-  if(!bothSides)B.replaceHandoff=q.p;
-  if(B.replaceHandoff!==q.p){
-    app.innerHTML=`<h1>ターン${B.turn}</h1>`+boardHtml(null,null,q.p)+logHtml()+
-     `<div class="overlay"><p>プレイヤー${q.p}にデバイスを渡してください</p>
-      <p class="note">ひんしのポケモンの交代要員を選びます（相手の選出は見えません）</p>
-      <button class="big" onclick="B.replaceHandoff=${q.p};render()">プレイヤー${q.p}：選出する</button></div>`;
-    scrollLog(); return;
-  }
-  const reserved=replaceReserved(q.p);
-  const bench=benchMons(q.p).filter(m=>!reserved.includes(m.name));
+  if(!q){ B.inputPlayer=1; B.phase="handoff"; render(); return; }
+  const bench=benchMons(q.p);
   if(bench.length===0){ B.replaceQueue.shift(); rReplace(app); return; }
-  let html=`<h1>ターン${B.turn}</h1>`+boardHtml(null,null,q.p)+
+  let html=`<h1>ターン${B.turn}</h1>`+boardHtml()+
    `<div class="panel"><h2>プレイヤー${q.p}：${POSNAME[q.pos]}に出すポケモンを選択</h2>`;
-  const chosen=replaceReserved(q.p);
-  if(chosen.length)html+=`<div class="note">選出済み: ${chosen.map(esc).join("、")}</div>`;
   bench.forEach(m=>{ html+=`<button onclick="doReplace('${esc(m.name)}')">${esc(m.name)} (HP ${m.hp}/${m.maxhp})</button>`; });
   html+=`</div>`+logHtml();
   app.innerHTML=html;
 }
 window.doReplace=function(name){
   const q=B.replaceQueue.shift();
-  B.pendReplace=B.pendReplace||[];
-  B.pendReplace.push({p:q.p,pos:q.pos,name});
-  const next=B.replaceQueue[0];
-  if(next&&next.p!==q.p)B.replaceHandoff=null;
+  const m=benchMons(q.p).find(x=>x.name===name);
+  if(m){ B.sides[q.p].field[q.pos]=m; m.vol.firstTurn=true; log(`P${q.p}は${m.name}を繰り出した！`); onEntry(m); }
   if(B.replaceQueue.length){ render(); }
-  else finishReplace();
+  else { B.inputPlayer=1; B.phase="handoff"; render(); }
 };
-function finishReplace(){
-  const list=B.pendReplace||[];
-  const entering=[];
-  list.forEach(r=>{
-    const m=B.sides[r.p].team.find(x=>!x.fainted&&x.name===r.name&&!B.sides[r.p].field.includes(x));
-    if(m){ B.sides[r.p].field[r.pos]=m; m.vol.firstTurn=true; m.vol.justEntered=true; log(`P${r.p}は${m.name}を繰り出した！`); entering.push(m); }
-  });
-  B.pendReplace=[]; B.replaceHandoff=null; B.replaceQueue=[];
-  entering.sort((a,b)=>effSpe(b)-effSpe(a)).forEach(m=>onEntry(m));
-  autoCenter();
-  B.inputPlayer=1; B.phase="handoff"; render();
-}
 /* =============== てだすけ補正 =============== */
 const _origCalc=calcDamage;
 calcDamage=function(att,def,name,M,opts){
