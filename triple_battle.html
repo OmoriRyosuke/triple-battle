@@ -564,6 +564,11 @@ function loadTeams(){
       if(m.n){ const i=DEX.findIndex(d=>d.n===m.n); m.dex=i; }  // 見つからなければ-1（別ポケモンに化けさせない）
       else if(DEX[m.dex]) m.n=DEX[m.dex].n;
       else m.dex=-1;
+      // 図鑑側で特性が差し替わった場合、保存された古い特性を第1特性に戻す
+      const d=DEX[m.dex];
+      if(d&&m.ability&&!d.abil.some(a=>a[0]===m.ability)) m.ability=d.abil[0][0];
+      // 同様に、覚えられなくなった技も落とす
+      if(d&&!d.allMoves&&Array.isArray(m.moves)) m.moves=m.moves.filter(n=>MOVES[n]);
     }); });
     return ts;
   }catch(e){return [];}
@@ -825,7 +830,7 @@ window.setNat=function(which,v){
   if(m.plus&&m.minus&&m.plus!=="none"&&m.plus===m.minus){ alert("同じ能力に補正はかけられません"); m[which==="plus"?"minus":"plus"]="none"; }
   render();
 };
-const IMPL_ABILITIES=["いかく","ひでり","あめふらし","すなおこし","サイコメイカー","グラスメイカー","ダウンロード","おもてなし","きょうえん","トレース","まけんき","そうだいしょう","さめはだ","すながくれ","フェアリースキン","てきおうりょく","すいすい","ようりょくそ","かるわざ","どくしゅ","かたいツメ","あまのじゃく","いしあたま","すてみ","クリアボディ","しろいけむり","シェルアーマー","メガランチャー","じきゅうりょく","がんじょう","あついしぼう","たいねつ","いたずらごころ","すりぬけ","ふゆう","フェアリーオーラ","フラワーベール","ノーガード","ひらいしん","せいでんき","おうごんのからだ","こんじょう","しんがん","きもったま","さいせいりょく","アナライズ","テクニシャン","ムラっけ","はやてのつばさ","ほのおのからだ","フラワーギフト","テレパシー","せいしんりょく","きんちょうかん","かたやぶり","マジシャン","サンパワー","もうか","げきりゅう","しんりょく","テイルアーマー","そうしょく","かがくへんかガス","てんねん","しれいとう","よびみず","かげふみ","こだいかっせい","マジックミラー","ミストメイカー","ふかしのこぶし","ぎゃくじょう","トランジスタ","ゆきふらし","ゆきがくれ","おやこあい","スカイスキン","せいぎのこころ","ぼうおん","ぼうじん","フレンドガード","やるき","もらいび","ふしぎなまもり","クォークチャージ","きょうせい","エレキメーカー","ほおぶくろ","するどいめ","あとだし","はやおき","すじがねいり","はんすう","メロメロボディ","かたやぶり","わるいてぐせ","おみとおし","しめりけ","ライトメタル","プレッシャー","いしあたま","ぼうだん","しんりょく","わざわいのつるぎ","わざわいのたま","わざわいのうつわ","わざわいのおふだ","すなのちから","ちからずく","がんじょうあご","すなかき","リーフガード","しゅうかく","ちょすい","あめうけざら"];
+const IMPL_ABILITIES=["いかく","ひでり","あめふらし","すなおこし","サイコメイカー","グラスメイカー","ダウンロード","おもてなし","きょうえん","トレース","まけんき","そうだいしょう","さめはだ","すながくれ","フェアリースキン","てきおうりょく","すいすい","ようりょくそ","かるわざ","どくしゅ","かたいツメ","あまのじゃく","いしあたま","すてみ","クリアボディ","しろいけむり","シェルアーマー","メガランチャー","じきゅうりょく","がんじょう","あついしぼう","たいねつ","いたずらごころ","すりぬけ","ふゆう","フェアリーオーラ","フラワーベール","ノーガード","ひらいしん","せいでんき","おうごんのからだ","こんじょう","しんがん","きもったま","さいせいりょく","アナライズ","テクニシャン","ムラっけ","はやてのつばさ","ほのおのからだ","フラワーギフト","テレパシー","せいしんりょく","きんちょうかん","かたやぶり","マジシャン","サンパワー","もうか","げきりゅう","しんりょく","テイルアーマー","そうしょく","かがくへんかガス","てんねん","しれいとう","よびみず","かげふみ","こだいかっせい","マジックミラー","ミストメイカー","ふかしのこぶし","ぎゃくじょう","トランジスタ","ゆきふらし","ゆきがくれ","おやこあい","スカイスキン","せいぎのこころ","ぼうおん","ぼうじん","フレンドガード","やるき","もらいび","ふしぎなまもり","クォークチャージ","きょうせい","エレキメーカー","ほおぶくろ","するどいめ","あとだし","はやおき","すじがねいり","はんすう","メロメロボディ","かたやぶり","わるいてぐせ","おみとおし","しめりけ","ライトメタル","プレッシャー","いしあたま","ぼうだん","しんりょく","わざわいのつるぎ","わざわいのたま","わざわいのうつわ","わざわいのおふだ","すなのちから","ちからずく","がんじょうあご","すなかき","リーフガード","しゅうかく","ちょすい","あめうけざら","きけんよち","ほうし","マイペース","のろわれボディ"];
 function customPanel(){
   let html=`<div class="panel"><h2>カスタムポケモンを追加（手動入力）</h2>
    名前: <input type="text" id="cname" style="width:130px">
@@ -1064,7 +1069,20 @@ function onEntry(mon){
   checkSeeds();
   if(a==="いかく"){
     const fs=B.sides[foeSide(mon.side)].field; const p=fieldPos(mon);
-    fs.forEach((f,fp)=>{ if(alive(f)&&reachable(p,fp)){ applyBoost(f,{a:-1},mon,`${mon.name}のいかく`); } });
+    fs.forEach((f,fp)=>{ if(alive(f)&&reachable(p,fp)){
+      if(effAbility(f)==="マイペース"){ log(`${f.name}はマイペースでいかくを受けない！`); return; }
+      applyBoost(f,{a:-1},mon,`${mon.name}のいかく`); } });
+  }
+  if(a==="きけんよち"){
+    const p=fieldPos(mon);
+    const danger=[];
+    B.sides[foeSide(mon.side)].field.forEach((f,fp)=>{
+      if(!alive(f)||!reachable(p,fp))return;
+      (f.cfg.moves||[]).forEach(n=>{ const M=MOVES[n]; if(!M||M.cat==="X")return;
+        if(typeEff(f,M,moveTypeOf(f,n,M),mon)>1||(M.p||0)>=100) danger.push(f.name); });
+    });
+    if(danger.length) log(`${mon.name}のきけんよち！${[...new Set(danger)].join("・")}の攻撃に危険を感じている！`);
+    else log(`${mon.name}のきけんよち！危険な技は感じられない。`);
   }
   if(a==="ダウンロード"){
     const fs=B.sides[foeSide(mon.side)].field.filter(alive);
@@ -1965,6 +1983,16 @@ function execMove(mon,name,M,targetInfo,movedSet,allActs){
         if(effAbility(def)==="せいでんき"&&Math.random()<0.3)applyStatus(mon,"par",def);
         if(effAbility(def)==="ほのおのからだ"&&Math.random()<0.3)applyStatus(mon,"brn",def);
         if(effAbility(mon)==="どくしゅ"&&Math.random()<0.3)applyStatus(def,"psn",mon);
+        if(effAbility(def)==="ほうし"&&!mon.types.includes("くさ")&&effAbility(mon)!=="ぼうじん"&&mon.item!=="ぼうじんゴーグル"){
+          const r=Math.random();
+          if(r<0.09)applyStatus(mon,"psn",def);
+          else if(r<0.19)applyStatus(mon,"par",def);
+          else if(r<0.30)applyStatus(mon,"slp",def);
+        }
+      }
+      if(alive(def)&&effAbility(def)==="のろわれボディ"&&!mon.vol.disabled&&MOVES[name]&&Math.random()<0.3){
+        mon.vol.disabled=name; mon.vol.disableTurns=4;
+        log(`　${def.name}ののろわれボディ！${mon.name}の${name}を封じた！`);
       }
       if(alive(def)&&effAbility(def)==="じきゅうりょく")applyBoost(def,{b:1},def,`${def.name}のじきゅうりょく`);
       if(M.fx==="bind"&&alive(def)&&!def.vol.bind){ def.vol.bind=4; log(`　${def.name}は渦に閉じ込められた！`); }
@@ -2201,6 +2229,7 @@ function execStatus(mon,name,M,targetInfo){
 }
 function addConfusion(t,src){
   if(t.vol.confusion||!alive(t))return;
+  if(effAbility(t)==="マイペース"){ log(`　${t.name}はマイペースで混乱しない！`); return; }
   if(src&&src.side!==t.side&&B.sides[t.side].fx.safeguard){ log(`　${t.name}はしんぴのまもりに守られている！`); return; }
   if(B.terrain==="mist"&&grounded(t)){ log(`　${t.name}はミストフィールドに守られている！`); return; }
   t.vol.confusion=2+Math.floor(Math.random()*3);
