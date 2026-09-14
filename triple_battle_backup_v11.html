@@ -561,9 +561,8 @@ function loadTeams(){
     const ts=JSON.parse(localStorage.getItem("tb_teams")||"[]");
     // 図鑑に新ポケモンが増えても崩れないよう、保存された名前から番号を引き直す
     ts.forEach(t=>{ (t.mons||[]).forEach(m=>{
-      if(m.n){ const i=DEX.findIndex(d=>d.n===m.n); m.dex=i; }  // 見つからなければ-1（別ポケモンに化けさせない）
+      if(m.n){ const i=DEX.findIndex(d=>d.n===m.n); if(i>=0)m.dex=i; }
       else if(DEX[m.dex]) m.n=DEX[m.dex].n;
-      else m.dex=-1;
     }); });
     return ts;
   }catch(e){return [];}
@@ -634,8 +633,7 @@ function rMenu(app){
   html+=`<div class="note">※技・特性・持ち物の使用率はポケモン徹底攻略のポケチャン ダブル使用率(2026/07/10更新)を元にしています。カラミンゴ/イエッサン♀/ガチグマ2種/モロバレル/ポリゴン2はポケチャン未実装のためSVでの標準的な型を推定で収録（★印）。ふういん・スキルスワップ・じこあんじ等の一部の技は未対応のため除外。チームはこのブラウザ内に保存されます。</div>`;
   app.innerHTML=html;
 }
-function dispName(cfg){ return DEX[cfg.dex] ? DEX[cfg.dex].n : `${cfg.n||"？"}（削除済み）`; }
-function teamBroken(t){ return (t.mons||[]).some(m=>!DEX[m.dex]); }
+function dispName(cfg){ return DEX[cfg.dex].n; }
 function collectData(){
   return {v:1, savedAt:new Date().toISOString(), teams:loadTeams(), customDex:loadCustom(), customMoves:loadCustomMoves()};
 }
@@ -679,15 +677,7 @@ window.importFile=function(inp){
   r.readAsText(f);
 };
 window.goBuilder=function(){ S={mode:"builder", team:{name:"新しいチーム", mons:[]}, editIdx:-1, srcIdx:null}; render(); };
-window.editTeam=function(i){
-  const ts=loadTeams(); const t=JSON.parse(JSON.stringify(ts[i]));
-  const gone=(t.mons||[]).filter(m=>!DEX[m.dex]).map(m=>m.n||"？");
-  if(gone.length){
-    t.mons=t.mons.filter(m=>!!DEX[m.dex]);
-    alert(`${gone.join("、")}は図鑑から削除されているため外しました。6体になるよう選び直して保存してください。`);
-  }
-  S={mode:"builder", team:t, editIdx:i, srcIdx:null}; render();
-};
+window.editTeam=function(i){ const ts=loadTeams(); S={mode:"builder", team:JSON.parse(JSON.stringify(ts[i])), editIdx:i, srcIdx:null}; render(); };
 window.delTeam=function(i){ if(!confirm("削除しますか？"))return; const ts=loadTeams(); ts.splice(i,1); saveTeams(ts); render(); };
 window.goSetup=function(){ S={mode:"setup", step:"team1", teams:{}, orders:{}, orderTmp:[]}; render(); };
 window.goMenu=function(){ S={mode:"menu"}; render(); };
@@ -953,8 +943,7 @@ function rSetup(app){
     const p=S.step==="team1"?1:2;
     html+=`<div class="panel"><h2>プレイヤー${p}：使うチームを選択</h2>`;
     if(p===1) html+=`<label class="chk" style="width:auto;"><input type="checkbox" ${S.hideInfo?"checked":""} onchange="S.hideInfo=this.checked">相手の持ち物・HP実数値を隠す（相手のHPは％表示）</label><br>`;
-    ts.forEach((t,i)=>{ const ng=teamBroken(t);
-      html+=`<div style="margin:4px 0;"><button ${ng?"disabled":""} onclick="pickTeam(${p},${i})">${esc(t.name)}</button> <span class="note">${t.mons.map(m=>esc(dispName(m))).join("、")}${ng?"（削除されたポケモンを含むため使えません。メニューで編集してください）":""}</span></div>`; });
+    ts.forEach((t,i)=>{ html+=`<div style="margin:4px 0;"><button onclick="pickTeam(${p},${i})">${esc(t.name)}</button> <span class="note">${t.mons.map(m=>esc(dispName(m))).join("、")}</span></div>`; });
     html+=`</div>`;
   } else {
     const p=S.step==="order1"?1:2;
