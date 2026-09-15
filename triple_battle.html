@@ -18,6 +18,12 @@
   .statsbtn{font-size:12px;padding:3px 8px;}
   .filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:6px;}
   .benchline{flex:1;text-align:center;}
+  .btnstack{display:flex;flex-direction:column;gap:3px;align-items:flex-start;}
+  .btnstack button{width:100%;text-align:center;}
+  .evrow{flex-wrap:nowrap;}
+  .evlab{flex:0 0 190px;white-space:nowrap;}
+  .logbox{width:min(820px,96vw);}
+  #logbig{white-space:pre-wrap;background:#12141a;border:1px solid #444c60;border-radius:4px;padding:8px;max-height:60vh;overflow:auto;font-size:12px;line-height:1.5;}
   .calcbox{width:min(1100px,96vw);}
   .calcwrap{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start;}
   .calcleft{flex:1 1 340px;min-width:280px;}
@@ -641,6 +647,8 @@ const STR={
  calc_note:      ()=> LANG==="ja"?"相手の特性・持ち物は計算に入れていません（突撃チョッキ等も無視）。天候・フィールド・壁・自分の特性と持ち物は反映します。":"Opponent's ability and item are ignored (Assault Vest etc.). Weather, terrain, screens and your own ability and item are included.",
  calc_hp_now:    ()=> LANG==="ja"?"現HP":"current HP",
  calc_hp_full:   ()=> LANG==="ja"?"満タン":"full HP",
+ log_btn:        ()=> LANG==="ja"?"バトルログを見る":"Battle log",
+ log_h:          ()=> LANG==="ja"?"バトルログ":"Battle log",
 };
 function TX(k,...a){ const f=STR[k]; return f?f(...a):k; }
 window.TX=TX;
@@ -1406,9 +1414,9 @@ function calcState(){
   if(c.defEv===undefined)c.defEv=0;
   if(c.nat===undefined)c.nat=1;
   if(c.foeRank===undefined)c.foeRank="board";
+  if(c.myRank===undefined)c.myRank="board";
   const M=c.move?MOVES[c.move]:null;
-  const key=(M&&M.cat==="P")?"a":"c";
-  if(c.myRank===undefined||c.myKey!==key){ c.myKey=key; c.myRank=att.boosts[key]||0; }
+  c.myKey=(M&&M.cat==="P")?"a":"c";
   return {p:p,att:att,moves:moves,field:field};
 }
 /* 相手の仮の個体をつくる。特性と持ち物は無視する */
@@ -1457,7 +1465,7 @@ function calcRows(){
   const spread=(M.rng==="SP"||M.rng==="ADJ")&&foesOnField>=2;
   const defPhys=(M.fx==="psyshock")?true:(M.cat==="P");
   const key=c.myKey, keep=att.boosts[key];
-  att.boosts[key]=c.myRank;
+  if(c.myRank!=="board")att.boosts[key]=c.myRank;   // 「盤面のまま」なら今のランクをそのまま使う
   let rows="";
   B.sides[fp].team.forEach(src=>{
     const onField=B.sides[fp].field.includes(src);
@@ -1470,6 +1478,11 @@ function calcRows(){
     }
     const useNow=onField&&!src.fainted;
     const hp=useNow?src.hp:foe.maxhp;
+    // 相手のHPを隠すモードでは、実数ではなく割合で見せる
+    const mask=B.hideInfo&&src.side!==p;
+    const hpShow=useNow
+      ? (mask?`${Math.ceil(src.hp/src.maxhp*100)}%`:String(src.hp))
+      : String(foe.maxhp);
     const hpLabel=useNow?TX("calc_hp_now"):TX("calc_hp_full");
     const st=rollStats(r.raw,hp);
     const pct=v=>(v/foe.maxhp*100).toFixed(1);
@@ -1481,7 +1494,7 @@ function calcRows(){
       <td>${st.lo}〜${st.hi}</td>
       <td>${pct(st.lo)}〜${pct(st.hi)}%</td>
       <td class="note">${TX("calc_crit")} ${rc.dmg}</td>
-      <td>${verdict}<span class="note"> / ${hpLabel} ${hp}</span></td></tr>`;
+      <td>${verdict}<span class="note"> / ${hpLabel} ${hpShow}</span></td></tr>`;
   });
   att.boosts[key]=keep;
   return `<div class="note">${spread?TX("calc_spread"):""}</div>
@@ -1497,14 +1510,14 @@ function calcPanelHtml(){
     const att=cs.att, moves=cs.moves, field=cs.field;
     left+=`<div class="crow">`+field.map(x=>`<button class="${x.i===c.pos?"sel":""}" onclick="pickCalcAtt(${x.i})">${TX("pos",x.i)} ${esc(x.m.name)}</button>`).join("")+`</div>`;
     left+=`<div class="crow">`+(moves.length?moves.map(n=>`<button class="${n===c.move?"sel":""}" onclick="pickCalcMove('${esc(n)}')">${esc(n)}<span class="note"> ${MOVES[n].t}${MOVES[n].cat==="P"?"物":"特"}${MOVES[n].p||""}</span></button>`).join(""):`<span class="note">${TX("calc_none")}</span>`)+`</div>`;
-    left+=`<div class="crow"><label>${TX("calc_hpev")}: <b id="hpevlab">${c.hpEv}</b></label>
+    left+=`<div class="crow evrow"><label class="evlab">${TX("calc_hpev")}: <b id="hpevlab">${c.hpEv}</b></label>
       <input type="range" min="0" max="32" value="${c.hpEv}" oninput="B.calc.hpEv=+this.value;refreshCalc()"></div>`;
-    left+=`<div class="crow"><label>${TX("calc_dev")}: <b id="devlab">${c.defEv}</b></label>
+    left+=`<div class="crow evrow"><label class="evlab">${TX("calc_dev")}: <b id="devlab">${c.defEv}</b></label>
       <input type="range" min="0" max="32" value="${c.defEv}" oninput="B.calc.defEv=+this.value;refreshCalc()"></div>`;
     const nb=(v,l)=>`<button class="${c.nat===v?"sel":""}" onclick="B.calc.nat=${v};render()">${l}</button>`;
     const ranks=[-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6];
     left+=`<div class="crow"><span>${TX("calc_nat")}: ${nb(1.1,"1.1")}${nb(1,"1.0")}${nb(0.9,"0.9")}</span>
-      <span>${TX("calc_myrank")}: <select onchange="B.calc.myRank=+this.value;render()">`+ranks.map(v=>`<option value="${v}" ${c.myRank===v?"selected":""}>${v>0?"+"+v:v}</option>`).join("")+`</select></span>
+      <span>${TX("calc_myrank")}: <select onchange="setMyRank(this.value)"><option value="board" ${c.myRank==="board"?"selected":""}>${TX("calc_board")}</option>`+ranks.map(v=>`<option value="${v}" ${c.myRank===v?"selected":""}>${v>0?"+"+v:v}</option>`).join("")+`</select></span>
       <span>${TX("calc_forank")}: <select onchange="setFoeRank(this.value)"><option value="board" ${c.foeRank==="board"?"selected":""}>${TX("calc_board")}</option>`+ranks.map(v=>`<option value="${v}" ${c.foeRank===v?"selected":""}>${v>0?"+"+v:v}</option>`).join("")+`</select></span></div>`;
   }
   left+=`<div class="note">${TX("calc_note")}</div></div>`;
@@ -1514,14 +1527,24 @@ function calcPanelHtml(){
     <button class="big" onclick="B.showCalc=null;render()">${TX("close")}</button>
   </div></div>`;
 }
-window.pickCalcAtt=function(i){ B.calc.pos=i; B.calc.move=null; B.calc.myRank=undefined; render(); };
-window.pickCalcMove=function(n){ B.calc.move=n; B.calc.myRank=undefined; render(); };
+window.pickCalcAtt=function(i){ B.calc.pos=i; B.calc.move=null; render(); };
+window.pickCalcMove=function(n){ B.calc.move=n; render(); };
 window.setFoeRank=function(v){ B.calc.foeRank=(v==="board")?"board":+v; render(); };
+window.setMyRank=function(v){ B.calc.myRank=(v==="board")?"board":+v; render(); };
 window.refreshCalc=function(){
   const a=document.getElementById("hpevlab"); if(a)a.textContent=B.calc.hpEv;
   const b=document.getElementById("devlab"); if(b)b.textContent=B.calc.defEv;
   const r=document.getElementById("calcres"); if(r)r.innerHTML=calcRows();
 };
+/* バトルログをボタンからも見られるようにする（下の表示はそのまま残す） */
+function logPanelHtml(){
+  if(!B||!B.showLog)return "";
+  return `<div class="overlay"><div class="statsbox logbox">
+    <h2>${TX("log_h")}</h2>
+    <div id="logbig">${B.log.map(esc).join("\n")}</div>
+    <button class="big" onclick="B.showLog=null;render()">${TX("close")}</button>
+  </div></div>`;
+}
 /* 自分の手持ちの実数値と振り方を見るパネル */
 function statsPanelHtml(){
   if(!B||!B.showStats)return "";
@@ -1580,10 +1603,13 @@ function boardHtml(activeSide,activePos,viewer){
     if(t.length)cond.push(`P${p}:${t.join("/")}`);
   });
   const who=viewer||B.inputPlayer||1;
-  const statsBtn=`<button class="statsbtn" onclick="B.showStats=${who};render()">${TX("stats_btn")}</button>`;
-  const calcBtn=`<button class="statsbtn" onclick="B.showCalc=${who};render()">${TX("calc_btn")}</button>`;
+  const btns=`<div class="btnstack">
+    <button class="statsbtn" onclick="B.showCalc=${who};render()">${TX("calc_btn")}</button>
+    <button class="statsbtn" onclick="B.showStats=${who};render()">${TX("stats_btn")}</button>
+    <button class="statsbtn" onclick="B.showLog=1;render()">${TX("log_btn")}</button>
+   </div>`;
   let html=`<div class="note" style="text-align:center;">${cond.join("　")||""}</div><div class="board">
-   <div class="hdrow">${calcBtn}<span class="note benchline">${TX("player",2)}　${TX("bench")}:${benchList(2,hideFor(2))}</span>${statsBtn}</div><div class="row">`;
+   <div class="hdrow">${btns}<span class="note benchline">${TX("player",2)}　${TX("bench")}:${benchList(2,hideFor(2))}</span></div><div class="row">`;
   [2,1,0].forEach(p=>{ html+=slotHtml(f2[p],TX("pos_of",2,p),activeSide===2&&activePos===p,hideFor(2)); });
   html+=`</div><div class="row">`;
   [0,1,2].forEach(p=>{ html+=slotHtml(f1[p],TX("pos_of",1,p),activeSide===1&&activePos===p,hideFor(1)); });
@@ -1597,7 +1623,7 @@ function benchList(p,hide){
 function benchMons(p){ return B.sides[p].team.filter(m=>!m.fainted && !B.sides[p].field.includes(m)); }
 function rBattle(app){
   if(B.phase==="handoff"){
-    app.innerHTML=`<h1>${TX("turn",B.turn)}</h1>`+boardHtml(null,null,B.inputPlayer)+logHtml()+statsPanelHtml()+calcPanelHtml()+
+    app.innerHTML=`<h1>${TX("turn",B.turn)}</h1>`+boardHtml(null,null,B.inputPlayer)+logHtml()+statsPanelHtml()+calcPanelHtml()+logPanelHtml()+
      `<div class="overlay"><p>${TX("handoff",B.inputPlayer)}</p>
       <button class="big" onclick="startInput()">${TX("handoff_btn",B.inputPlayer)}</button></div>`;
     scrollLog(); return;
@@ -1606,7 +1632,7 @@ function rBattle(app){
   if(B.phase==="replace"){ rReplace(app); scrollLog(); return; }
   if(B.phase==="midswitch"){ rMidSwitch(app); scrollLog(); return; }
   if(B.phase==="end"){
-    app.innerHTML=`<h1>${TX("win",B.winner)}</h1>`+boardHtml()+logHtml()+statsPanelHtml()+calcPanelHtml()+
+    app.innerHTML=`<h1>${TX("win",B.winner)}</h1>`+boardHtml()+logHtml()+statsPanelHtml()+calcPanelHtml()+logPanelHtml()+
      `<div style="text-align:center;"><button class="big" onclick="goMenu()">${TX("back_menu")}</button></div>`;
     scrollLog(); return;
   }
@@ -1710,7 +1736,7 @@ function rInput(app){
     html+=`</div></div>`;
     html+=`<button class="danger" onclick="B.sub='action';B.chosenMove=null;render()">技選択に戻る</button>`;
   }
-  html+=`</div>`+logHtml()+statsPanelHtml()+calcPanelHtml();
+  html+=`</div>`+logHtml()+statsPanelHtml()+calcPanelHtml()+logPanelHtml();
   app.innerHTML=html;
 }
 function availableBench(pl){
@@ -2695,7 +2721,7 @@ function rMidSwitch(app){
   let html=`<h1>ターン${B.turn}</h1>`+boardHtml(null,null,mon.side)+
    `<div class="panel"><h2>プレイヤー${mon.side}：${esc(ms.label)}！ ${esc(mon.name)}の交代先を選択</h2>`;
   benchMons(mon.side).forEach(m=>{ html+=`<button onclick="doMidSwitch('${esc(m.name)}')">${esc(m.name)} (HP ${m.hp}/${m.maxhp})</button>`; });
-  html+=`</div>`+logHtml()+statsPanelHtml()+calcPanelHtml();
+  html+=`</div>`+logHtml()+statsPanelHtml()+calcPanelHtml()+logPanelHtml();
   app.innerHTML=html;
 }
 window.doMidSwitch=function(name){
@@ -2728,7 +2754,7 @@ function rReplace(app){
   const chosen=replaceReserved(q.p);
   if(chosen.length)html+=`<div class="note">選出済み: ${chosen.map(esc).join("、")}</div>`;
   bench.forEach(m=>{ html+=`<button onclick="doReplace('${esc(m.name)}')">${esc(m.name)} (HP ${m.hp}/${m.maxhp})</button>`; });
-  html+=`</div>`+logHtml()+statsPanelHtml()+calcPanelHtml();
+  html+=`</div>`+logHtml()+statsPanelHtml()+calcPanelHtml()+logPanelHtml();
   app.innerHTML=html;
 }
 window.doReplace=function(name){
