@@ -17,6 +17,14 @@
   .hdrow{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
   .statsbtn{font-size:12px;padding:3px 8px;}
   .filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:6px;}
+  .benchline{flex:1;text-align:center;}
+  .calcbox{width:min(1100px,96vw);}
+  .calcwrap{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start;}
+  .calcleft{flex:1 1 340px;min-width:280px;}
+  .calcright{flex:1 1 420px;min-width:300px;}
+  .crow{margin:6px 0;display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+  .crow input[type=range]{flex:1;min-width:140px;}
+  .crow select{background:#12141a;color:#e8e8e8;border:1px solid #444c60;border-radius:4px;padding:2px 4px;}
   .filters select{background:#12141a;color:#e8e8e8;border:1px solid #444c60;border-radius:4px;padding:2px 4px;}
   .statsbox{background:#1a1d26;border:1px solid #444c60;border-radius:6px;padding:12px;max-width:96vw;max-height:86vh;overflow:auto;}
   .tblwrap{overflow-x:auto;}
@@ -612,6 +620,27 @@ const STR={
  asc:            ()=> LANG==="ja"?"低い順":"Low → high",
  hits:           (n)=> LANG==="ja"?`${n}体`:`${n} found`,
  add_mon:        ()=> LANG==="ja"?"ポケモンを追加":"Add a Pokemon",
+ calc_btn:       ()=> LANG==="ja"?"ダメージ計算":"Damage calc",
+ calc_h:         (p)=> LANG==="ja"?`プレイヤー${p}：ダメージ計算`:`Player ${p}: damage calculator`,
+ calc_att:       ()=> LANG==="ja"?"attacker":"Attacker",
+ calc_move:      ()=> LANG==="ja"?"技":"Move",
+ calc_hpev:      ()=> LANG==="ja"?"相手のHP振り":"Opponent HP points",
+ calc_dev:       ()=> LANG==="ja"?"相手の防御／特防振り":"Opponent Def / SpD points",
+ calc_nat:       ()=> LANG==="ja"?"相手の性格補正":"Opponent nature",
+ calc_myrank:    ()=> LANG==="ja"?"自分のランク":"Your rank",
+ calc_forank:    ()=> LANG==="ja"?"相手のランク":"Opponent rank",
+ calc_board:     ()=> LANG==="ja"?"盤面のまま":"As on board",
+ calc_none:      ()=> LANG==="ja"?"攻撃技がありません":"No attacking moves",
+ calc_noatt:     ()=> LANG==="ja"?"場に出せるポケモンがいません":"No Pokemon on the field",
+ calc_spread:    ()=> LANG==="ja"?"全体技のため0.75倍で計算":"Spread move: 0.75x applied",
+ calc_crit:      ()=> LANG==="ja"?"急所":"Crit",
+ calc_ko1:       (pc)=> LANG==="ja"?`乱数1発 ${pc}%`:`${pc}% to OHKO`,
+ calc_fix:       (n)=> LANG==="ja"?`確定${n}発`:`${n}HKO guaranteed`,
+ calc_rand:      (n,pc)=> LANG==="ja"?`乱数${n}発 ${pc}%`:`${n}HKO ${pc}%`,
+ calc_immune:    ()=> LANG==="ja"?"効果がない":"No effect",
+ calc_note:      ()=> LANG==="ja"?"相手の特性・持ち物は計算に入れていません（突撃チョッキ等も無視）。天候・フィールド・壁・自分の特性と持ち物は反映します。":"Opponent's ability and item are ignored (Assault Vest etc.). Weather, terrain, screens and your own ability and item are included.",
+ calc_hp_now:    ()=> LANG==="ja"?"現HP":"current HP",
+ calc_hp_full:   ()=> LANG==="ja"?"満タン":"full HP",
 };
 function TX(k,...a){ const f=STR[k]; return f?f(...a):k; }
 window.TX=TX;
@@ -1363,6 +1392,136 @@ function effSpe(mon){
   return s;
 }
 /* =============== 画面（バトル） =============== */
+/* =============== ダメージ計算 =============== */
+function calcState(){
+  if(!B.calc)B.calc={};
+  const c=B.calc, p=B.showCalc;
+  const field=B.sides[p].field.map((m,i)=>({m,i})).filter(x=>alive(x.m)&&!x.m.vol.commander);
+  if(!field.length)return null;
+  if(c.side!==p||!field.some(x=>x.i===c.pos)){ c.side=p; c.pos=field[0].i; c.move=null; c.myRank=undefined; }
+  const att=B.sides[p].field[c.pos];
+  const moves=(att.cfg.moves||[]).filter(n=>MOVES[n]&&MOVES[n].cat!=="X");
+  if(!moves.includes(c.move))c.move=moves[0]||null;
+  if(c.hpEv===undefined)c.hpEv=0;
+  if(c.defEv===undefined)c.defEv=0;
+  if(c.nat===undefined)c.nat=1;
+  if(c.foeRank===undefined)c.foeRank="board";
+  const M=c.move?MOVES[c.move]:null;
+  const key=(M&&M.cat==="P")?"a":"c";
+  if(c.myRank===undefined||c.myKey!==key){ c.myKey=key; c.myRank=att.boosts[key]||0; }
+  return {p:p,att:att,moves:moves,field:field};
+}
+/* 相手の仮の個体をつくる。特性と持ち物は無視する */
+function calcFoeMon(src,c,defPhys){
+  const d=DEX[src.dex];
+  const ev={h:c.hpEv,b:c.defEv,d:c.defEv};
+  const st=calcStats(src.dex,ev,(src.isMega&&d.mega)?d.mega:false,null);
+  const k=defPhys?"b":"d";
+  if(c.nat!==1)st[k]=Math.floor(st[k]*c.nat);
+  const rank=(c.foeRank==="board")?(src.boosts?(src.boosts[k]||0):0):c.foeRank;
+  const bo={a:0,b:0,c:0,d:0,s:0}; bo[k]=rank;
+  return {
+    srcRef:src, side:src.side, dex:src.dex, name:src.name, types:src.types.slice(),
+    ability:"", item:"なし", itemUsed:true, stats:st, hp:st.h, maxhp:st.h,
+    status:null, boosts:bo, isMega:!!src.isMega, fainted:false, vol:{}, cfg:src.cfg
+  };
+}
+/* 乱数の下限・上限と、HP以上になる確率 */
+function rollStats(raw,hp){
+  const at=r=>Math.max(1,Math.floor(raw*(0.85+r*0.15)));
+  const lo=at(0), hi=at(1);
+  const pKO=n=>{
+    if(n<=0)return 0;
+    if(n===1){
+      const r=(hp/raw-0.85)/0.15;
+      if(r<=0)return 1;
+      if(r>1)return 0;
+      return 1-r;
+    }
+    let hit=0;
+    for(let i=0;i<4000;i++){ let s2=0; for(let k=0;k<n;k++)s2+=at(Math.random()); if(s2>=hp)hit++; }
+    return hit/4000;
+  };
+  const need=Math.max(1,Math.ceil(hp/hi));
+  const worst=Math.max(1,Math.ceil(hp/lo));
+  return {lo:lo,hi:hi,need:need,worst:worst,pKO:pKO};
+}
+function calcRows(){
+  const cs=calcState();
+  if(!cs)return `<div class="note">${TX("calc_noatt")}</div>`;
+  const c=B.calc, p=cs.p, att=cs.att;
+  if(!c.move)return `<div class="note">${TX("calc_none")}</div>`;
+  const M=MOVES[c.move];
+  const fp=foeSide(p);
+  const foesOnField=B.sides[fp].field.filter(m=>alive(m)&&!m.vol.commander).length;
+  const spread=(M.rng==="SP"||M.rng==="ADJ")&&foesOnField>=2;
+  const defPhys=(M.fx==="psyshock")?true:(M.cat==="P");
+  const key=c.myKey, keep=att.boosts[key];
+  att.boosts[key]=c.myRank;
+  let rows="";
+  B.sides[fp].team.forEach(src=>{
+    const onField=B.sides[fp].field.includes(src);
+    const foe=calcFoeMon(src,c,defPhys);
+    const r=calcDamage(att,foe,c.move,M,{spread:spread,roll:0,forceCrit:false});
+    const rc=calcDamage(att,foe,c.move,M,{spread:spread,roll:1,forceCrit:true});
+    if(!r.raw||r.eff===0){
+      rows+=`<tr class="${src.fainted?"faint":""}"><td class="nmcell">${esc(src.name)}</td><td colspan="4" class="note">${TX("calc_immune")}</td></tr>`;
+      return;
+    }
+    const useNow=onField&&!src.fainted;
+    const hp=useNow?src.hp:foe.maxhp;
+    const hpLabel=useNow?TX("calc_hp_now"):TX("calc_hp_full");
+    const st=rollStats(r.raw,hp);
+    const pct=v=>(v/foe.maxhp*100).toFixed(1);
+    let verdict;
+    if(st.need===st.worst) verdict=TX("calc_fix",st.need);
+    else { const pc=Math.round(st.pKO(st.need)*100); verdict=(st.need===1)?TX("calc_ko1",pc):TX("calc_rand",st.need,pc); }
+    rows+=`<tr class="${src.fainted?"faint":""}">
+      <td class="nmcell">${esc(src.name)}${onField?`<span class="st mega">${TX("onfield")}</span>`:""}${src.fainted?" ✕":""}</td>
+      <td>${st.lo}〜${st.hi}</td>
+      <td>${pct(st.lo)}〜${pct(st.hi)}%</td>
+      <td class="note">${TX("calc_crit")} ${rc.dmg}</td>
+      <td>${verdict}<span class="note"> / ${hpLabel} ${hp}</span></td></tr>`;
+  });
+  att.boosts[key]=keep;
+  return `<div class="note">${spread?TX("calc_spread"):""}</div>
+    <div class="tblwrap"><table class="stats">${rows}</table></div>`;
+}
+function calcPanelHtml(){
+  if(!B||!B.showCalc)return "";
+  const cs=calcState();
+  const p=B.showCalc, c=B.calc||{};
+  let left=`<div class="calcleft">`;
+  if(!cs) left+=`<div class="note">${TX("calc_noatt")}</div>`;
+  else{
+    const att=cs.att, moves=cs.moves, field=cs.field;
+    left+=`<div class="crow">`+field.map(x=>`<button class="${x.i===c.pos?"sel":""}" onclick="pickCalcAtt(${x.i})">${TX("pos",x.i)} ${esc(x.m.name)}</button>`).join("")+`</div>`;
+    left+=`<div class="crow">`+(moves.length?moves.map(n=>`<button class="${n===c.move?"sel":""}" onclick="pickCalcMove('${esc(n)}')">${esc(n)}<span class="note"> ${MOVES[n].t}${MOVES[n].cat==="P"?"物":"特"}${MOVES[n].p||""}</span></button>`).join(""):`<span class="note">${TX("calc_none")}</span>`)+`</div>`;
+    left+=`<div class="crow"><label>${TX("calc_hpev")}: <b id="hpevlab">${c.hpEv}</b></label>
+      <input type="range" min="0" max="32" value="${c.hpEv}" oninput="B.calc.hpEv=+this.value;refreshCalc()"></div>`;
+    left+=`<div class="crow"><label>${TX("calc_dev")}: <b id="devlab">${c.defEv}</b></label>
+      <input type="range" min="0" max="32" value="${c.defEv}" oninput="B.calc.defEv=+this.value;refreshCalc()"></div>`;
+    const nb=(v,l)=>`<button class="${c.nat===v?"sel":""}" onclick="B.calc.nat=${v};render()">${l}</button>`;
+    const ranks=[-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6];
+    left+=`<div class="crow"><span>${TX("calc_nat")}: ${nb(1.1,"1.1")}${nb(1,"1.0")}${nb(0.9,"0.9")}</span>
+      <span>${TX("calc_myrank")}: <select onchange="B.calc.myRank=+this.value;render()">`+ranks.map(v=>`<option value="${v}" ${c.myRank===v?"selected":""}>${v>0?"+"+v:v}</option>`).join("")+`</select></span>
+      <span>${TX("calc_forank")}: <select onchange="setFoeRank(this.value)"><option value="board" ${c.foeRank==="board"?"selected":""}>${TX("calc_board")}</option>`+ranks.map(v=>`<option value="${v}" ${c.foeRank===v?"selected":""}>${v>0?"+"+v:v}</option>`).join("")+`</select></span></div>`;
+  }
+  left+=`<div class="note">${TX("calc_note")}</div></div>`;
+  return `<div class="overlay"><div class="statsbox calcbox">
+    <h2>${TX("calc_h",p)}</h2>
+    <div class="calcwrap">${left}<div class="calcright" id="calcres">${calcRows()}</div></div>
+    <button class="big" onclick="B.showCalc=null;render()">${TX("close")}</button>
+  </div></div>`;
+}
+window.pickCalcAtt=function(i){ B.calc.pos=i; B.calc.move=null; B.calc.myRank=undefined; render(); };
+window.pickCalcMove=function(n){ B.calc.move=n; B.calc.myRank=undefined; render(); };
+window.setFoeRank=function(v){ B.calc.foeRank=(v==="board")?"board":+v; render(); };
+window.refreshCalc=function(){
+  const a=document.getElementById("hpevlab"); if(a)a.textContent=B.calc.hpEv;
+  const b=document.getElementById("devlab"); if(b)b.textContent=B.calc.defEv;
+  const r=document.getElementById("calcres"); if(r)r.innerHTML=calcRows();
+};
 /* 自分の手持ちの実数値と振り方を見るパネル */
 function statsPanelHtml(){
   if(!B||!B.showStats)return "";
@@ -1422,8 +1581,9 @@ function boardHtml(activeSide,activePos,viewer){
   });
   const who=viewer||B.inputPlayer||1;
   const statsBtn=`<button class="statsbtn" onclick="B.showStats=${who};render()">${TX("stats_btn")}</button>`;
+  const calcBtn=`<button class="statsbtn" onclick="B.showCalc=${who};render()">${TX("calc_btn")}</button>`;
   let html=`<div class="note" style="text-align:center;">${cond.join("　")||""}</div><div class="board">
-   <div class="hdrow"><span class="note">${TX("player",2)}　${TX("bench")}:${benchList(2,hideFor(2))}</span>${statsBtn}</div><div class="row">`;
+   <div class="hdrow">${calcBtn}<span class="note benchline">${TX("player",2)}　${TX("bench")}:${benchList(2,hideFor(2))}</span>${statsBtn}</div><div class="row">`;
   [2,1,0].forEach(p=>{ html+=slotHtml(f2[p],TX("pos_of",2,p),activeSide===2&&activePos===p,hideFor(2)); });
   html+=`</div><div class="row">`;
   [0,1,2].forEach(p=>{ html+=slotHtml(f1[p],TX("pos_of",1,p),activeSide===1&&activePos===p,hideFor(1)); });
@@ -1437,7 +1597,7 @@ function benchList(p,hide){
 function benchMons(p){ return B.sides[p].team.filter(m=>!m.fainted && !B.sides[p].field.includes(m)); }
 function rBattle(app){
   if(B.phase==="handoff"){
-    app.innerHTML=`<h1>${TX("turn",B.turn)}</h1>`+boardHtml(null,null,B.inputPlayer)+logHtml()+statsPanelHtml()+
+    app.innerHTML=`<h1>${TX("turn",B.turn)}</h1>`+boardHtml(null,null,B.inputPlayer)+logHtml()+statsPanelHtml()+calcPanelHtml()+
      `<div class="overlay"><p>${TX("handoff",B.inputPlayer)}</p>
       <button class="big" onclick="startInput()">${TX("handoff_btn",B.inputPlayer)}</button></div>`;
     scrollLog(); return;
@@ -1446,7 +1606,7 @@ function rBattle(app){
   if(B.phase==="replace"){ rReplace(app); scrollLog(); return; }
   if(B.phase==="midswitch"){ rMidSwitch(app); scrollLog(); return; }
   if(B.phase==="end"){
-    app.innerHTML=`<h1>${TX("win",B.winner)}</h1>`+boardHtml()+logHtml()+statsPanelHtml()+
+    app.innerHTML=`<h1>${TX("win",B.winner)}</h1>`+boardHtml()+logHtml()+statsPanelHtml()+calcPanelHtml()+
      `<div style="text-align:center;"><button class="big" onclick="goMenu()">${TX("back_menu")}</button></div>`;
     scrollLog(); return;
   }
@@ -1550,7 +1710,7 @@ function rInput(app){
     html+=`</div></div>`;
     html+=`<button class="danger" onclick="B.sub='action';B.chosenMove=null;render()">技選択に戻る</button>`;
   }
-  html+=`</div>`+logHtml()+statsPanelHtml();
+  html+=`</div>`+logHtml()+statsPanelHtml()+calcPanelHtml();
   app.innerHTML=html;
 }
 function availableBench(pl){
@@ -1647,6 +1807,7 @@ function movePowerOf(att,name,M,def){
   return p;
 }
 function calcDamage(att,def,name,M,opts){
+  opts=opts||{};
   const mt=moveTypeOf(att,name,M);
   if(mt==="じめん"&&!grounded(def)&&effAbility(att)!=="かたやぶり") return {dmg:0,eff:0,imm:`当たらない`};
   const eff=typeEff(att,M,mt,def);
@@ -1658,7 +1819,8 @@ function calcDamage(att,def,name,M,opts){
   const defPhys = M.fx==="psyshock" ? true : M.cat==="P";
   let crit=false;
   { const critChance=M.crit===2?1:(M.crit?1/8:1/24);
-    if(effAbility(def)!=="シェルアーマー"&&Math.random()<critChance)crit=true; }
+    if(opts.forceCrit!==undefined) crit=!!opts.forceCrit;                       // ダメージ計算画面用
+    else if(effAbility(def)!=="シェルアーマー"&&Math.random()<critChance)crit=true; }
   const igAtk = effAbility(def)==="てんねん";
   const igDef = effAbility(att)==="てんねん"||M.fx==="sacredsword";
   const aBoost=b=> igAtk?1:boostMul(crit?Math.max(0,b):b);
@@ -1670,7 +1832,8 @@ function calcDamage(att,def,name,M,opts){
   let D = defPhys ? def.stats.b*dBoost(def.boosts.b) : def.stats.d*dBoost(def.boosts.d);
   // わざわい系（本人以外すべてに影響）
   {
-    const ruin=(nm,self)=>[1,2].some(pp=>B.sides[pp].field.some(m=>alive(m)&&m!==self&&effAbility(m)===nm));
+    // srcRef はダメージ計算画面が作る仮の個体が、元の自分自身を「他人」と数えないための目印
+    const ruin=(nm,self)=>[1,2].some(pp=>B.sides[pp].field.some(m=>alive(m)&&m!==self&&m!==(self&&self.srcRef)&&effAbility(m)===nm));
     if(defPhys && ruin("わざわいのつるぎ",def)) D*=0.75;      // 防御ダウン
     if(!defPhys && ruin("わざわいのたま",def)) D*=0.75;        // 特防ダウン（イーユイ）
     if(M.cat==="S" && ruin("わざわいのうつわ",att)) A*=0.75;   // 特攻ダウン（ディンルー）
@@ -1740,8 +1903,10 @@ function calcDamage(att,def,name,M,opts){
     const blocked = B.sides[att.side].field.some(m=>alive(m)&&effAbility(m)==="きんちょうかん");
     if(!blocked){ mod*=0.5; log(`${def.name}は${def.item}で威力を弱めた！`); consumeItem(def); }
   }
-  dmg=Math.max(1,Math.floor(dmg*mod*(0.85+Math.random()*0.15)));
-  return {dmg,eff,crit,mt};
+  const raw=dmg*mod;                                     // 乱数をかける前の値
+  const rr=(opts.roll!==undefined)?opts.roll:Math.random();
+  dmg=Math.max(1,Math.floor(raw*(0.85+rr*0.15)));
+  return {dmg,eff,crit,mt,raw};
 }
 /* =============== ターン解決 =============== */
 function resolveTurn(){
@@ -2530,7 +2695,7 @@ function rMidSwitch(app){
   let html=`<h1>ターン${B.turn}</h1>`+boardHtml(null,null,mon.side)+
    `<div class="panel"><h2>プレイヤー${mon.side}：${esc(ms.label)}！ ${esc(mon.name)}の交代先を選択</h2>`;
   benchMons(mon.side).forEach(m=>{ html+=`<button onclick="doMidSwitch('${esc(m.name)}')">${esc(m.name)} (HP ${m.hp}/${m.maxhp})</button>`; });
-  html+=`</div>`+logHtml()+statsPanelHtml();
+  html+=`</div>`+logHtml()+statsPanelHtml()+calcPanelHtml();
   app.innerHTML=html;
 }
 window.doMidSwitch=function(name){
@@ -2563,7 +2728,7 @@ function rReplace(app){
   const chosen=replaceReserved(q.p);
   if(chosen.length)html+=`<div class="note">選出済み: ${chosen.map(esc).join("、")}</div>`;
   bench.forEach(m=>{ html+=`<button onclick="doReplace('${esc(m.name)}')">${esc(m.name)} (HP ${m.hp}/${m.maxhp})</button>`; });
-  html+=`</div>`+logHtml()+statsPanelHtml();
+  html+=`</div>`+logHtml()+statsPanelHtml()+calcPanelHtml();
   app.innerHTML=html;
 }
 window.doReplace=function(name){
