@@ -16,6 +16,8 @@
   .pickslot.empty{opacity:.45;}
   .hdrow{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
   .statsbtn{font-size:12px;padding:3px 8px;}
+  .filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:6px;}
+  .filters select{background:#12141a;color:#e8e8e8;border:1px solid #444c60;border-radius:4px;padding:2px 4px;}
   .statsbox{background:#1a1d26;border:1px solid #444c60;border-radius:6px;padding:12px;max-width:96vw;max-height:86vh;overflow:auto;}
   .tblwrap{overflow-x:auto;}
   table.stats{border-collapse:collapse;font-size:12px;width:100%;}
@@ -598,9 +600,21 @@ const STR={
  points:         ()=> LANG==="ja"?"振り":"Points",
  onfield:        ()=> LANG==="ja"?"場":"Field",
  statname:       (k)=> LANG==="ja"?STATN[k]:{h:"HP",a:"Atk",b:"Def",c:"SpA",d:"SpD",s:"Spe"}[k],
+ suspect:        (ns)=> LANG==="ja"?`⚠ ${ns} の技がこのポケモンのものと合っていません。図鑑の変更で別個体に変わった可能性があります。編集して確認してください。`:`⚠ The saved moves for ${ns} do not match this Pokemon. It may have been swapped by a dex change. Please edit and check.`,
+ search:         ()=> LANG==="ja"?"検索":"Search",
+ mon_ph:         ()=> LANG==="ja"?"ポケモン名（ひらがな可）":"Pokemon name",
+ type_f:         ()=> LANG==="ja"?"タイプ":"Type",
+ all_types:      ()=> LANG==="ja"?"すべて":"All",
+ sort_f:         ()=> LANG==="ja"?"並び":"Sort",
+ sort_dex:       ()=> LANG==="ja"?"図鑑順":"Dex order",
+ sort_bst:       ()=> LANG==="ja"?"合計種族値":"Base stat total",
+ desc:           ()=> LANG==="ja"?"高い順":"High → low",
+ asc:            ()=> LANG==="ja"?"低い順":"Low → high",
+ hits:           (n)=> LANG==="ja"?`${n}体`:`${n} found`,
+ add_mon:        ()=> LANG==="ja"?"ポケモンを追加":"Add a Pokemon",
 };
-function T(k,...a){ const f=STR[k]; return f?f(...a):k; }
-window.T=T;
+function TX(k,...a){ const f=STR[k]; return f?f(...a):k; }
+window.TX=TX;
 const STATN={h:"HP",a:"攻撃",b:"防御",c:"特攻",d:"特防",s:"素早"};
 const STATKEYS=["h","a","b","c","d","s"];
 /* =============== ステータス計算 =============== */
@@ -627,9 +641,14 @@ function loadTeams(){
     const ts=JSON.parse(localStorage.getItem("tb_teams")||"[]");
     // 図鑑に新ポケモンが増えても崩れないよう、保存された名前から番号を引き直す
     ts.forEach(t=>{ (t.mons||[]).forEach(m=>{
-      if(m.n){ const i=DEX.findIndex(d=>d.n===m.n); m.dex=i; }  // 見つからなければ-1（別ポケモンに化けさせない）
-      else if(DEX[m.dex]) m.n=DEX[m.dex].n;
-      else m.dex=-1;
+      // 引き当ては ID → 名前 → 番号 の順。番号は最後の手段で、当てた瞬間に名前を刻んで二度とずれないようにする
+      let i=-1;
+      if(m.cid) i=DEX.findIndex(d=>d.cid===m.cid);
+      if(i<0&&m.n) i=DEX.findIndex(d=>d.n===m.n);
+      if(i<0&&!m.n&&!m.cid&&DEX[m.dex]) i=m.dex;
+      m.dex=i;
+      const dd=DEX[i];
+      if(dd){ m.n=dd.n; if(dd.cid)m.cid=dd.cid; }
       // 図鑑側で特性が差し替わった場合、保存された古い特性を第1特性に戻す
       const d=DEX[m.dex];
       if(d&&m.ability&&!d.abil.some(a=>a[0]===m.ability)) m.ability=d.abil[0][0];
@@ -641,11 +660,24 @@ function loadTeams(){
 }
 function saveTeams(ts){
   try{
-    (ts||[]).forEach(t=>{ (t.mons||[]).forEach(m=>{ if(DEX[m.dex])m.n=DEX[m.dex].n; }); });
+    (ts||[]).forEach(t=>{ (t.mons||[]).forEach(m=>{
+      const d=DEX[m.dex];
+      if(d){ m.n=d.n; if(d.cid)m.cid=d.cid; else delete m.cid; }
+    }); });
     localStorage.setItem("tb_teams",JSON.stringify(ts));
   }catch(e){alert("保存に失敗しました（ブラウザのlocalStorageが使えない環境かもしれません）");}
 }
-function loadCustom(){ try{return JSON.parse(localStorage.getItem("tb_customdex")||"[]");}catch(e){return [];} }
+function newCid(){ return "c"+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+function loadCustom(){
+  try{
+    const l=JSON.parse(localStorage.getItem("tb_customdex")||"[]");
+    // 図鑑の並びが変わっても見失わないよう、IDのない古いカスタムにIDを振る
+    let changed=false;
+    l.forEach(c=>{ if(!c.cid){ c.cid=newCid(); changed=true; } });
+    if(changed)saveCustomDex(l);
+    return l;
+  }catch(e){return [];}
+}
 function saveCustomDex(l){ try{localStorage.setItem("tb_customdex",JSON.stringify(l));}catch(e){} }
 loadCustom().forEach(c=>DEX.push(c));
 function loadCustomMoves(){ try{return JSON.parse(localStorage.getItem("tb_custommoves")||"[]");}catch(e){return [];} }
@@ -682,26 +714,28 @@ function applySearchFilters(){
 /* =============== メニュー =============== */
 function rMenu(app){
   const ts=loadTeams();
-  let html=`<div style="text-align:right;margin-bottom:4px;"><span class="note">${T("lang_label")}:</span>
+  let html=`<div style="text-align:right;margin-bottom:4px;"><span class="note">${TX("lang_label")}:</span>
    <button class="${LANG==="ja"?"sel":""}" onclick="setLang('ja')">日本語</button><button class="${LANG==="en"?"sel":""}" onclick="setLang('en')">English</button></div>`;
-  html+=`<h1>${T("title")}</h1><div class="panel" style="text-align:center;">
-   <button class="big" onclick="goBuilder()">${T("menu_build")}</button>
-   <button class="big" ${ts.length===0?"disabled":""} onclick="goSetup()">${T("menu_start")}</button>
-   ${ts.length===0?`<div class="note">${T("menu_needteam")}</div>`:""}
-  </div><div class="panel"><h2>${T("saved_teams")}</h2>`;
-  if(ts.length===0) html+=`<div class="note">${T("none_yet")}</div>`;
-  ts.forEach((t,i)=>{ html+=`<div style="margin:4px 0;"><b>${esc(t.name)}</b>: ${t.mons.map(m=>esc(dispName(m))).join("、")}
-    <button onclick="editTeam(${i})">${T("edit")}</button><button class="danger" onclick="delTeam(${i})">${T("del")}</button></div>`; });
+  html+=`<h1>${TX("title")}</h1><div class="panel" style="text-align:center;">
+   <button class="big" onclick="goBuilder()">${TX("menu_build")}</button>
+   <button class="big" ${ts.length===0?"disabled":""} onclick="goSetup()">${TX("menu_start")}</button>
+   ${ts.length===0?`<div class="note">${TX("menu_needteam")}</div>`:""}
+  </div><div class="panel"><h2>${TX("saved_teams")}</h2>`;
+  if(ts.length===0) html+=`<div class="note">${TX("none_yet")}</div>`;
+  ts.forEach((t,i)=>{ const sus=teamSuspect(t);
+    html+=`<div style="margin:4px 0;"><b>${esc(t.name)}</b>: ${t.mons.map(m=>esc(dispName(m))).join("、")}
+    ${sus?`<div class="warn">${TX("suspect",suspectNames(t).join("、"))}</div>`:""}
+    <button onclick="editTeam(${i})">${TX("edit")}</button><button class="danger" onclick="delTeam(${i})">${TX("del")}</button></div>`; });
   html+=`</div>`;
-  html+=`<div class="panel"><h2>${T("backup_h")}</h2>
-   <div class="note">${T("backup_note")}</div>
-   <button class="big" onclick="exportData()">${T("exp")}</button>
-   <button class="big" onclick="downloadData()">${T("expfile")}</button>
-   <button class="big" onclick="S.showImport=!S.showImport;render()">${T("imp")}</button>
-   <div id="expbox" style="margin-top:8px;">${S.exportText?`<div class="note">${T("exp_hint")}</div><textarea id="exparea" style="width:100%;height:110px;background:#12141a;color:#e8e8e8;border:1px solid #444c60;border-radius:4px;">${esc(S.exportText)}</textarea>`:""}</div>
-   ${S.showImport?`<div style="margin-top:8px;"><div class="note">${T("imp_hint")}</div>
+  html+=`<div class="panel"><h2>${TX("backup_h")}</h2>
+   <div class="note">${TX("backup_note")}</div>
+   <button class="big" onclick="exportData()">${TX("exp")}</button>
+   <button class="big" onclick="downloadData()">${TX("expfile")}</button>
+   <button class="big" onclick="S.showImport=!S.showImport;render()">${TX("imp")}</button>
+   <div id="expbox" style="margin-top:8px;">${S.exportText?`<div class="note">${TX("exp_hint")}</div><textarea id="exparea" style="width:100%;height:110px;background:#12141a;color:#e8e8e8;border:1px solid #444c60;border-radius:4px;">${esc(S.exportText)}</textarea>`:""}</div>
+   ${S.showImport?`<div style="margin-top:8px;"><div class="note">${TX("imp_hint")}</div>
      <textarea id="imparea" style="width:100%;height:110px;background:#12141a;color:#e8e8e8;border:1px solid #444c60;border-radius:4px;"></textarea>
-     <button class="sel" onclick="importData()">${T("imp_do")}</button>
+     <button class="sel" onclick="importData()">${TX("imp_do")}</button>
      <input type="file" id="impfile" accept=".json,.txt" onchange="importFile(this)" style="margin-left:8px;"></div>`:""}
   </div>`;
   html+=`<div class="note">※技・特性・持ち物の使用率はポケモン徹底攻略のポケチャン ダブル使用率(2026/07/10更新)を元にしています。カラミンゴ/イエッサン♀/ガチグマ2種/モロバレル/ポリゴン2はポケチャン未実装のためSVでの標準的な型を推定で収録（★印）。ふういん・スキルスワップ・じこあんじ等の一部の技は未対応のため除外。チームはこのブラウザ内に保存されます。</div>`;
@@ -709,6 +743,15 @@ function rMenu(app){
 }
 function dispName(cfg){ return DEX[cfg.dex] ? DEX[cfg.dex].n : `${cfg.n||"？"}（削除済み）`; }
 function teamBroken(t){ return (t.mons||[]).some(m=>!DEX[m.dex]); }
+/* 保存された技がそのポケモンの覚える技に無い＝別個体に化けた疑い */
+function monMismatch(m){
+  const d=DEX[m.dex];
+  if(!d||d.allMoves)return false;
+  const learn=(d.mv||[]).map(x=>x[0]);
+  return (m.moves||[]).some(n=>!learn.includes(n));
+}
+function teamSuspect(t){ return (t.mons||[]).some(monMismatch); }
+function suspectNames(t){ return (t.mons||[]).filter(monMismatch).map(m=>m.n||"？"); }
 function collectData(){
   return {v:1, savedAt:new Date().toISOString(), teams:loadTeams(), customDex:loadCustom(), customMoves:loadCustomMoves()};
 }
@@ -793,10 +836,27 @@ function rBuilder(app){
   html+=`</div>`;
   if(S.srcIdx!==null){ html+=monEditor(); }
   else {
-    html+=`<div class="panel"><h2>ポケモンを追加</h2>検索: <input type="text" id="monsearch" placeholder="ポケモン名（ひらがな可）" oninput="S.qMon=this.value;filterEls(this,'rosterlist')" style="width:180px;"><div class="roster" id="rosterlist">`;
-    DEX.forEach((d,i)=>{
+    const sortKey=S.roSort||"dex", sortDir=S.roDir||"desc", typeF=S.roType||"";
+    const bstOf=d=>d.bs.reduce((a,b)=>a+b,0);
+    let list=DEX.map((d,i)=>({d,i}));
+    if(typeF) list=list.filter(x=>x.d.t.includes(typeF));
+    if(sortKey!=="dex"){
+      const val=x=> sortKey==="bst" ? bstOf(x.d) : x.d.bs[STATKEYS.indexOf(sortKey)];
+      list.sort((a,b)=> sortDir==="desc" ? val(b)-val(a) || a.i-b.i : val(a)-val(b) || a.i-b.i );
+    }
+    const opt=(v,label,cur)=>`<option value="${v}" ${cur===v?"selected":""}>${label}</option>`;
+    html+=`<div class="panel"><h2>${TX("add_mon")}</h2>
+     <div class="filters">
+      <span>${TX("search")}: <input type="text" id="monsearch" placeholder="${TX("mon_ph")}" oninput="S.qMon=this.value;filterEls(this,'rosterlist')" style="width:170px;"></span>
+      <span>${TX("type_f")}: <select onchange="S.roType=this.value;render()">${opt("",TX("all_types"),typeF)}${Object.keys(CHART).map(t=>opt(t,t,typeF)).join("")}</select></span>
+      <span>${TX("sort_f")}: <select onchange="S.roSort=this.value;render()">${opt("dex",TX("sort_dex"),sortKey)}${opt("bst",TX("sort_bst"),sortKey)}${STATKEYS.map(k=>opt(k,TX("statname",k),sortKey)).join("")}</select>
+       <button class="${sortDir==="desc"?"sel":""}" ${sortKey==="dex"?"disabled":""} onclick="S.roDir='desc';render()">${TX("desc")}</button><button class="${sortDir==="asc"?"sel":""}" ${sortKey==="dex"?"disabled":""} onclick="S.roDir='asc';render()">${TX("asc")}</button></span>
+      <span class="note">${TX("hits",list.length)}</span>
+     </div><div class="roster" id="rosterlist">`;
+    list.forEach(({d,i})=>{
       const used=T.mons.some(m=>m.dex===i);
-      html+=`<button data-n="${esc(d.n)}" ${used||T.mons.length>=6?"disabled":""} onclick="addMon(${i})">${esc(d.n)}${d.mega?" ⓜ":""}${d.est?" ★":""}${d.custom?" ✎":""}<br><span class="note">${d.t.join("/")}</span></button>`;
+      const num = sortKey==="dex" ? "" : `<span class="note"> ${sortKey==="bst"?bstOf(d):d.bs[STATKEYS.indexOf(sortKey)]}</span>`;
+      html+=`<button data-n="${esc(d.n)}" ${used||T.mons.length>=6?"disabled":""} onclick="addMon(${i})">${esc(d.n)}${d.mega?" ⓜ":""}${d.est?" ★":""}${d.custom?" ✎":""}${num}<br><span class="note">${d.t.join("/")}</span></button>`;
     });
     html+=`</div><div class="note">ⓜ=メガシンカ可能 ★=使用率データなし（推定型） ✎=カスタム</div></div>`;
     html+=customPanel();
@@ -999,7 +1059,7 @@ window.createCustom=function(){
   const bs=[0,1,2,3,4,5].map(i=>Math.max(1,Math.min(255,parseInt(g("cb"+i).value)||50)));
   const a1=(g("cab1").value||"").trim(), a2=(g("cab2").value||"").trim();
   const abil=[[a1||"特性なし",null]]; if(a2)abil.push([a2,null]);
-  const entry={n:name,t,bs,abil,custom:1,allMoves:1,mv:[],items:[["きあいのタスキ",null],["オボンのみ",null],["いのちのたま",null]]};
+  const entry={n:name,t,bs,abil,custom:1,cid:newCid(),allMoves:1,mv:[],items:[["きあいのタスキ",null],["オボンのみ",null],["いのちのたま",null]]};
   const cl=loadCustom(); cl.push(entry); saveCustomDex(cl);
   DEX.push(entry);
   alert(name+"を追加しました。ロスターから選んで技・能力を設定してください。");
@@ -1021,33 +1081,33 @@ window.saveTeam=function(){
 /* =============== バトル準備 =============== */
 function rSetup(app){
   const ts=loadTeams();
-  let html=`<h1>${T("setup_h")}</h1><button onclick="goMenu()">${T("to_menu")}</button>`;
+  let html=`<h1>${TX("setup_h")}</h1><button onclick="goMenu()">${TX("to_menu")}</button>`;
   if(S.step==="team1"||S.step==="team2"){
     const p=S.step==="team1"?1:2;
-    html+=`<div class="panel"><h2>${T("pick_team",p)}</h2>`;
-    if(p===1) html+=`<label class="chk" style="width:auto;"><input type="checkbox" ${S.hideInfo?"checked":""} onchange="S.hideInfo=this.checked">${T("hide_info")}</label><br>`;
+    html+=`<div class="panel"><h2>${TX("pick_team",p)}</h2>`;
+    if(p===1) html+=`<label class="chk" style="width:auto;"><input type="checkbox" ${S.hideInfo?"checked":""} onchange="S.hideInfo=this.checked">${TX("hide_info")}</label><br>`;
     ts.forEach((t,i)=>{ const ng=teamBroken(t);
-      html+=`<div style="margin:4px 0;"><button ${ng?"disabled":""} onclick="pickTeam(${p},${i})">${esc(t.name)}</button> <span class="note">${t.mons.map(m=>esc(dispName(m))).join("、")}${ng?T("team_broken"):""}</span></div>`; });
+      html+=`<div style="margin:4px 0;"><button ${ng?"disabled":""} onclick="pickTeam(${p},${i})">${esc(t.name)}</button> <span class="note">${t.mons.map(m=>esc(dispName(m))).join("、")}${ng?TX("team_broken"):""}</span></div>`; });
     html+=`</div>`;
   } else {
     const p=S.step==="order1"?1:2;
     const team=S.teams[p];
-    html+=`<div class="panel"><h2>${T("order_h",p)}</h2>`;
+    html+=`<div class="panel"><h2>${TX("order_h",p)}</h2>`;
     // 3枠ぶんの高さを最初から確保しておく（選んだ瞬間に下へずれないように）
     html+=`<div class="pickslots">`;
     [0,1,2].forEach(k=>{
       const mi=S.orderTmp[k];
       const filled=mi!==undefined;
-      html+=`<span class="tag pickslot ${filled?"":"empty"}">${T("pos",k)}: ${filled?esc(dispName(team.mons[mi])):T("unset")}</span>`;
+      html+=`<span class="tag pickslot ${filled?"":"empty"}">${TX("pos",k)}: ${filled?esc(dispName(team.mons[mi])):TX("unset")}</span>`;
     });
     html+=`</div><div>`;
     team.mons.forEach((m,i)=>{
       const sel=S.orderTmp.includes(i);
       const k=S.orderTmp.indexOf(i);
-      html+=`<button class="${sel?"sel":""}" onclick="toggleOrder(${i})">${sel?`<b>${T("pos",k)}</b> `:""}${esc(dispName(m))}</button>`;
+      html+=`<button class="${sel?"sel":""}" onclick="toggleOrder(${i})">${sel?`<b>${TX("pos",k)}</b> `:""}${esc(dispName(m))}</button>`;
     });
-    html+=`</div><div class="note">${T("order_note")}</div>`;
-    html+=`<button class="big" ${S.orderTmp.length===3?"":"disabled"} onclick="confirmOrder()">${T("confirm")}</button></div>`;
+    html+=`</div><div class="note">${TX("order_note")}</div>`;
+    html+=`<button class="big" ${S.orderTmp.length===3?"":"disabled"} onclick="confirmOrder()">${TX("confirm")}</button></div>`;
   }
   app.innerHTML=html;
 }
@@ -1310,22 +1370,22 @@ function statsPanelHtml(){
   const rows=B.sides[p].team.map(m=>{
     const cfg=m.cfg, ev=cfg.ev||{};
     const onField=B.sides[p].field.includes(m);
-    const nat=(cfg.plus&&cfg.minus)?`${T("statname",cfg.plus)}↑ ${T("statname",cfg.minus)}↓`:"—";
+    const nat=(cfg.plus&&cfg.minus)?`${TX("statname",cfg.plus)}↑ ${TX("statname",cfg.minus)}↓`:"—";
     const st=STATKEYS.map(k=>`<td>${m.stats[k]}${ev[k]?`<span class="note"> (${ev[k]})</span>`:""}</td>`).join("");
     return `<tr class="${m.fainted?"faint":""}">
-      <td class="nmcell">${esc(m.name)}${onField?`<span class="st mega">${T("onfield")}</span>`:""}${m.fainted?" ✕":""}</td>
+      <td class="nmcell">${esc(m.name)}${onField?`<span class="st mega">${TX("onfield")}</span>`:""}${m.fainted?" ✕":""}</td>
       ${st}<td class="note">${nat}</td><td class="note">${esc(m.ability)}</td><td class="note">${esc(m.item)}</td>
       <td class="note">${(cfg.moves||[]).map(esc).join(" / ")}</td></tr>`;
   }).join("");
   return `<div class="overlay"><div class="statsbox">
-    <h2>${T("stats_h",p)}</h2>
-    <div class="note">${T("points")}: ( ) ／ ${T("nature")}</div>
-    <div class="tblwrap"><table class="stats"><tr><th></th>${STATKEYS.map(k=>`<th>${T("statname",k)}</th>`).join("")}<th>${T("nature")}</th><th>${T("ability")}</th><th>${T("item")}</th><th>${T("moves")}</th></tr>${rows}</table></div>
-    <button class="big" onclick="B.showStats=null;render()">${T("close")}</button>
+    <h2>${TX("stats_h",p)}</h2>
+    <div class="note">${TX("points")}: ( ) ／ ${TX("nature")}</div>
+    <div class="tblwrap"><table class="stats"><tr><th></th>${STATKEYS.map(k=>`<th>${TX("statname",k)}</th>`).join("")}<th>${TX("nature")}</th><th>${TX("ability")}</th><th>${TX("item")}</th><th>${TX("moves")}</th></tr>${rows}</table></div>
+    <button class="big" onclick="B.showStats=null;render()">${TX("close")}</button>
   </div></div>`;
 }
 function slotHtml(mon,posLabel,acting,hide){
-  if(!mon) return `<div class="slot dead"><div class="pos">${posLabel}</div><div class="nm">${T("empty_slot")}</div></div>`;
+  if(!mon) return `<div class="slot dead"><div class="pos">${posLabel}</div><div class="nm">${TX("empty_slot")}</div></div>`;
   const pct=Math.max(0,mon.hp/mon.maxhp*100);
   const cls=pct<=25?"crit":(pct<=50?"low":"");
   const stTag=mon.status?`<span class="st ${mon.status==="tox"?"psn":mon.status}">${{brn:"やけど",psn:"どく",tox:"猛毒",par:"まひ",slp:"ねむり",frz:"こおり"}[mon.status]}</span>`:"";
@@ -1361,13 +1421,13 @@ function boardHtml(activeSide,activePos,viewer){
     if(t.length)cond.push(`P${p}:${t.join("/")}`);
   });
   const who=viewer||B.inputPlayer||1;
-  const statsBtn=`<button class="statsbtn" onclick="B.showStats=${who};render()">${T("stats_btn")}</button>`;
+  const statsBtn=`<button class="statsbtn" onclick="B.showStats=${who};render()">${TX("stats_btn")}</button>`;
   let html=`<div class="note" style="text-align:center;">${cond.join("　")||""}</div><div class="board">
-   <div class="hdrow"><span class="note">${T("player",2)}　${T("bench")}:${benchList(2,hideFor(2))}</span>${statsBtn}</div><div class="row">`;
-  [2,1,0].forEach(p=>{ html+=slotHtml(f2[p],T("pos_of",2,p),activeSide===2&&activePos===p,hideFor(2)); });
+   <div class="hdrow"><span class="note">${TX("player",2)}　${TX("bench")}:${benchList(2,hideFor(2))}</span>${statsBtn}</div><div class="row">`;
+  [2,1,0].forEach(p=>{ html+=slotHtml(f2[p],TX("pos_of",2,p),activeSide===2&&activePos===p,hideFor(2)); });
   html+=`</div><div class="row">`;
-  [0,1,2].forEach(p=>{ html+=slotHtml(f1[p],T("pos_of",1,p),activeSide===1&&activePos===p,hideFor(1)); });
-  html+=`</div><div class="note" style="text-align:center;">${T("player",1)}　${T("bench")}:${benchList(1,hideFor(1))}</div></div>`;
+  [0,1,2].forEach(p=>{ html+=slotHtml(f1[p],TX("pos_of",1,p),activeSide===1&&activePos===p,hideFor(1)); });
+  html+=`</div><div class="note" style="text-align:center;">${TX("player",1)}　${TX("bench")}:${benchList(1,hideFor(1))}</div></div>`;
   return html;
 }
 function benchList(p,hide){
@@ -1377,17 +1437,17 @@ function benchList(p,hide){
 function benchMons(p){ return B.sides[p].team.filter(m=>!m.fainted && !B.sides[p].field.includes(m)); }
 function rBattle(app){
   if(B.phase==="handoff"){
-    app.innerHTML=`<h1>${T("turn",B.turn)}</h1>`+boardHtml(null,null,B.inputPlayer)+logHtml()+statsPanelHtml()+
-     `<div class="overlay"><p>${T("handoff",B.inputPlayer)}</p>
-      <button class="big" onclick="startInput()">${T("handoff_btn",B.inputPlayer)}</button></div>`;
+    app.innerHTML=`<h1>${TX("turn",B.turn)}</h1>`+boardHtml(null,null,B.inputPlayer)+logHtml()+statsPanelHtml()+
+     `<div class="overlay"><p>${TX("handoff",B.inputPlayer)}</p>
+      <button class="big" onclick="startInput()">${TX("handoff_btn",B.inputPlayer)}</button></div>`;
     scrollLog(); return;
   }
   if(B.phase==="input"){ rInput(app); scrollLog(); return; }
   if(B.phase==="replace"){ rReplace(app); scrollLog(); return; }
   if(B.phase==="midswitch"){ rMidSwitch(app); scrollLog(); return; }
   if(B.phase==="end"){
-    app.innerHTML=`<h1>${T("win",B.winner)}</h1>`+boardHtml()+logHtml()+statsPanelHtml()+
-     `<div style="text-align:center;"><button class="big" onclick="goMenu()">${T("back_menu")}</button></div>`;
+    app.innerHTML=`<h1>${TX("win",B.winner)}</h1>`+boardHtml()+logHtml()+statsPanelHtml()+
+     `<div style="text-align:center;"><button class="big" onclick="goMenu()">${TX("back_menu")}</button></div>`;
     scrollLog(); return;
   }
 }
@@ -2489,7 +2549,7 @@ function rReplace(app){
   const bothSides=B.replaceQueue.some(x=>x.p!==q.p)||(B.pendReplace||[]).some(x=>x.p!==q.p);
   if(!bothSides)B.replaceHandoff=q.p;
   if(B.replaceHandoff!==q.p){
-    app.innerHTML=`<h1>${T("turn",B.turn)}</h1>`+boardHtml(null,null,q.p)+logHtml()+
+    app.innerHTML=`<h1>${TX("turn",B.turn)}</h1>`+boardHtml(null,null,q.p)+logHtml()+
      `<div class="overlay"><p>プレイヤー${q.p}にデバイスを渡してください</p>
       <p class="note">ひんしのポケモンの交代要員を選びます（相手の選出は見えません）</p>
       <button class="big" onclick="B.replaceHandoff=${q.p};render()">プレイヤー${q.p}：選出する</button></div>`;
