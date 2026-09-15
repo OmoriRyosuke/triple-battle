@@ -17,9 +17,13 @@
   .hdrow{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
   .statsbtn{font-size:12px;padding:3px 8px;}
   .filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:6px;}
-  .benchline{flex:1;text-align:center;}
-  .btnstack{display:flex;flex-direction:column;gap:3px;align-items:flex-start;}
-  .btnstack button{width:100%;text-align:center;}
+  .benchline{text-align:center;margin:1px 0;}
+  .boardwrap{display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap;}
+  .boardmain{flex:1;min-width:0;}
+  /* 1つ目のボタンが上段の「P2の右」と同じ高さに来るよう、控え表示のぶんだけ下げる */
+  .btnstack{display:flex;flex-direction:column;gap:3px;align-items:stretch;flex:0 0 auto;padding-top:20px;}
+  .btnstack button{width:100%;text-align:center;margin:0;}
+  @media (max-width:640px){ .btnstack{flex-direction:row;flex-wrap:wrap;padding-top:0;width:100%;} .btnstack button{width:auto;flex:1 1 auto;} }
   .evrow{flex-wrap:nowrap;}
   .evlab{flex:0 0 190px;white-space:nowrap;}
   .logbox{width:min(820px,96vw);}
@@ -1609,11 +1613,12 @@ function boardHtml(activeSide,activePos,viewer){
     <button class="statsbtn" onclick="B.showLog=1;render()">${TX("log_btn")}</button>
    </div>`;
   let html=`<div class="note" style="text-align:center;">${cond.join("　")||""}</div><div class="board">
-   <div class="hdrow">${btns}<span class="note benchline">${TX("player",2)}　${TX("bench")}:${benchList(2,hideFor(2))}</span></div><div class="row">`;
+   <div class="boardwrap">${btns}<div class="boardmain">
+   <div class="note benchline">${TX("player",2)}　${TX("bench")}:${benchList(2,hideFor(2))}</div><div class="row">`;
   [2,1,0].forEach(p=>{ html+=slotHtml(f2[p],TX("pos_of",2,p),activeSide===2&&activePos===p,hideFor(2)); });
   html+=`</div><div class="row">`;
   [0,1,2].forEach(p=>{ html+=slotHtml(f1[p],TX("pos_of",1,p),activeSide===1&&activePos===p,hideFor(1)); });
-  html+=`</div><div class="note" style="text-align:center;">${TX("player",1)}　${TX("bench")}:${benchList(1,hideFor(1))}</div></div>`;
+  html+=`</div><div class="note benchline">${TX("player",1)}　${TX("bench")}:${benchList(1,hideFor(1))}</div></div></div></div>`;
   return html;
 }
 function benchList(p,hide){
