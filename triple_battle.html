@@ -11,6 +11,17 @@
   button{background:#3a4254;color:#e8e8e8;border:1px solid #5a6478;border-radius:6px;padding:7px 11px;margin:3px;cursor:pointer;font-size:13px;}
   button:hover{background:#4a5570;} button.sel{background:#2e7d4f;border-color:#4caf7d;} button.danger{background:#7d2e2e;} button.big{font-size:16px;padding:10px 18px;}
   button:disabled{opacity:.35;cursor:default;}
+  .pickslots{display:flex;gap:6px;flex-wrap:wrap;min-height:34px;align-items:center;margin-bottom:6px;}
+  .pickslot{min-width:120px;display:inline-block;}
+  .pickslot.empty{opacity:.45;}
+  .hdrow{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
+  .statsbtn{font-size:12px;padding:3px 8px;}
+  .statsbox{background:#1a1d26;border:1px solid #444c60;border-radius:6px;padding:12px;max-width:96vw;max-height:86vh;overflow:auto;}
+  .tblwrap{overflow-x:auto;}
+  table.stats{border-collapse:collapse;font-size:12px;width:100%;}
+  table.stats th,table.stats td{border:1px solid #3a4152;padding:3px 6px;text-align:center;white-space:nowrap;}
+  table.stats td.nmcell{text-align:left;font-weight:bold;}
+  table.stats tr.faint{opacity:.45;}
   .roster{display:flex;flex-wrap:wrap;} .roster button{width:calc(20% - 12px);text-align:left;font-size:12px;}
   .panel{background:#252a36;border:1px solid #444c60;border-radius:8px;padding:12px;margin:10px 0;}
   .note{font-size:12px;color:#9aa4b8;} .warn{color:#e0b040;font-size:12px;}
@@ -535,6 +546,61 @@ const DEX = [
 ];
 const GENERAL_ITEMS = Object.keys(ITEMS);
 const POSNAME=["左","中","右"];
+const POSNAME_EN=["Left","Center","Right"];
+/* =============== 表示言語 =============== */
+let LANG=(function(){ try{ return localStorage.getItem("tb_lang")||"ja"; }catch(e){ return "ja"; } })();
+function setLang(l){ LANG=l; try{localStorage.setItem("tb_lang",l);}catch(e){} render(); }
+window.setLang=setLang;
+const STR={
+ pos:            (k)=> LANG==="ja"?POSNAME[k]:POSNAME_EN[k],
+ title:          ()=> LANG==="ja"?"トリプルバトル":"Triple Battle",
+ menu_build:     ()=> LANG==="ja"?"チーム編成（作成・編集）":"Team Builder",
+ menu_start:     ()=> LANG==="ja"?"バトル開始":"Start Battle",
+ menu_needteam:  ()=> LANG==="ja"?"まずチームを作成してください（バトルには保存済みチームが必要）":"Create a team first (a saved team is required to battle).",
+ saved_teams:    ()=> LANG==="ja"?"保存済みチーム":"Saved Teams",
+ none_yet:       ()=> LANG==="ja"?"まだありません":"None yet",
+ edit:           ()=> LANG==="ja"?"編集":"Edit",
+ del:            ()=> LANG==="ja"?"削除":"Delete",
+ backup_h:       ()=> LANG==="ja"?"データのバックアップ（書き出し・読み込み）":"Backup (Export / Import)",
+ backup_note:    ()=> LANG==="ja"?"チーム・カスタムポケモン・カスタム技はこのブラウザ内にだけ保存されています。下のボタンでテキストとして書き出して保存しておけば、別のPCやスマホでも復元できます。":"Teams and custom data are stored only in this browser. Export them as text to restore on another device.",
+ exp:            ()=> LANG==="ja"?"データを書き出す":"Export data",
+ expfile:        ()=> LANG==="ja"?"ファイルで保存":"Save as file",
+ imp:            ()=> LANG==="ja"?"データを読み込む":"Import data",
+ imp_do:         ()=> LANG==="ja"?"読み込む":"Import",
+ exp_hint:       ()=> LANG==="ja"?"下のテキストを全部コピーして、メモ帳やメール等に保存してください（Ctrl+A→Ctrl+C）":"Copy all of the text below and save it somewhere (Ctrl+A then Ctrl+C).",
+ imp_hint:       ()=> LANG==="ja"?"書き出したテキストを貼り付けて「読み込む」を押してください（現在のデータは上書きされます）":"Paste exported text and press Import. This overwrites your current data.",
+ lang_label:     ()=> LANG==="ja"?"言語":"Language",
+ setup_h:        ()=> LANG==="ja"?"バトル準備":"Battle Setup",
+ to_menu:        ()=> LANG==="ja"?"← メニューへ":"← Menu",
+ pick_team:      (p)=> LANG==="ja"?`プレイヤー${p}：使うチームを選択`:`Player ${p}: choose a team`,
+ hide_info:      ()=> LANG==="ja"?"相手の持ち物・HP実数値を隠す（相手のHPは％表示）":"Hide opponent's item and exact HP (show HP as %)",
+ team_broken:    ()=> LANG==="ja"?"（削除されたポケモンを含むため使えません。メニューで編集してください）":" (contains a deleted Pokemon - edit it from the menu)",
+ order_h:        (p)=> LANG==="ja"?`プレイヤー${p}：場に出す3体を選ぶ（クリック順に 左・中・右）`:`Player ${p}: pick the 3 to send out (click order = Left, Center, Right)`,
+ order_note:     ()=> LANG==="ja"?"選ばなかった3体は控えになります。もう一度押すと選び直せます。":"The other 3 become your bench. Click again to unselect.",
+ unset:          ()=> LANG==="ja"?"未選択":"—",
+ confirm:        ()=> LANG==="ja"?"決定":"Confirm",
+ turn:           (n)=> LANG==="ja"?`ターン${n}`:`Turn ${n}`,
+ handoff:        (p)=> LANG==="ja"?`プレイヤー${p}にデバイスを渡してください`:`Pass the device to Player ${p}`,
+ handoff_btn:    (p)=> LANG==="ja"?`プレイヤー${p}：コマンド入力`:`Player ${p}: enter commands`,
+ win:            (w)=> LANG==="ja"?(w===0?"引き分け！":"プレイヤー"+w+"の勝利！"):(w===0?"Draw!":"Player "+w+" wins!"),
+ back_menu:      ()=> LANG==="ja"?"メニューへ戻る":"Back to menu",
+ player:         (p)=> LANG==="ja"?`プレイヤー${p}`:`Player ${p}`,
+ bench:          ()=> LANG==="ja"?"控え":"Bench",
+ empty_slot:     ()=> LANG==="ja"?"（空き）":"(empty)",
+ pos_of:         (p,k)=> LANG==="ja"?`P${p}の${POSNAME[k]}`:`P${p} ${POSNAME_EN[k]}`,
+ stats_btn:      ()=> LANG==="ja"?"自分の能力を見る":"My stats",
+ stats_h:        (p)=> LANG==="ja"?`プレイヤー${p}：手持ちの実数値と振り方`:`Player ${p}: stats and point spread`,
+ close:          ()=> LANG==="ja"?"閉じる":"Close",
+ nature:         ()=> LANG==="ja"?"性格補正":"Nature",
+ ability:        ()=> LANG==="ja"?"特性":"Ability",
+ item:           ()=> LANG==="ja"?"持ち物":"Item",
+ moves:          ()=> LANG==="ja"?"技":"Moves",
+ points:         ()=> LANG==="ja"?"振り":"Points",
+ onfield:        ()=> LANG==="ja"?"場":"Field",
+ statname:       (k)=> LANG==="ja"?STATN[k]:{h:"HP",a:"Atk",b:"Def",c:"SpA",d:"SpD",s:"Spe"}[k],
+};
+function T(k,...a){ const f=STR[k]; return f?f(...a):k; }
+window.T=T;
 const STATN={h:"HP",a:"攻撃",b:"防御",c:"特攻",d:"特防",s:"素早"};
 const STATKEYS=["h","a","b","c","d","s"];
 /* =============== ステータス計算 =============== */
@@ -616,24 +682,26 @@ function applySearchFilters(){
 /* =============== メニュー =============== */
 function rMenu(app){
   const ts=loadTeams();
-  let html=`<h1>トリプルバトル</h1><div class="panel" style="text-align:center;">
-   <button class="big" onclick="goBuilder()">チーム編成（作成・編集）</button>
-   <button class="big" ${ts.length===0?"disabled":""} onclick="goSetup()">バトル開始</button>
-   ${ts.length===0?'<div class="note">まずチームを作成してください（バトルには保存済みチームが必要）</div>':""}
-  </div><div class="panel"><h2>保存済みチーム</h2>`;
-  if(ts.length===0) html+=`<div class="note">まだありません</div>`;
+  let html=`<div style="text-align:right;margin-bottom:4px;"><span class="note">${T("lang_label")}:</span>
+   <button class="${LANG==="ja"?"sel":""}" onclick="setLang('ja')">日本語</button><button class="${LANG==="en"?"sel":""}" onclick="setLang('en')">English</button></div>`;
+  html+=`<h1>${T("title")}</h1><div class="panel" style="text-align:center;">
+   <button class="big" onclick="goBuilder()">${T("menu_build")}</button>
+   <button class="big" ${ts.length===0?"disabled":""} onclick="goSetup()">${T("menu_start")}</button>
+   ${ts.length===0?`<div class="note">${T("menu_needteam")}</div>`:""}
+  </div><div class="panel"><h2>${T("saved_teams")}</h2>`;
+  if(ts.length===0) html+=`<div class="note">${T("none_yet")}</div>`;
   ts.forEach((t,i)=>{ html+=`<div style="margin:4px 0;"><b>${esc(t.name)}</b>: ${t.mons.map(m=>esc(dispName(m))).join("、")}
-    <button onclick="editTeam(${i})">編集</button><button class="danger" onclick="delTeam(${i})">削除</button></div>`; });
+    <button onclick="editTeam(${i})">${T("edit")}</button><button class="danger" onclick="delTeam(${i})">${T("del")}</button></div>`; });
   html+=`</div>`;
-  html+=`<div class="panel"><h2>データのバックアップ（書き出し・読み込み）</h2>
-   <div class="note">チーム・カスタムポケモン・カスタム技はこのブラウザ内にだけ保存されています。下のボタンでテキストとして書き出して保存しておけば、別のPCやスマホでも復元できます。</div>
-   <button class="big" onclick="exportData()">データを書き出す</button>
-   <button class="big" onclick="downloadData()">ファイルで保存</button>
-   <button class="big" onclick="S.showImport=!S.showImport;render()">データを読み込む</button>
-   <div id="expbox" style="margin-top:8px;">${S.exportText?`<div class="note">下のテキストを全部コピーして、メモ帳やメール等に保存してください（Ctrl+A→Ctrl+C）</div><textarea id="exparea" style="width:100%;height:110px;background:#12141a;color:#e8e8e8;border:1px solid #444c60;border-radius:4px;">${esc(S.exportText)}</textarea>`:""}</div>
-   ${S.showImport?`<div style="margin-top:8px;"><div class="note">書き出したテキストを貼り付けて「読み込む」を押してください（現在のデータは上書きされます）</div>
+  html+=`<div class="panel"><h2>${T("backup_h")}</h2>
+   <div class="note">${T("backup_note")}</div>
+   <button class="big" onclick="exportData()">${T("exp")}</button>
+   <button class="big" onclick="downloadData()">${T("expfile")}</button>
+   <button class="big" onclick="S.showImport=!S.showImport;render()">${T("imp")}</button>
+   <div id="expbox" style="margin-top:8px;">${S.exportText?`<div class="note">${T("exp_hint")}</div><textarea id="exparea" style="width:100%;height:110px;background:#12141a;color:#e8e8e8;border:1px solid #444c60;border-radius:4px;">${esc(S.exportText)}</textarea>`:""}</div>
+   ${S.showImport?`<div style="margin-top:8px;"><div class="note">${T("imp_hint")}</div>
      <textarea id="imparea" style="width:100%;height:110px;background:#12141a;color:#e8e8e8;border:1px solid #444c60;border-radius:4px;"></textarea>
-     <button class="sel" onclick="importData()">読み込む</button>
+     <button class="sel" onclick="importData()">${T("imp_do")}</button>
      <input type="file" id="impfile" accept=".json,.txt" onchange="importFile(this)" style="margin-left:8px;"></div>`:""}
   </div>`;
   html+=`<div class="note">※技・特性・持ち物の使用率はポケモン徹底攻略のポケチャン ダブル使用率(2026/07/10更新)を元にしています。カラミンゴ/イエッサン♀/ガチグマ2種/モロバレル/ポリゴン2はポケチャン未実装のためSVでの標準的な型を推定で収録（★印）。ふういん・スキルスワップ・じこあんじ等の一部の技は未対応のため除外。チームはこのブラウザ内に保存されます。</div>`;
@@ -953,25 +1021,33 @@ window.saveTeam=function(){
 /* =============== バトル準備 =============== */
 function rSetup(app){
   const ts=loadTeams();
-  let html=`<h1>バトル準備</h1><button onclick="goMenu()">← メニューへ</button>`;
+  let html=`<h1>${T("setup_h")}</h1><button onclick="goMenu()">${T("to_menu")}</button>`;
   if(S.step==="team1"||S.step==="team2"){
     const p=S.step==="team1"?1:2;
-    html+=`<div class="panel"><h2>プレイヤー${p}：使うチームを選択</h2>`;
-    if(p===1) html+=`<label class="chk" style="width:auto;"><input type="checkbox" ${S.hideInfo?"checked":""} onchange="S.hideInfo=this.checked">相手の持ち物・HP実数値を隠す（相手のHPは％表示）</label><br>`;
+    html+=`<div class="panel"><h2>${T("pick_team",p)}</h2>`;
+    if(p===1) html+=`<label class="chk" style="width:auto;"><input type="checkbox" ${S.hideInfo?"checked":""} onchange="S.hideInfo=this.checked">${T("hide_info")}</label><br>`;
     ts.forEach((t,i)=>{ const ng=teamBroken(t);
-      html+=`<div style="margin:4px 0;"><button ${ng?"disabled":""} onclick="pickTeam(${p},${i})">${esc(t.name)}</button> <span class="note">${t.mons.map(m=>esc(dispName(m))).join("、")}${ng?"（削除されたポケモンを含むため使えません。メニューで編集してください）":""}</span></div>`; });
+      html+=`<div style="margin:4px 0;"><button ${ng?"disabled":""} onclick="pickTeam(${p},${i})">${esc(t.name)}</button> <span class="note">${t.mons.map(m=>esc(dispName(m))).join("、")}${ng?T("team_broken"):""}</span></div>`; });
     html+=`</div>`;
   } else {
     const p=S.step==="order1"?1:2;
     const team=S.teams[p];
-    html+=`<div class="panel"><h2>プレイヤー${p}：選出順を決める（クリック順に 1:左 2:中 3:右 4-6:控え）</h2>`;
-    S.orderTmp.forEach((mi,k)=>{ html+=`<span class="tag">${k<3?POSNAME[k]:"控え"+(k-2)}: ${esc(dispName(team.mons[mi]))}</span>`; });
-    html+=`<div>`;
+    html+=`<div class="panel"><h2>${T("order_h",p)}</h2>`;
+    // 3枠ぶんの高さを最初から確保しておく（選んだ瞬間に下へずれないように）
+    html+=`<div class="pickslots">`;
+    [0,1,2].forEach(k=>{
+      const mi=S.orderTmp[k];
+      const filled=mi!==undefined;
+      html+=`<span class="tag pickslot ${filled?"":"empty"}">${T("pos",k)}: ${filled?esc(dispName(team.mons[mi])):T("unset")}</span>`;
+    });
+    html+=`</div><div>`;
     team.mons.forEach((m,i)=>{
       const sel=S.orderTmp.includes(i);
-      html+=`<button class="${sel?"sel":""}" onclick="toggleOrder(${i})">${esc(dispName(m))}</button>`;
+      const k=S.orderTmp.indexOf(i);
+      html+=`<button class="${sel?"sel":""}" onclick="toggleOrder(${i})">${sel?`<b>${T("pos",k)}</b> `:""}${esc(dispName(m))}</button>`;
     });
-    html+=`</div><button class="big" ${S.orderTmp.length===6?"":"disabled"} onclick="confirmOrder()">決定</button></div>`;
+    html+=`</div><div class="note">${T("order_note")}</div>`;
+    html+=`<button class="big" ${S.orderTmp.length===3?"":"disabled"} onclick="confirmOrder()">${T("confirm")}</button></div>`;
   }
   app.innerHTML=html;
 }
@@ -982,12 +1058,16 @@ window.pickTeam=function(p,i){
 };
 window.toggleOrder=function(i){
   const k=S.orderTmp.indexOf(i);
-  if(k>=0)S.orderTmp.splice(k,1); else S.orderTmp.push(i);
+  if(k>=0)S.orderTmp.splice(k,1);
+  else { if(S.orderTmp.length>=3)return; S.orderTmp.push(i); }
   render();
 };
 window.confirmOrder=function(){
   const p=S.step==="order1"?1:2;
-  S.orders[p]=S.orderTmp.slice();
+  if(S.orderTmp.length!==3)return;
+  // 場に出す3体を選び、残りはチーム順のまま控えに回す
+  const rest=S.teams[p].mons.map((m,i)=>i).filter(i=>!S.orderTmp.includes(i));
+  S.orders[p]=S.orderTmp.concat(rest);
   if(p===1){ S.step="order2"; S.orderTmp=[]; render(); }
   else startBattle();
 };
@@ -1223,8 +1303,29 @@ function effSpe(mon){
   return s;
 }
 /* =============== 画面（バトル） =============== */
+/* 自分の手持ちの実数値と振り方を見るパネル */
+function statsPanelHtml(){
+  if(!B||!B.showStats)return "";
+  const p=B.showStats;
+  const rows=B.sides[p].team.map(m=>{
+    const cfg=m.cfg, ev=cfg.ev||{};
+    const onField=B.sides[p].field.includes(m);
+    const nat=(cfg.plus&&cfg.minus)?`${T("statname",cfg.plus)}↑ ${T("statname",cfg.minus)}↓`:"—";
+    const st=STATKEYS.map(k=>`<td>${m.stats[k]}${ev[k]?`<span class="note"> (${ev[k]})</span>`:""}</td>`).join("");
+    return `<tr class="${m.fainted?"faint":""}">
+      <td class="nmcell">${esc(m.name)}${onField?`<span class="st mega">${T("onfield")}</span>`:""}${m.fainted?" ✕":""}</td>
+      ${st}<td class="note">${nat}</td><td class="note">${esc(m.ability)}</td><td class="note">${esc(m.item)}</td>
+      <td class="note">${(cfg.moves||[]).map(esc).join(" / ")}</td></tr>`;
+  }).join("");
+  return `<div class="overlay"><div class="statsbox">
+    <h2>${T("stats_h",p)}</h2>
+    <div class="note">${T("points")}: ( ) ／ ${T("nature")}</div>
+    <div class="tblwrap"><table class="stats"><tr><th></th>${STATKEYS.map(k=>`<th>${T("statname",k)}</th>`).join("")}<th>${T("nature")}</th><th>${T("ability")}</th><th>${T("item")}</th><th>${T("moves")}</th></tr>${rows}</table></div>
+    <button class="big" onclick="B.showStats=null;render()">${T("close")}</button>
+  </div></div>`;
+}
 function slotHtml(mon,posLabel,acting,hide){
-  if(!mon) return `<div class="slot dead"><div class="pos">${posLabel}</div><div class="nm">（空き）</div></div>`;
+  if(!mon) return `<div class="slot dead"><div class="pos">${posLabel}</div><div class="nm">${T("empty_slot")}</div></div>`;
   const pct=Math.max(0,mon.hp/mon.maxhp*100);
   const cls=pct<=25?"crit":(pct<=50?"low":"");
   const stTag=mon.status?`<span class="st ${mon.status==="tox"?"psn":mon.status}">${{brn:"やけど",psn:"どく",tox:"猛毒",par:"まひ",slp:"ねむり",frz:"こおり"}[mon.status]}</span>`:"";
@@ -1259,11 +1360,14 @@ function boardHtml(activeSide,activePos,viewer){
     if(fx.safeguard)t.push(`しんぴのまもり(残${fx.safeguard})`);
     if(t.length)cond.push(`P${p}:${t.join("/")}`);
   });
-  let html=`<div class="note" style="text-align:center;">${cond.join("　")||""}</div><div class="board"><div class="note" style="text-align:center;">プレイヤー2　控え:${benchList(2,hideFor(2))}</div><div class="row">`;
-  [2,1,0].forEach(p=>{ html+=slotHtml(f2[p],"P2の"+POSNAME[p],activeSide===2&&activePos===p,hideFor(2)); });
+  const who=viewer||B.inputPlayer||1;
+  const statsBtn=`<button class="statsbtn" onclick="B.showStats=${who};render()">${T("stats_btn")}</button>`;
+  let html=`<div class="note" style="text-align:center;">${cond.join("　")||""}</div><div class="board">
+   <div class="hdrow"><span class="note">${T("player",2)}　${T("bench")}:${benchList(2,hideFor(2))}</span>${statsBtn}</div><div class="row">`;
+  [2,1,0].forEach(p=>{ html+=slotHtml(f2[p],T("pos_of",2,p),activeSide===2&&activePos===p,hideFor(2)); });
   html+=`</div><div class="row">`;
-  [0,1,2].forEach(p=>{ html+=slotHtml(f1[p],"P1の"+POSNAME[p],activeSide===1&&activePos===p,hideFor(1)); });
-  html+=`</div><div class="note" style="text-align:center;">プレイヤー1　控え:${benchList(1,hideFor(1))}</div></div>`;
+  [0,1,2].forEach(p=>{ html+=slotHtml(f1[p],T("pos_of",1,p),activeSide===1&&activePos===p,hideFor(1)); });
+  html+=`</div><div class="note" style="text-align:center;">${T("player",1)}　${T("bench")}:${benchList(1,hideFor(1))}</div></div>`;
   return html;
 }
 function benchList(p,hide){
@@ -1273,17 +1377,17 @@ function benchList(p,hide){
 function benchMons(p){ return B.sides[p].team.filter(m=>!m.fainted && !B.sides[p].field.includes(m)); }
 function rBattle(app){
   if(B.phase==="handoff"){
-    app.innerHTML=`<h1>ターン${B.turn}</h1>`+boardHtml(null,null,B.inputPlayer)+logHtml()+
-     `<div class="overlay"><p>プレイヤー${B.inputPlayer}にデバイスを渡してください</p>
-      <button class="big" onclick="startInput()">プレイヤー${B.inputPlayer}：コマンド入力</button></div>`;
+    app.innerHTML=`<h1>${T("turn",B.turn)}</h1>`+boardHtml(null,null,B.inputPlayer)+logHtml()+statsPanelHtml()+
+     `<div class="overlay"><p>${T("handoff",B.inputPlayer)}</p>
+      <button class="big" onclick="startInput()">${T("handoff_btn",B.inputPlayer)}</button></div>`;
     scrollLog(); return;
   }
   if(B.phase==="input"){ rInput(app); scrollLog(); return; }
   if(B.phase==="replace"){ rReplace(app); scrollLog(); return; }
   if(B.phase==="midswitch"){ rMidSwitch(app); scrollLog(); return; }
   if(B.phase==="end"){
-    app.innerHTML=`<h1>${B.winner===0?"引き分け！":"プレイヤー"+B.winner+"の勝利！"}</h1>`+boardHtml()+logHtml()+
-     `<div style="text-align:center;"><button class="big" onclick="goMenu()">メニューへ戻る</button></div>`;
+    app.innerHTML=`<h1>${T("win",B.winner)}</h1>`+boardHtml()+logHtml()+statsPanelHtml()+
+     `<div style="text-align:center;"><button class="big" onclick="goMenu()">${T("back_menu")}</button></div>`;
     scrollLog(); return;
   }
 }
@@ -1386,7 +1490,7 @@ function rInput(app){
     html+=`</div></div>`;
     html+=`<button class="danger" onclick="B.sub='action';B.chosenMove=null;render()">技選択に戻る</button>`;
   }
-  html+=`</div>`+logHtml();
+  html+=`</div>`+logHtml()+statsPanelHtml();
   app.innerHTML=html;
 }
 function availableBench(pl){
@@ -2366,7 +2470,7 @@ function rMidSwitch(app){
   let html=`<h1>ターン${B.turn}</h1>`+boardHtml(null,null,mon.side)+
    `<div class="panel"><h2>プレイヤー${mon.side}：${esc(ms.label)}！ ${esc(mon.name)}の交代先を選択</h2>`;
   benchMons(mon.side).forEach(m=>{ html+=`<button onclick="doMidSwitch('${esc(m.name)}')">${esc(m.name)} (HP ${m.hp}/${m.maxhp})</button>`; });
-  html+=`</div>`+logHtml();
+  html+=`</div>`+logHtml()+statsPanelHtml();
   app.innerHTML=html;
 }
 window.doMidSwitch=function(name){
@@ -2385,7 +2489,7 @@ function rReplace(app){
   const bothSides=B.replaceQueue.some(x=>x.p!==q.p)||(B.pendReplace||[]).some(x=>x.p!==q.p);
   if(!bothSides)B.replaceHandoff=q.p;
   if(B.replaceHandoff!==q.p){
-    app.innerHTML=`<h1>ターン${B.turn}</h1>`+boardHtml(null,null,q.p)+logHtml()+
+    app.innerHTML=`<h1>${T("turn",B.turn)}</h1>`+boardHtml(null,null,q.p)+logHtml()+
      `<div class="overlay"><p>プレイヤー${q.p}にデバイスを渡してください</p>
       <p class="note">ひんしのポケモンの交代要員を選びます（相手の選出は見えません）</p>
       <button class="big" onclick="B.replaceHandoff=${q.p};render()">プレイヤー${q.p}：選出する</button></div>`;
@@ -2399,7 +2503,7 @@ function rReplace(app){
   const chosen=replaceReserved(q.p);
   if(chosen.length)html+=`<div class="note">選出済み: ${chosen.map(esc).join("、")}</div>`;
   bench.forEach(m=>{ html+=`<button onclick="doReplace('${esc(m.name)}')">${esc(m.name)} (HP ${m.hp}/${m.maxhp})</button>`; });
-  html+=`</div>`+logHtml();
+  html+=`</div>`+logHtml()+statsPanelHtml();
   app.innerHTML=html;
 }
 window.doReplace=function(name){
