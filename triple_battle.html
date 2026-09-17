@@ -1144,8 +1144,7 @@ function rSetup(app){
     html+=`</div><div>`;
     team.mons.forEach((m,i)=>{
       const sel=S.orderTmp.includes(i);
-      const k=S.orderTmp.indexOf(i);
-      html+=`<button class="${sel?"sel":""}" onclick="toggleOrder(${i})">${sel?`<b>${TX("pos",k)}</b> `:""}${esc(dispName(m))}</button>`;
+      html+=`<button class="${sel?"sel":""}" onclick="toggleOrder(${i})">${esc(dispName(m))}</button>`;
     });
     html+=`</div><div class="note">${TX("order_note")}</div>`;
     html+=`<button class="big" ${S.orderTmp.length===3?"":"disabled"} onclick="confirmOrder()">${TX("confirm")}</button></div>`;
@@ -1643,7 +1642,10 @@ function rBattle(app){
   }
 }
 function logHtml(){ return `<div id="log">${B.log.map(esc).join("\n")}</div>`; }
-function scrollLog(){ const l=$("log"); if(l)l.scrollTop=l.scrollHeight; }
+function scrollLog(){
+  const l=$("log"); if(l)l.scrollTop=l.scrollHeight;
+  const g=$("logbig"); if(g)g.scrollTop=g.scrollHeight;   // ボタンから開いたログも末尾から見せる
+}
 /* =============== コマンド入力 =============== */
 window.startInput=function(){
   B.phase="input";
